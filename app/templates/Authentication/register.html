@@ -1,0 +1,100 @@
+{% extends "base.html" %} {% block title %}Register - Observatory Booking{%
+endblock %} {% block content %}
+<div
+  class="max-w-md mx-auto bg-white p-6 shadow-lg rounded-lg dark:bg-gray-800 dark:text-gray-100"
+>
+  <h2
+    class="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-gray-100"
+  >
+    Register
+  </h2>
+  <form id="registerForm" method="post" action="{{ url_for('bp.register') }}">
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 dark:text-gray-300"
+        >Name</label
+      >
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+        required
+      />
+    </div>
+
+    <div class="mb-4">
+      <label for="email" class="block text-gray-700 dark:text-gray-300"
+        >Email</label
+      >
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+        required
+      />
+      <small id="emailError" class="text-red-500 hidden"
+        >Invalid email format.</small
+      >
+    </div>
+
+    <div class="mb-4">
+      <label for="password" class="block text-gray-700 dark:text-gray-300"
+        >Password</label
+      >
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+        required
+        minlength="8"
+        maxlength="30"
+      />
+      <small id="passwordStrengthError" class="text-red-500 hidden">
+        Password must be at least 8 characters long and include uppercase
+        letters, lowercase letters, and numbers.
+      </small>
+    </div>
+
+    <div class="mb-4">
+      <label for="confirm" class="block text-gray-700 dark:text-gray-300"
+        >Confirm Password</label
+      >
+      <input
+        type="password"
+        id="confirm"
+        name="confirm"
+        class="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+        required
+        minlength="8"
+      />
+      <small id="confirmError" class="text-red-500 hidden"
+        >Passwords do not match.</small
+      >
+    </div>
+
+    <button
+      type="submit"
+      id="register-button"
+      disabled
+      class="w-full bg-green-600 text-white p-2 rounded-md opacity-50 cursor-not-allowed transition-all duration-200 dark:bg-green-700"
+    >
+      Register
+    </button>
+  </form>
+
+  <p class="mt-4">
+    Already have an account?
+    <a
+      href="{{ url_for('bp.login') }}"
+      class="text-blue-600 dark:text-blue-400 hover:underline"
+      >Login here</a
+    >
+  </p>
+</div>
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/authentication/register.js') }}"
+></script>
+{% endblock %}

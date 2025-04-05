@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.services.weather_service &#8212; Observatory Booking  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=9ae7186b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/services/weather_service';</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <img src="../../../_static/logo.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">Observatory Booking</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../components/index.html">
+    Components
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../components/index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.services.weather_service</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.services.weather_service</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Weather Service Module</span>
+
+<span class="sd">This module provides the `WeatherService` class responsible for:</span>
+
+<span class="sd">- Fetching weather data from the Open-Meteo API.</span>
+<span class="sd">- Updating weather conditions for scheduled events.</span>
+<span class="sd">- Using a background scheduler to refresh data every 3 hours.</span>
+<span class="sd">- Implementing a robust HTTP request retry mechanism.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">requests.adapters</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPAdapter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib3.util.retry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Retry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">apscheduler.schedulers.background</span><span class="w"> </span><span class="kn">import</span> <span class="n">BackgroundScheduler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">Slot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..data_transfer_objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttl_cache</span><span class="p">,</span> <span class="n">logger</span>
+
+
+<div class="viewcode-block" id="WeatherService">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherService</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A service to retrieve and manage weather data.</span>
+
+<span class="sd">    This class:</span>
+<span class="sd">    - Fetches weather forecasts from the Open-Meteo API.</span>
+<span class="sd">    - Updates weather conditions for scheduled events.</span>
+<span class="sd">    - Schedules periodic weather updates in the background.</span>
+<span class="sd">    - Implements a retry mechanism for API requests.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">API_ENDPOINT_TEMPLATE</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;https://api.open-meteo.com/v1/forecast?&quot;</span>
+        <span class="s2">&quot;latitude=</span><span class="si">{latitude}</span><span class="s2">&amp;longitude=</span><span class="si">{longitude}</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;&amp;hourly=dew_point_2m,precipitation_probability,cloud_cover,visibility&quot;</span>
+        <span class="s2">&quot;&amp;timezone=</span><span class="si">{tz_str}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">WEIGHTS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;cloud_cover&quot;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+        <span class="s2">&quot;precipitation_probability&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+        <span class="s2">&quot;dew_point&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span>
+        <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">DEW_POINT_THRESHOLD_LOW</span> <span class="o">=</span> <span class="mf">5.0</span>
+    <span class="n">DEW_POINT_THRESHOLD_HIGH</span> <span class="o">=</span> <span class="mf">10.0</span>
+    <span class="n">IDEAL_VISIBILITY</span> <span class="o">=</span> <span class="mf">20000.0</span>  <span class="c1"># in meters</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_session</span><span class="p">,</span> <span class="n">cache_time</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the WeatherService.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            db_session (Callable[[], Session]): A callable that returns a new database session.</span>
+<span class="sd">            cache_time (int, optional): Cache time (in hours) for API responses. Defaults to 3.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db_session</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_time</span> <span class="o">=</span> <span class="n">cache_time</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="n">retry_strategy</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span>
+            <span class="n">total</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="n">backoff_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">status_forcelist</span><span class="o">=</span><span class="p">[</span><span class="mi">429</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">504</span><span class="p">],</span>
+            <span class="n">allowed_methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">adapter</span> <span class="o">=</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retry_strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http_session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">,</span> <span class="n">adapter</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">BackgroundScheduler</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_events_weather</span><span class="p">,</span> <span class="s2">&quot;interval&quot;</span><span class="p">,</span> <span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;update_events_weather&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+        <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;WeatherService initialized with background scheduler.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WeatherService.shutdown">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.shutdown">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gracefully shuts down the background scheduler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;WeatherService scheduler shutdown complete.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherService.fetch_weather_data">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.fetch_weather_data">[docs]</a>
+    <span class="nd">@ttl_cache</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_weather_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">tz_str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve weather data from Open-Meteo API.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            latitude (float): Latitude coordinate.</span>
+<span class="sd">            longitude (float): Longitude coordinate.</span>
+<span class="sd">            tz_str (str): Timezone string.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[datetime, Dict[str, float]]: A mapping of datetime to weather parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">api_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">API_ENDPOINT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="o">=</span><span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="n">longitude</span><span class="p">,</span> <span class="n">tz_str</span><span class="o">=</span><span class="n">tz_str</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Fetching weather data from URL: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">api_url</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+            <span class="n">hourly</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hourly&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">times</span> <span class="o">=</span> <span class="n">hourly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">dew_points</span> <span class="o">=</span> <span class="n">hourly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dew_point_2m&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">precip_probs</span> <span class="o">=</span> <span class="n">hourly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;precipitation_probability&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">cloud_covers</span> <span class="o">=</span> <span class="n">hourly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cloud_cover&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">visibilities</span> <span class="o">=</span> <span class="n">hourly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visibility&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+            <span class="n">weather_data</span> <span class="o">=</span> <span class="n">WeatherData</span><span class="p">(</span>
+                <span class="n">times</span><span class="o">=</span><span class="n">times</span><span class="p">,</span>
+                <span class="n">dew_points</span><span class="o">=</span><span class="n">dew_points</span><span class="p">,</span>
+                <span class="n">precip_probs</span><span class="o">=</span><span class="n">precip_probs</span><span class="p">,</span>
+                <span class="n">cloud_covers</span><span class="o">=</span><span class="n">cloud_covers</span><span class="p">,</span>
+                <span class="n">visibilities</span><span class="o">=</span><span class="n">visibilities</span><span class="p">,</span>
+                <span class="n">tz_str</span><span class="o">=</span><span class="n">tz_str</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_hourly_data</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">RequestException</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error fetching weather data: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{}</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_hourly_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process raw hourly weather data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            weather_data (WeatherData): The retrieved weather data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[datetime, Dict[str, float]]: A dictionary mapping datetimes to weather parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weather_by_time</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">time_str</span><span class="p">,</span> <span class="n">dew</span><span class="p">,</span> <span class="n">precip</span><span class="p">,</span> <span class="n">cloud</span><span class="p">,</span> <span class="n">vis</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="n">weather_data</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
+            <span class="n">weather_data</span><span class="o">.</span><span class="n">dew_points</span><span class="p">,</span>
+            <span class="n">weather_data</span><span class="o">.</span><span class="n">precip_probs</span><span class="p">,</span>
+            <span class="n">weather_data</span><span class="o">.</span><span class="n">cloud_covers</span><span class="p">,</span>
+            <span class="n">weather_data</span><span class="o">.</span><span class="n">visibilities</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">time_str</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                    <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="n">weather_data</span><span class="o">.</span><span class="n">tz_str</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error parsing datetime &#39;</span><span class="si">%s</span><span class="s2">&#39;: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time_str</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">weather_by_time</span><span class="p">[</span><span class="n">dt</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;dew_point&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">dew</span><span class="p">),</span>
+                <span class="s2">&quot;precipitation_probability&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">precip</span><span class="p">),</span>
+                <span class="s2">&quot;cloud_cover&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">cloud</span><span class="p">),</span>
+                <span class="s2">&quot;visibility&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">vis</span><span class="p">),</span>
+            <span class="p">}</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Parsed weather data for </span><span class="si">%d</span><span class="s2"> hourly entries.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">weather_by_time</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">weather_by_time</span>
+
+<div class="viewcode-block" id="WeatherService.calculate_hourly_rating">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.calculate_hourly_rating">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_hourly_rating</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">weather</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate weather rating based on parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            weather (Dict[str, float]): Weather parameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Calculated rating (0 to 100).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cloud_rating</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span> <span class="o">-</span> <span class="n">weather</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cloud_cover&quot;</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">))</span>
+
+        <span class="n">precip_rating</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span> <span class="o">-</span> <span class="n">weather</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;precipitation_probability&quot;</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">dew_point</span> <span class="o">=</span> <span class="n">weather</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dew_point&quot;</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEW_POINT_THRESHOLD_HIGH</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dew_point</span> <span class="o">&lt;</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEW_POINT_THRESHOLD_LOW</span><span class="p">:</span>
+            <span class="n">dew_rating</span> <span class="o">=</span> <span class="mf">100.0</span>
+        <span class="k">elif</span> <span class="n">dew_point</span> <span class="o">&lt;=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEW_POINT_THRESHOLD_HIGH</span><span class="p">:</span>
+            <span class="n">range_size</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEW_POINT_THRESHOLD_HIGH</span> <span class="o">-</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEW_POINT_THRESHOLD_LOW</span>
+            <span class="n">relative_pos</span> <span class="o">=</span> <span class="n">dew_point</span> <span class="o">-</span> <span class="bp">cls</span><span class="o">.</span><span class="n">DEW_POINT_THRESHOLD_LOW</span>
+            <span class="n">dew_rating</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">relative_pos</span> <span class="o">*</span> <span class="p">(</span><span class="mf">100.0</span> <span class="o">/</span> <span class="n">range_size</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dew_rating</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="n">visibility</span> <span class="o">=</span> <span class="n">weather</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;visibility&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">visibility_rating</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="p">(</span><span class="n">visibility</span> <span class="o">/</span> <span class="bp">cls</span><span class="o">.</span><span class="n">IDEAL_VISIBILITY</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">)</span>
+
+        <span class="n">rating</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">WEIGHTS</span><span class="p">[</span><span class="s2">&quot;cloud_cover&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cloud_rating</span>
+            <span class="o">+</span> <span class="bp">cls</span><span class="o">.</span><span class="n">WEIGHTS</span><span class="p">[</span><span class="s2">&quot;precipitation_probability&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">precip_rating</span>
+            <span class="o">+</span> <span class="bp">cls</span><span class="o">.</span><span class="n">WEIGHTS</span><span class="p">[</span><span class="s2">&quot;dew_point&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">dew_rating</span>
+            <span class="o">+</span> <span class="bp">cls</span><span class="o">.</span><span class="n">WEIGHTS</span><span class="p">[</span><span class="s2">&quot;visibility&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">visibility_rating</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">rating</span></div>
+
+
+<div class="viewcode-block" id="WeatherService.calculate_average_weather_rating">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.calculate_average_weather_rating">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_average_weather_rating</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">hourly_weather</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the average weather rating over a list of hourly weather data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hourly_weather (List[Dict[str, float]]): A list of hourly</span>
+<span class="sd">            weather parameter dictionaries.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The average weather rating (0 to 100).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">hourly_weather</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="n">ratings</span> <span class="o">=</span> <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">calculate_hourly_rating</span><span class="p">(</span><span class="n">hour</span><span class="p">)</span> <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">hourly_weather</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ratings</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ratings</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherService.get_event_weather">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.get_event_weather">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_event_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_start</span><span class="p">,</span> <span class="n">event_end</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve weather conditions for an event.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event_start (datetime): Event start time.</span>
+<span class="sd">            event_end (datetime): Event end time.</span>
+<span class="sd">            config (Configuration): System configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[Optional[float], bool, bool]:</span>
+<span class="sd">                - Average rating (None if unavailable)</span>
+<span class="sd">                - Warning (True if below threshold)</span>
+<span class="sd">                - Forecast availability</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weather_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_weather_data</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span>
+        <span class="p">)</span>
+
+        <span class="n">hourly_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_hourly_range</span><span class="p">(</span>
+            <span class="n">event_start</span><span class="p">,</span> <span class="n">event_end</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span>
+        <span class="p">)</span>
+        <span class="n">hourly_data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">weather_data</span><span class="p">[</span><span class="n">hour</span><span class="p">]</span> <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">hourly_range</span> <span class="k">if</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">weather_data</span>
+        <span class="p">]</span>
+
+        <span class="n">rating</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate_average_weather_rating</span><span class="p">(</span><span class="n">hourly_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">hourly_data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="n">weather_warning</span> <span class="o">=</span> <span class="n">rating</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">rating</span> <span class="o">&lt;</span> <span class="n">config</span><span class="o">.</span><span class="n">weather_threshold</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Event weather rating: </span><span class="si">%s</span><span class="s2">, warning: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">rating</span><span class="p">,</span> <span class="n">weather_warning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rating</span><span class="p">,</span> <span class="n">weather_warning</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hourly_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeatherService.update_events_weather">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.update_events_weather">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_events_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update weather conditions for all upcoming events.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+            <span class="n">forecast_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_weather_data</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span>
+            <span class="p">)</span>
+            <span class="n">events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_upcoming_events</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Updating weather for </span><span class="si">%d</span><span class="s2"> upcoming events.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_event_weather</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">forecast_data</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+
+            <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Weather conditions successfully updated for upcoming events.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error updating event weather: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_event_weather</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">event</span><span class="p">,</span>
+        <span class="n">forecast_data</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update weather data for a single event.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event: The event to update</span>
+<span class="sd">            forecast_data: The forecast data dictionary</span>
+<span class="sd">            config: The configuration object with weather thresholds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hourly_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_hourly_range</span><span class="p">(</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">start_time</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">end_time</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span>
+        <span class="p">)</span>
+        <span class="n">hourly_data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">forecast_data</span><span class="p">[</span><span class="n">hour</span><span class="p">]</span> <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">hourly_range</span> <span class="k">if</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">forecast_data</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">hourly_data</span><span class="p">:</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">weather_rating</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_average_weather_rating</span><span class="p">(</span><span class="n">hourly_data</span><span class="p">)</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">weather_warning</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">weather_rating</span> <span class="o">&lt;</span> <span class="n">config</span><span class="o">.</span><span class="n">weather_threshold</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">weather_forecast</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">weather_forecast</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_hourly_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">tz_str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a list of hourly timestamps between start and end, inclusive.</span>
+<span class="sd">        Ensures that the datetimes are timezone-aware and in the specified timezone.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start (datetime): The start datetime.</span>
+<span class="sd">            end (datetime): The end datetime.</span>
+<span class="sd">            tz_str (str): Timezone string (e.g., &#39;UTC&#39;, &#39;Europe/Rome&#39;).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[datetime]: Hourly datetime objects covering the entire period.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tz</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">tz_str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">start</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">end</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">total_hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_hours</span><span class="p">)]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_upcoming_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">timezone_str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve upcoming events from the database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            session (Any): The database session.</span>
+<span class="sd">            timezone_str (str): The timezone string.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Slot]: A list of upcoming events within the next 7 days.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">now_local</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="n">timezone_str</span><span class="p">))</span>
+        <span class="n">now_utc</span> <span class="o">=</span> <span class="n">now_local</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">future_utc</span> <span class="o">=</span> <span class="p">(</span><span class="n">now_local</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">now_utc</span><span class="p">,</span> <span class="n">Slot</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;=</span> <span class="n">future_utc</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Retrieved </span><span class="si">%d</span><span class="s2"> upcoming events.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">events</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Tosin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

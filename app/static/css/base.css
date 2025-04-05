@@ -1,0 +1,24 @@
+/* Custom styles for smooth transitions */
+html,
+body {
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Smooth transition for icons */
+#theme-toggle-dark-icon,
+#theme-toggle-light-icon {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide the inactive icon */
+#theme-toggle-dark-icon.hidden,
+#theme-toggle-light-icon.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Show the active icon */
+#theme-toggle-dark-icon:not(.hidden),
+#theme-toggle-light-icon:not(.hidden) {
+  opacity: 1;
+}

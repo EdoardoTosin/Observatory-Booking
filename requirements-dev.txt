@@ -1,0 +1,6 @@
+pylint
+black
+mypy
+pre-commit
+types-requests
+types-waitress

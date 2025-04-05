@@ -1,0 +1,4 @@
+Filters
+==============
+
+.. automodule:: app.filters

@@ -1,0 +1,926 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.routes.admin_dashboard &#8212; Observatory Booking  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=9ae7186b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/routes/admin_dashboard';</script>
+    <link rel="icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <img src="../../../_static/logo.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">Observatory Booking</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../components/index.html">
+    Components
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../components/index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.routes.admin_dashboard</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.routes.admin_dashboard</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Admin Dashboard routes for managing configurations, events, and users.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span><span class="p">,</span> <span class="n">available_timezones</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">timezone</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">joinedload</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">render_template</span><span class="p">,</span>
+    <span class="n">request</span><span class="p">,</span>
+    <span class="n">redirect</span><span class="p">,</span>
+    <span class="n">url_for</span><span class="p">,</span>
+    <span class="n">flash</span><span class="p">,</span>
+    <span class="n">current_app</span><span class="p">,</span>
+    <span class="n">session</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..booking_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">User</span><span class="p">,</span> <span class="n">Slot</span><span class="p">,</span> <span class="n">Booking</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..data_transfer_objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigurationUpdate</span><span class="p">,</span> <span class="n">EventData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.blueprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">bp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.security_decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin_required</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.static_pages</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_static_page</span>
+
+
+<div class="viewcode-block" id="convert_utc_time_to_local_str">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.convert_utc_time_to_local_str">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_utc_time_to_local_str</span><span class="p">(</span><span class="n">time_obj</span><span class="p">,</span> <span class="n">target_tz</span><span class="p">,</span> <span class="n">reference_date</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a UTC time object to a local time string in HH:MM format.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">time_obj</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">dt_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">reference_date</span><span class="p">,</span> <span class="n">time_obj</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;UTC&quot;</span><span class="p">))</span>
+    <span class="n">dt_local</span> <span class="o">=</span> <span class="n">dt_utc</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">target_tz</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dt_local</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="admin_js">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.admin_js">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/js/admin.js&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">admin_js</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the admin javascript.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">render_static_page</span><span class="p">(</span><span class="s2">&quot;static/js/admin/admin.js&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="user_accounts_js">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.user_accounts_js">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/js/user_accounts.js&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">user_accounts_js</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the User Accounts javascript.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">render_static_page</span><span class="p">(</span><span class="s2">&quot;static/js/admin/tabs/user_accounts.js&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="events_calendar_js">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.events_calendar_js">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/js/events_calendar.js&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">events_calendar_js</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the Events Calendar javascript.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">render_static_page</span><span class="p">(</span><span class="s2">&quot;static/js/admin/tabs/events_calendar.js&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_config_details">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.get_config_details">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_config_details</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve configuration details and format time strings.&quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">config_timezone</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">))</span>
+    <span class="n">today_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
+        <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span>
+        <span class="s2">&quot;timezone&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">,</span>
+        <span class="s2">&quot;weather_threshold&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">weather_threshold</span><span class="p">,</span>
+        <span class="s2">&quot;max_bookings_per_event&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">max_bookings_per_event</span><span class="p">,</span>
+        <span class="s2">&quot;default_opening_time&quot;</span><span class="p">:</span> <span class="n">convert_utc_time_to_local_str</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">default_opening_time</span><span class="p">,</span> <span class="n">config_timezone</span><span class="p">,</span> <span class="n">today_date</span>
+        <span class="p">),</span>
+        <span class="s2">&quot;default_closing_time&quot;</span><span class="p">:</span> <span class="n">convert_utc_time_to_local_str</span><span class="p">(</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">default_closing_time</span><span class="p">,</span> <span class="n">config_timezone</span><span class="p">,</span> <span class="n">today_date</span>
+        <span class="p">),</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="build_events_data">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.build_events_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_events_data</span><span class="p">(</span><span class="n">slots</span><span class="p">,</span> <span class="n">config_timezone</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build events data for calendar display.&quot;&quot;&quot;</span>
+    <span class="n">events_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">:</span>
+        <span class="n">start_local</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">config_timezone</span><span class="p">)</span>
+        <span class="n">end_local</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">config_timezone</span><span class="p">)</span>
+        <span class="n">effective_date</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+        <span class="n">rating</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">slot</span><span class="o">.</span><span class="n">weather_rating</span>
+            <span class="k">if</span> <span class="n">slot</span><span class="o">.</span><span class="n">weather_forecast</span> <span class="ow">and</span> <span class="n">slot</span><span class="o">.</span><span class="n">weather_rating</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="s2">&quot;No Data&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">events_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">slot</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s2">&quot;effective_date&quot;</span><span class="p">:</span> <span class="n">effective_date</span><span class="p">,</span>
+                <span class="s2">&quot;opening_time&quot;</span><span class="p">:</span> <span class="n">start_local</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;closing_time&quot;</span><span class="p">:</span> <span class="n">end_local</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;max_bookings&quot;</span><span class="p">:</span> <span class="n">slot</span><span class="o">.</span><span class="n">max_bookings</span><span class="p">,</span>
+                <span class="s2">&quot;weather_rating&quot;</span><span class="p">:</span> <span class="n">rating</span><span class="p">,</span>
+                <span class="s2">&quot;num_bookings&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">slot</span><span class="o">.</span><span class="n">bookings</span><span class="p">),</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">slot</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">slot</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">events_data</span></div>
+
+
+
+<div class="viewcode-block" id="admin">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.admin">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">],</span> <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">admin</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Render the admin dashboard page with full configuration, user, booking,</span>
+<span class="sd">    and event slot data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+            <span class="n">config_timezone</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">))</span>
+            <span class="n">config_dict</span> <span class="o">=</span> <span class="n">get_config_details</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+            <span class="n">users</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">bookings</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Booking</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">slots</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">bookings</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">events_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">build_events_data</span><span class="p">(</span><span class="n">slots</span><span class="p">,</span> <span class="n">config_timezone</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
+            <span class="s2">&quot;admin/admin.html&quot;</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="n">config_dict</span><span class="p">,</span>
+            <span class="n">users</span><span class="o">=</span><span class="n">users</span><span class="p">,</span>
+            <span class="n">bookings</span><span class="o">=</span><span class="n">bookings</span><span class="p">,</span>
+            <span class="n">slots</span><span class="o">=</span><span class="n">slots</span><span class="p">,</span>
+            <span class="n">events_json</span><span class="o">=</span><span class="n">events_json</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Admin dashboard error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred while loading the admin dashboard.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="update_configuration">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.update_configuration">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/config&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_configuration</span><span class="p">():</span>  <span class="c1"># pylint: disable=too-many-locals</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates configuration settings from the admin dashboard.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;GET&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">latitude_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;latitude&quot;</span><span class="p">)</span>
+        <span class="n">longitude_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;longitude&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">latitude_str</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">longitude_str</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Latitude and Longitude are required.&quot;</span><span class="p">)</span>
+        <span class="n">latitude</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">latitude_str</span><span class="p">)</span>
+        <span class="n">longitude</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">longitude_str</span><span class="p">)</span>
+        <span class="n">timezone_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timezone&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timezone_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_timezones</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid timezone: </span><span class="si">{</span><span class="n">timezone_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">weather_threshold_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weather_threshold&quot;</span><span class="p">)</span>
+        <span class="n">max_bookings_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_bookings_per_event&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">weather_threshold_str</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="n">max_bookings_str</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="n">timezone_str</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing required form fields.&quot;</span><span class="p">)</span>
+        <span class="n">weather_threshold</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">weather_threshold_str</span><span class="p">)</span>
+        <span class="n">max_bookings_per_event</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_bookings_str</span><span class="p">)</span>
+        <span class="n">default_opening_time_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default_opening_time&quot;</span><span class="p">)</span>
+        <span class="n">default_closing_time_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default_closing_time&quot;</span><span class="p">)</span>
+        <span class="n">validate_config_inputs</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">,</span> <span class="n">weather_threshold</span><span class="p">,</span> <span class="n">max_bookings_per_event</span>
+        <span class="p">)</span>
+        <span class="n">default_opening_time_utc</span><span class="p">,</span> <span class="n">default_closing_time_utc</span> <span class="o">=</span> <span class="n">process_time_inputs</span><span class="p">(</span>
+            <span class="n">default_opening_time_str</span><span class="p">,</span> <span class="n">default_closing_time_str</span><span class="p">,</span> <span class="n">timezone_str</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">SQLAlchemyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">config_update</span> <span class="o">=</span> <span class="n">ConfigurationUpdate</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="o">=</span><span class="n">latitude</span><span class="p">,</span>
+            <span class="n">longitude</span><span class="o">=</span><span class="n">longitude</span><span class="p">,</span>
+            <span class="n">timezone_str</span><span class="o">=</span><span class="n">timezone_str</span><span class="p">,</span>
+            <span class="n">weather_threshold</span><span class="o">=</span><span class="n">weather_threshold</span><span class="p">,</span>
+            <span class="n">max_bookings_per_event</span><span class="o">=</span><span class="n">max_bookings_per_event</span><span class="p">,</span>
+            <span class="n">default_opening_time</span><span class="o">=</span><span class="n">default_opening_time_utc</span><span class="p">,</span>
+            <span class="n">default_closing_time</span><span class="o">=</span><span class="n">default_closing_time_utc</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">update_configuration</span><span class="p">(</span><span class="n">config_update</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Configuration updated successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Config update error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Failed to update configuration.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="validate_config_inputs">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.validate_config_inputs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_config_inputs</span><span class="p">(</span>
+    <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">weather_threshold</span><span class="p">,</span>
+    <span class="n">max_bookings_per_event</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Validate ranges for latitude, longitude, weather threshold, and booking limits.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="o">-</span><span class="mi">90</span> <span class="o">&lt;=</span> <span class="n">latitude</span> <span class="o">&lt;=</span> <span class="mi">90</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Latitude must be between -90 and 90.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="o">-</span><span class="mi">180</span> <span class="o">&lt;=</span> <span class="n">longitude</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Longitude must be between -180 and 180.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">weather_threshold</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cloud threshold must be between 0 and 100.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max_bookings_per_event</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Maximum bookings per event must be at least 1.&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="process_time_inputs">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.process_time_inputs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_time_inputs</span><span class="p">(</span><span class="n">opening_time_str</span><span class="p">,</span> <span class="n">closing_time_str</span><span class="p">,</span> <span class="n">timezone_str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process time inputs from form strings to UTC time objects.&quot;&quot;&quot;</span>
+    <span class="n">default_opening_time_local</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">opening_time_str</span><span class="p">,</span> <span class="s2">&quot;%H:%M&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">default_closing_time_local</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">closing_time_str</span><span class="p">,</span> <span class="s2">&quot;%H:%M&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">reference_date</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">form_timezone</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">timezone_str</span><span class="p">)</span>
+    <span class="n">opening_local_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span>
+        <span class="n">reference_date</span><span class="p">,</span> <span class="n">default_opening_time_local</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">form_timezone</span>
+    <span class="p">)</span>
+    <span class="n">closing_local_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span>
+        <span class="n">reference_date</span><span class="p">,</span> <span class="n">default_closing_time_local</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">form_timezone</span>
+    <span class="p">)</span>
+    <span class="n">default_opening_time_utc</span> <span class="o">=</span> <span class="n">opening_local_dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">default_closing_time_utc</span> <span class="o">=</span> <span class="n">closing_local_dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">default_opening_time_utc</span><span class="p">,</span> <span class="n">default_closing_time_utc</span></div>
+
+
+
+<div class="viewcode-block" id="update_events_weather">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.update_events_weather">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/update_events_weather&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_events_weather</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates events weather using the system logic.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">update_events_weather</span><span class="p">()</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Weather updated successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Update events weather error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred while regenerating events.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="confirm_event">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.confirm_event">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/confirm_event&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">confirm_event</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates or updates an event based on admin input.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;GET&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">handle_confirm_event</span><span class="p">()</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Confirm event error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing event: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="handle_confirm_event">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.handle_confirm_event">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_confirm_event</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle the event confirmation logic.&quot;&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;event_title&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;event_description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">event_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;event_id&quot;</span><span class="p">)</span>
+    <span class="n">event_date_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;event_date&quot;</span><span class="p">)</span>
+    <span class="n">opening_time_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;opening_time&quot;</span><span class="p">)</span>
+    <span class="n">closing_time_str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;closing_time&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">max_bookings</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_bookings&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid max bookings value.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Title cannot exceed 30 characters.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Description cannot exceed 255 characters.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">event_date_str</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">opening_time_str</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">closing_time_str</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Date, Time and Max Booking fields must be provided.&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">event_date_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">event_date_str</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid event date format.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">error</span>
+    <span class="n">event_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">event_date_date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">opening_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">opening_time_str</span><span class="p">,</span> <span class="s2">&quot;%H:%M&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">closing_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">closing_time_str</span><span class="p">,</span> <span class="s2">&quot;%H:%M&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="n">event_data</span> <span class="o">=</span> <span class="n">EventData</span><span class="p">(</span>
+        <span class="n">event_title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">event_description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+        <span class="n">event_date</span><span class="o">=</span><span class="n">event_date</span><span class="p">,</span>
+        <span class="n">opening_time</span><span class="o">=</span><span class="n">opening_time</span><span class="p">,</span>
+        <span class="n">closing_time</span><span class="o">=</span><span class="n">closing_time</span><span class="p">,</span>
+        <span class="n">max_bookings</span><span class="o">=</span><span class="n">max_bookings</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">confirm_event</span><span class="p">(</span><span class="n">event_data</span><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><span class="n">event_id</span><span class="p">)</span>
+    <span class="n">flash</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span> <span class="k">if</span> <span class="s2">&quot;successfully&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="delete_event">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.delete_event">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/delete_event/&lt;int:event_id&gt;&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_event</span><span class="p">(</span><span class="n">event_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes an event if it has no existing bookings and hasn&#39;t started yet.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">slot</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">event_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">slot</span><span class="p">:</span>
+                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Event not found&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+            <span class="n">slot_start_time_aware</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+            <span class="n">now_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">slot_start_time_aware</span> <span class="o">&lt;=</span> <span class="n">now_utc</span><span class="p">:</span>
+                <span class="n">flash</span><span class="p">(</span>
+                    <span class="s2">&quot;Cannot delete an event that has finished or already started.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">slot</span><span class="o">.</span><span class="n">bookings</span><span class="p">:</span>
+                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Cannot delete event with existing bookings&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Event deleted successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Delete event error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error deleting event: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="update_user_role">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.update_user_role">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/user/role&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_user_role</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates a user&#39;s role via the admin dashboard.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">))</span>
+        <span class="n">new_role</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_role&quot;</span><span class="p">)</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">update_user_role</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">new_role</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;User role updated successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Update role error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="block_user">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.block_user">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/user/block&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">block_user</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Blocks or unblocks a user via the admin dashboard.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing &#39;user_id&#39; value in request.&quot;</span><span class="p">)</span>
+        <span class="n">block_value</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;block&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">block_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing &#39;block&#39; value in request.&quot;</span><span class="p">)</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">handle_block_user_logic</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">block_value</span><span class="p">)</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">block_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User </span><span class="si">{</span><span class="s1">&#39;blocked&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unblocked&#39;</span><span class="si">}</span><span class="s2"> successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Block user error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="handle_block_user_logic">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.handle_block_user_logic">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_block_user_logic</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">block_value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle the logic for blocking/unblocking a user.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">block_value</span> <span class="o">==</span> <span class="s2">&quot;toggle&quot;</span><span class="p">:</span>
+        <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">target_user</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">target_user</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;User not found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">target_user</span><span class="o">.</span><span class="n">blocked</span>
+    <span class="k">return</span> <span class="n">block_value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="delete_user">
+<a class="viewcode-back" href="../../../components/routes/admin_dashboard.html#app.routes.admin_dashboard.delete_user">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/admin/user/delete&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@admin_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_user</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle the logic for deleting a user account.&quot;&quot;&quot;</span>
+    <span class="n">current_user_rank</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;admin_rank&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_user_rank</span> <span class="o">!=</span> <span class="s2">&quot;super&quot;</span><span class="p">:</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Only superadmin can delete user accounts.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">delete_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;User account deleted successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SQLAlchemyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;User deletion failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to delete user: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Tosin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

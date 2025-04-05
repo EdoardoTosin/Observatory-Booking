@@ -1,0 +1,919 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data Transfer Objects module &#8212; Observatory Booking  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9ae7186b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'components/data_transfer_objects';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database Setup Module" href="database_setup.html" />
+    <link rel="prev" title="Booking System module" href="booking_system.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">Observatory Booking</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="index.html">
+    Components
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Entry Point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="booking_system.html">Booking System module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Transfer Objects module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database_setup.html">Database Setup Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Database Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/index.html">Routes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Components</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Data Transfer Objects module</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-app.data_transfer_objects">
+<span id="data-transfer-objects-module"></span><h1>Data Transfer Objects module<a class="headerlink" href="#module-app.data_transfer_objects" title="Link to this heading">#</a></h1>
+<p>Data Transfer Objects (DTOs) for the application.</p>
+<p>These classes serve as lightweight, structured containers for transferring
+data between different layers of the system (e.g., services, routes).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConfigurationUpdate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timezone_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bookings_per_event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_opening_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">time</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">datetime.time(17,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_closing_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">time</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">datetime.time(22,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/data_transfer_objects.html#ConfigurationUpdate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DTO for updating system configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.latitude">
+<span class="sig-name descname"><span class="pre">latitude</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.latitude" title="Link to this definition">#</a></dt>
+<dd><p>Geographic latitude (-90 to 90) for weather data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.longitude">
+<span class="sig-name descname"><span class="pre">longitude</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.longitude" title="Link to this definition">#</a></dt>
+<dd><p>Geographic longitude (-180 to 180) for weather data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.timezone_str">
+<span class="sig-name descname"><span class="pre">timezone_str</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.timezone_str" title="Link to this definition">#</a></dt>
+<dd><p>IANA timezone identifier (e.g., ‘UTC’, ‘America/New_York’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.weather_threshold">
+<span class="sig-name descname"><span class="pre">weather_threshold</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.weather_threshold" title="Link to this definition">#</a></dt>
+<dd><p>Minimum acceptable weather condition rating (0-100%).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.max_bookings_per_event">
+<span class="sig-name descname"><span class="pre">max_bookings_per_event</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.max_bookings_per_event" title="Link to this definition">#</a></dt>
+<dd><p>Default maximum number of user bookings per event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.default_opening_time">
+<span class="sig-name descname"><span class="pre">default_opening_time</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.default_opening_time" title="Link to this definition">#</a></dt>
+<dd><p>Default event start time (local time).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime_time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.ConfigurationUpdate.default_closing_time">
+<span class="sig-name descname"><span class="pre">default_closing_time</span></span><a class="headerlink" href="#app.data_transfer_objects.ConfigurationUpdate.default_closing_time" title="Link to this definition">#</a></dt>
+<dd><p>Default event end time (local time).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime_time</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EventData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bookings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/data_transfer_objects.html#EventData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.data_transfer_objects.EventData" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DTO for creating or updating an event slot.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData.event_title">
+<span class="sig-name descname"><span class="pre">event_title</span></span><a class="headerlink" href="#app.data_transfer_objects.EventData.event_title" title="Link to this definition">#</a></dt>
+<dd><p>Title of the event (up to 30 characters recommended).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData.event_description">
+<span class="sig-name descname"><span class="pre">event_description</span></span><a class="headerlink" href="#app.data_transfer_objects.EventData.event_description" title="Link to this definition">#</a></dt>
+<dd><p>Event description (up to 255 characters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData.event_date">
+<span class="sig-name descname"><span class="pre">event_date</span></span><a class="headerlink" href="#app.data_transfer_objects.EventData.event_date" title="Link to this definition">#</a></dt>
+<dd><p>Date of the event (typically in UTC).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData.opening_time">
+<span class="sig-name descname"><span class="pre">opening_time</span></span><a class="headerlink" href="#app.data_transfer_objects.EventData.opening_time" title="Link to this definition">#</a></dt>
+<dd><p>Event start time (local time).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime_time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData.closing_time">
+<span class="sig-name descname"><span class="pre">closing_time</span></span><a class="headerlink" href="#app.data_transfer_objects.EventData.closing_time" title="Link to this definition">#</a></dt>
+<dd><p>Event end time (local time).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime_time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventData.max_bookings">
+<span class="sig-name descname"><span class="pre">max_bookings</span></span><a class="headerlink" href="#app.data_transfer_objects.EventData.max_bookings" title="Link to this definition">#</a></dt>
+<dd><p>Maximum allowed user bookings for the event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherInfo">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WeatherInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition_rating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_warning</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_forecast</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/data_transfer_objects.html#WeatherInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.data_transfer_objects.WeatherInfo" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DTO for summarizing weather evaluation results.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherInfo.condition_rating">
+<span class="sig-name descname"><span class="pre">condition_rating</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherInfo.condition_rating" title="Link to this definition">#</a></dt>
+<dd><p>Weather condition rating (0–100%).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherInfo.weather_warning">
+<span class="sig-name descname"><span class="pre">weather_warning</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherInfo.weather_warning" title="Link to this definition">#</a></dt>
+<dd><p>True if warning triggered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherInfo.weather_forecast">
+<span class="sig-name descname"><span class="pre">weather_forecast</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherInfo.weather_forecast" title="Link to this definition">#</a></dt>
+<dd><p>True if forecast data is present.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WeatherData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times:</span> <span class="pre">~typing.List[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dew_points:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precip_probs:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_covers:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibilities:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz_str:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'UTC'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/data_transfer_objects.html#WeatherData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.data_transfer_objects.WeatherData" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DTO for storing detailed hourly weather forecast data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData.times">
+<span class="sig-name descname"><span class="pre">times</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherData.times" title="Link to this definition">#</a></dt>
+<dd><p>ISO 8601 formatted timestamps for hourly data points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData.dew_points">
+<span class="sig-name descname"><span class="pre">dew_points</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherData.dew_points" title="Link to this definition">#</a></dt>
+<dd><p>Hourly dew point temperatures (°C).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData.precip_probs">
+<span class="sig-name descname"><span class="pre">precip_probs</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherData.precip_probs" title="Link to this definition">#</a></dt>
+<dd><p>Hourly precipitation probabilities (percentage).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData.cloud_covers">
+<span class="sig-name descname"><span class="pre">cloud_covers</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherData.cloud_covers" title="Link to this definition">#</a></dt>
+<dd><p>Hourly cloud cover percentages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData.visibilities">
+<span class="sig-name descname"><span class="pre">visibilities</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherData.visibilities" title="Link to this definition">#</a></dt>
+<dd><p>Hourly visibility distances (in meters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.WeatherData.tz_str">
+<span class="sig-name descname"><span class="pre">tz_str</span></span><a class="headerlink" href="#app.data_transfer_objects.WeatherData.tz_str" title="Link to this definition">#</a></dt>
+<dd><p>Timezone string used to interpret timestamps (e.g., ‘UTC’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventTimes">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EventTimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_local</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_local</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_utc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_utc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/data_transfer_objects.html#EventTimes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.data_transfer_objects.EventTimes" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DTO for event timings in both local timezone and UTC.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventTimes.start_local">
+<span class="sig-name descname"><span class="pre">start_local</span></span><a class="headerlink" href="#app.data_transfer_objects.EventTimes.start_local" title="Link to this definition">#</a></dt>
+<dd><p>Event start time in local timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventTimes.end_local">
+<span class="sig-name descname"><span class="pre">end_local</span></span><a class="headerlink" href="#app.data_transfer_objects.EventTimes.end_local" title="Link to this definition">#</a></dt>
+<dd><p>Event end time in local timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventTimes.start_utc">
+<span class="sig-name descname"><span class="pre">start_utc</span></span><a class="headerlink" href="#app.data_transfer_objects.EventTimes.start_utc" title="Link to this definition">#</a></dt>
+<dd><p>Event start time in UTC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="app.data_transfer_objects.EventTimes.end_utc">
+<span class="sig-name descname"><span class="pre">end_utc</span></span><a class="headerlink" href="#app.data_transfer_objects.EventTimes.end_utc" title="Link to this definition">#</a></dt>
+<dd><p>Event end time in UTC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="booking_system.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Booking System module</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="database_setup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Database Setup Module</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.latitude"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.latitude</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.longitude"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.longitude</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.timezone_str"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.timezone_str</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.weather_threshold"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.weather_threshold</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.max_bookings_per_event"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.max_bookings_per_event</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.default_opening_time"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.default_opening_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.ConfigurationUpdate.default_closing_time"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.default_closing_time</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData"><code class="docutils literal notranslate"><span class="pre">EventData</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData.event_title"><code class="docutils literal notranslate"><span class="pre">EventData.event_title</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData.event_description"><code class="docutils literal notranslate"><span class="pre">EventData.event_description</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData.event_date"><code class="docutils literal notranslate"><span class="pre">EventData.event_date</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData.opening_time"><code class="docutils literal notranslate"><span class="pre">EventData.opening_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData.closing_time"><code class="docutils literal notranslate"><span class="pre">EventData.closing_time</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventData.max_bookings"><code class="docutils literal notranslate"><span class="pre">EventData.max_bookings</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherInfo"><code class="docutils literal notranslate"><span class="pre">WeatherInfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherInfo.condition_rating"><code class="docutils literal notranslate"><span class="pre">WeatherInfo.condition_rating</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherInfo.weather_warning"><code class="docutils literal notranslate"><span class="pre">WeatherInfo.weather_warning</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherInfo.weather_forecast"><code class="docutils literal notranslate"><span class="pre">WeatherInfo.weather_forecast</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData"><code class="docutils literal notranslate"><span class="pre">WeatherData</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData.times"><code class="docutils literal notranslate"><span class="pre">WeatherData.times</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData.dew_points"><code class="docutils literal notranslate"><span class="pre">WeatherData.dew_points</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData.precip_probs"><code class="docutils literal notranslate"><span class="pre">WeatherData.precip_probs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData.cloud_covers"><code class="docutils literal notranslate"><span class="pre">WeatherData.cloud_covers</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData.visibilities"><code class="docutils literal notranslate"><span class="pre">WeatherData.visibilities</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.WeatherData.tz_str"><code class="docutils literal notranslate"><span class="pre">WeatherData.tz_str</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventTimes"><code class="docutils literal notranslate"><span class="pre">EventTimes</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventTimes.start_local"><code class="docutils literal notranslate"><span class="pre">EventTimes.start_local</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventTimes.end_local"><code class="docutils literal notranslate"><span class="pre">EventTimes.end_local</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventTimes.start_utc"><code class="docutils literal notranslate"><span class="pre">EventTimes.start_utc</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.data_transfer_objects.EventTimes.end_utc"><code class="docutils literal notranslate"><span class="pre">EventTimes.end_utc</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/components/data_transfer_objects.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Tosin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}403 Forbidden{% endblock %} {% block
+content %}
+<div class="text-center py-16">
+  <h1 class="text-4xl font-bold mb-4 dark:text-gray-100">403 - Forbidden</h1>
+  <p class="mb-8 dark:text-gray-300">
+    You don't have permission to access this page.
+  </p>
+  <a
+    href="{{ url_for('bp.index') }}"
+    class="bg-blue-600 text-white px-4 py-2 rounded-sm hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600"
+    >Return Home</a
+  >
+</div>
+{% endblock %}

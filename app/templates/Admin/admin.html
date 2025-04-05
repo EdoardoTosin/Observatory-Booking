@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% block title %}Admin Dashboard - Observatory
+Booking{% endblock %} {% block content %}
+<script>
+  const events = {{ events_json | safe }};
+</script>
+
+<div
+  class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-6 dark:bg-gray-800 dark:text-gray-100"
+>
+  <h2
+    class="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100"
+  >
+    Admin Dashboard
+  </h2>
+
+  <div class="flex flex-wrap justify-center items-center gap-6 mb-6">
+    <button
+      class="tab-button text-center px-4 py-2 border border-gray-200 rounded-lg bg-white dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200 ease-in-out focus:outline-hidden"
+      onclick="switchTab('calendar')"
+      id="calendarTabButton"
+    >
+      Events Calendar
+    </button>
+    <button
+      class="tab-button text-center px-4 py-2 border border-gray-200 rounded-lg bg-white dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200 ease-in-out focus:outline-hidden"
+      onclick="switchTab('users')"
+      id="usersTabButton"
+    >
+      User Accounts
+    </button>
+    <button
+      class="tab-button text-center px-4 py-2 border border-gray-200 rounded-lg bg-white dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer transition-colors duration-200 ease-in-out focus:outline-hidden"
+      onclick="switchTab('configuration')"
+      id="configurationTabButton"
+    >
+      System Settings
+    </button>
+  </div>
+
+  <div id="calendarTab" class="tab-content">
+    {% include 'admin/tabs/events_calendar.html' %}
+  </div>
+
+  <div id="usersTab" class="tab-content hidden">
+    {% include 'admin/tabs/user_accounts.html' %}
+  </div>
+
+  <div id="configurationTab" class="tab-content hidden">
+    {% include 'admin/tabs/system_settings.html' %}
+  </div>
+</div>
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/admin/admin.js') }}"
+></script>
+{% endblock %}

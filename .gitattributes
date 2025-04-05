@@ -1,0 +1,47 @@
+# ---- Python source files ----
+app/*.py                      linguist-language=Python text eol=lf
+app/routes/*.py              linguist-language=Python text eol=lf
+app/services/*.py            linguist-language=Python text eol=lf
+
+# ---- HTML templates ----
+app/templates/**/*.html      linguist-language=HTML text eol=lf
+
+# ---- JavaScript files ----
+app/static/js/**/*.js        linguist-language=JavaScript text eol=lf
+
+# ---- Ignore generated Tailwind/PostCSS CSS ----
+app/static/css/*.css         linguist-generated
+app/assets/css/*.css         linguist-generated
+
+# ---- Binary and static assets (exclude from stats, no diffs) ----
+app/static/images/*          binary linguist-generated
+app/static/*.ico             binary linguist-generated
+app/static/*.png             binary linguist-generated
+
+# ---- Compiled and generated Python files ----
+__pycache__/*                linguist-generated
+*.pyc                        linguist-generated binary
+
+# ---- Normalize line endings for all text files ----
+*.py                         text eol=lf
+*.html                       text eol=lf
+*.js                         text eol=lf
+*.css                        text eol=lf
+*.md                         text eol=lf
+*.txt                        text eol=lf
+*.rst                        text eol=lf
+*.yml                        text eol=lf
+*.yaml                       text eol=lf
+*.ini                        text eol=lf
+*.json                       text eol=lf
+*.lock                       text eol=lf
+*.config.js                  text eol=lf
+Makefile                     text eol=lf
+*.bat                        text eol=lf
+
+# ---- Mark non-source folders ----
+docs/                        linguist-documentation eol=lf
+docs/**/*.md                 text eol=lf
+docs/**/*.rst                text eol=lf
+assets/                      linguist-vendored
+node_modules/                linguist-vendored

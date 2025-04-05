@@ -1,0 +1,72 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - feature/**
+      - hotfix/**
+    paths:
+      - 'app/**'
+
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'app/**'
+
+jobs:
+  quality:
+    name: Quality Check & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Check formatting with black
+        run: black --check .
+
+      - name: Enforce pylint score of 10.00
+        run: |
+          score=$(pylint app/ | tee pylint.log | grep -oP "rated at \K[0-9\.]+")
+          echo "Pylint score: $score"
+          if [ "$score" != "10.00" ]; then
+            echo "Pylint score is below 10.00"
+            exit 1
+          fi
+
+      - name: Run type checks with mypy
+        run: |
+          mypy app/ || true
+          mypy --install-types --non-interactive
+          mypy app/
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Build Tailwind CSS
+        run: |
+          npm ci
+          npm run build

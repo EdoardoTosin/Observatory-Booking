@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.booking_system &#8212; Observatory Booking  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9ae7186b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/booking_system';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt=""/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">Observatory Booking</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../components/index.html">
+    Components
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../components/index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">app.booking_system</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for app.booking_system</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Booking system module.</span>
+
+<span class="sd">This module defines the `BookingSystem` class, which serves as the central orchestrator</span>
+<span class="sd">for the observatory booking application. It initializes the database and services, and</span>
+<span class="sd">exposes unified methods for both administrative and user-facing functionalities.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint: disable=unused-import</span>
+    <span class="n">Base</span><span class="p">,</span>
+    <span class="n">User</span><span class="p">,</span>
+    <span class="n">Slot</span><span class="p">,</span>
+    <span class="n">Booking</span><span class="p">,</span>
+    <span class="n">Configuration</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.database_setup</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_db_session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.services.weather_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.services.admin_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">AdminService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.services.user_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.services.booking_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">BookingService</span>
+
+
+<div class="viewcode-block" id="BookingSystem">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BookingSystem</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Central orchestrator for Observatory Booking Web App.</span>
+
+<span class="sd">    Responsibilities:</span>
+<span class="sd">    - Initialize the database and create tables.</span>
+<span class="sd">    - Instantiate service layers for weather, admin, user, and booking domains.</span>
+<span class="sd">    - Provide high-level methods for user management, event handling, and booking.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        session_local (scoped_session): Thread-safe session factory for database access.</span>
+<span class="sd">        lock (Lock): Synchronization primitive for thread-safe operations.</span>
+<span class="sd">        weather_service (WeatherService): Manages weather updates and ratings.</span>
+<span class="sd">        admin_service (AdminService): Handles admin operations and configurations.</span>
+<span class="sd">        user_service (UserService): Manages user accounts and credentials.</span>
+<span class="sd">        booking_service (BookingService): Processes slot bookings and cancellations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the BookingSystem instance.</span>
+
+<span class="sd">        Steps:</span>
+<span class="sd">        - Set up a scoped SQLAlchemy session and create database tables if not present.</span>
+<span class="sd">        - Instantiate core services with their dependencies.</span>
+<span class="sd">        - Ensure a superadmin user exists for initial access.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="p">,</span> <span class="n">engine</span> <span class="o">=</span> <span class="n">create_db_session</span><span class="p">()</span>
+
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">weather_service</span> <span class="o">=</span> <span class="n">WeatherService</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span> <span class="o">=</span> <span class="n">AdminService</span><span class="p">(</span>
+            <span class="n">db_session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="p">,</span>
+            <span class="n">lock</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">,</span>
+            <span class="n">weather_service</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weather_service</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_service</span> <span class="o">=</span> <span class="n">UserService</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">booking_service</span> <span class="o">=</span> <span class="n">BookingService</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span><span class="o">.</span><span class="n">_initialize_superadmin</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-caught</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to initialize superadmin: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Observatory Booking Web App initialized.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enter the context manager for resource setup.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            scoped_session: The active scoped session for database interaction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Entering context: setting up resources.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_local</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">exc_type</span><span class="p">,</span>
+        <span class="n">exc_value</span><span class="p">,</span>
+        <span class="n">traceback</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Exit the context manager and perform cleanup.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            exc_type: Exception type, if raised.</span>
+<span class="sd">            exc_value: Exception instance, if raised.</span>
+<span class="sd">            traceback: Traceback object, if exception occurred.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: False to propagate any exception that occurred.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Exiting context: cleaning up resources.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="BookingSystem.shutdown">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.shutdown">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shutdown the booking system gracefully.</span>
+
+<span class="sd">        Terminates background services (e.g., weather scheduler) and removes</span>
+<span class="sd">        the scoped session to release database connections.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weather_service</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_local</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.update_user_role">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.update_user_role">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_user_role</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">new_role</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change a user&#39;s role.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: Identifier of the user.</span>
+<span class="sd">            new_role: Role to assign (e.g., &#39;admin&#39;, &#39;user&#39;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span><span class="o">.</span><span class="n">update_user_role</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">new_role</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.block_user">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.block_user">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">block_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Block or unblock a user account.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: Identifier of the user.</span>
+<span class="sd">            block: True to block; False to unblock.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span><span class="o">.</span><span class="n">block_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.delete_user">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.delete_user">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a user account.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: Identifier of the user.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span><span class="o">.</span><span class="n">delete_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.update_configuration">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.update_configuration">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update system-wide configuration parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: Object containing updated configuration values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span><span class="o">.</span><span class="n">update_configuration</span><span class="p">(</span>
+            <span class="n">latitude</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
+            <span class="n">longitude</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">longitude</span><span class="p">,</span>
+            <span class="n">timezone</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">timezone_str</span><span class="p">,</span>
+            <span class="n">weather_threshold</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">weather_threshold</span><span class="p">,</span>
+            <span class="n">max_bookings_per_event</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_bookings_per_event</span><span class="p">,</span>
+            <span class="n">default_opening_time</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">default_opening_time</span><span class="p">,</span>
+            <span class="n">default_closing_time</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">default_closing_time</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.confirm_event">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.confirm_event">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">confirm_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create or update an event slot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event: Event data including time, description, and limits.</span>
+<span class="sd">            event_id (int): Event ID.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Status message about the confirmation result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">admin_service</span><span class="o">.</span><span class="n">confirm_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">event_id</span><span class="o">=</span><span class="n">event_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.update_events_weather">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.update_events_weather">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_events_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trigger weather updates for all scheduled events.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weather_service</span><span class="o">.</span><span class="n">update_events_weather</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.book_slot">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.book_slot">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">book_slot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Book a slot for a user.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: Identifier of the user making the booking.</span>
+<span class="sd">            slot_id: Identifier of the slot to book.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Status message about the booking result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">booking_service</span><span class="o">.</span><span class="n">book_slot</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="o">=</span><span class="n">slot_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.cancel_booking">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.cancel_booking">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cancel_booking</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cancel a previously booked slot.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: Identifier of the user.</span>
+<span class="sd">            slot_id: Identifier of the slot to cancel.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Status message about the cancellation result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">booking_service</span><span class="o">.</span><span class="n">cancel_booking</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="o">=</span><span class="n">slot_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.create_user_account">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.create_user_account">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_user_account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a new user account.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: User&#39;s full name.</span>
+<span class="sd">            email: User&#39;s email address.</span>
+<span class="sd">            password: User&#39;s password.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            User: The newly created user instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_service</span><span class="o">.</span><span class="n">create_user_account</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BookingSystem.change_user_password">
+<a class="viewcode-back" href="../../components/booking_system.html#app.booking_system.BookingSystem.change_user_password">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_user_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">new_password</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change the password for an existing user.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            user_id: Identifier of the user.</span>
+<span class="sd">            new_password: New password to assign.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_service</span><span class="o">.</span><span class="n">change_user_password</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">new_password</span><span class="o">=</span><span class="n">new_password</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Tosin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

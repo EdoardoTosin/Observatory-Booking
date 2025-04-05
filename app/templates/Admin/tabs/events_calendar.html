@@ -1,0 +1,275 @@
+<div class="mb-8">
+  <div class="flex justify-between items-center mb-4">
+    <button
+      onclick="previousMonth()"
+      class="p-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+    <h4
+      id="currentMonth"
+      class="text-xl font-semibold text-gray-700 dark:text-gray-100"
+    ></h4>
+    <button
+      onclick="nextMonth()"
+      class="p-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-7 gap-2 mb-2">
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Sun
+    </div>
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Mon
+    </div>
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Tue
+    </div>
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Wed
+    </div>
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Thu
+    </div>
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Fri
+    </div>
+    <div
+      class="text-center font-semibold text-sm text-gray-600 dark:text-gray-400"
+    >
+      Sat
+    </div>
+  </div>
+
+  <div id="calendarGrid" class="grid grid-cols-7 gap-2">
+  </div>
+
+  <div
+    id="eventModal"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50"
+  >
+    <div
+      class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full dark:bg-gray-800 dark:text-gray-100"
+    >
+      <h4 id="modalTitle" class="text-xl font-bold mb-4">Create Event</h4>
+      <form
+        id="eventForm"
+        method="post"
+        action="{{ url_for('bp.confirm_event') }}"
+      >
+        <input type="hidden" id="eventId" name="event_id" value="" />
+        <div class="mb-4">
+          <label
+            for="eventTitle"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Title</label
+          >
+          <input
+            type="text"
+            id="eventTitle"
+            name="event_title"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            placeholder="Enter event title"
+            maxlength="30"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="eventDescription"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Description</label
+          >
+          <textarea
+            id="eventDescription"
+            name="event_description"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            placeholder="Enter event description"
+            rows="3"
+            maxlength="255"
+            required
+          ></textarea>
+        </div>
+        <div class="mb-4">
+          <label
+            for="eventDate"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Date</label
+          >
+          <input
+            type="date"
+            id="eventDate"
+            name="event_date"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="openingTime"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Opening Time</label
+          >
+          <input
+            type="time"
+            id="openingTime"
+            name="opening_time"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="closingTime"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Closing Time</label
+          >
+          <input
+            type="time"
+            id="closingTime"
+            name="closing_time"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="maxBookings"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Maximum Bookings</label
+          >
+          <input
+            type="number"
+            id="maxBookings"
+            name="max_bookings"
+            min="1"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            required
+          />
+        </div>
+        <div class="mb-4" id="weatherRatingDiv">
+          <label
+            for="weatherRating"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Weather Rating (0 = Bad, 100 = Perfect)</label
+          >
+          <input
+            id="weatherRating"
+            name="weather_rating"
+            min="0"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            disabled
+          />
+        </div>
+        <div class="mb-4" id="bookedUsersDiv">
+          <label
+            for="bookedUsers"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Current booked users</label
+          >
+          <input
+            id="bookedUsers"
+            name="booked_users"
+            min="0"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+            disabled
+          />
+        </div>
+        <div class="flex justify-end space-x-4">
+          <button
+            id="cancelButton"
+            type="button"
+            class="bg-gray-600 text-white px-4 py-2 rounded-sm dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600"
+            onclick="closeEventModal()"
+          >
+            Discard
+          </button>
+          <button
+            id="deleteButton"
+            type="button"
+            class="bg-red-500 text-white px-4 py-2 rounded-sm dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600"
+            onclick="deleteEvent()"
+          >
+            Delete
+          </button>
+          <button
+            id="confirmButton"
+            type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded-sm dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <form id="deleteForm" method="post" style="display: none"></form>
+
+  <div class="flex justify-end space-x-4 mt-4">
+    <button
+      id="update-weather"
+      type="button"
+      class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-sm dark:bg-blue-700 dark:hover:bg-blue-600"
+      onclick="window.location.href='{{ url_for('bp.update_events_weather') }}';"
+    >
+      Update Weather
+    </button>
+  </div>
+</div>
+
+<script>
+  window.CALENDAR_CONFIG = {
+    defaultOpeningTime: "{{ config.default_opening_time }}",
+    defaultClosingTime: "{{ config.default_closing_time }}",
+    maxBookingsPerEvent: {{ config.max_bookings_per_event }},
+    timezone: "{{ config.timezone }}"
+  };
+  window.events = {{ events_json | safe }};
+</script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/admin/tabs/events_calendar.js') }}"
+></script>

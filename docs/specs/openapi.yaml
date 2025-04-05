@@ -1,0 +1,437 @@
+openapi: 3.0.3
+info:
+  title: Batcomputer API
+  version: "1.0.0"
+  description: >
+    Comprehensive API documentation grouped by role:
+    - Public
+    - Authenticated Users
+    - Admins
+    - Superadmins
+
+tags:
+  - name: Public
+    description: Endpoints accessible without authentication.
+  - name: User
+    description: Endpoints accessible to authenticated users.
+  - name: Admin
+    description: Endpoints for system administration and event management.
+  - name: Superadmin
+    description: Elevated admin endpoints for critical account operations.
+  - name: Utility
+    description: Static JavaScript files used by the web interface.
+
+paths:
+
+  /:
+    get:
+      tags: [public]
+      summary: Homepage
+      responses:
+        '200':
+          description: Rendered homepage
+
+  /favicon.ico:
+    get:
+      tags: [public]
+      summary: Favicon
+      responses:
+        '200':
+          description: Returns favicon
+
+  /contact:
+    get:
+      tags: [public]
+      summary: Contact page
+      responses:
+        '200':
+          description: Static contact page
+
+  /faq:
+    get:
+      tags: [public]
+      summary: FAQ page
+      responses:
+        '200':
+          description: Static FAQ
+
+  /terms_of_service:
+    get:
+      tags: [public]
+      summary: Terms of Service page
+      responses:
+        '200':
+          description: Static Terms page
+
+  /privacy_policy:
+    get:
+      tags: [public]
+      summary: Privacy Policy page
+      responses:
+        '200':
+          description: Static Privacy Policy
+
+  /cookie_policy:
+    get:
+      tags: [public]
+      summary: Cookie Policy page
+      responses:
+        '200':
+          description: Static Cookie Policy
+
+  /login:
+    get:
+      tags: [Public]
+      summary: Display the login form.
+      responses:
+        '200':
+          description: Login page rendered.
+    post:
+      tags: [Public]
+      summary: Authenticate a user and start a session.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '302':
+          description: Redirects to dashboard on success.
+        '400':
+          description: Invalid credentials.
+
+  /admin/user/delete:
+    post:
+      tags: [Superadmin]
+      summary: Delete a user account.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+      responses:
+        '200':
+          description: User account deleted.
+        '403':
+          description: Forbidden. Only superadmins allowed.
+        '500':
+          description: Deletion error.
+
+  /register:
+    get:
+      tags: [Public]
+      summary: Display the registration form.
+      responses:
+        '200':
+          description: Registration page rendered.
+    post:
+      tags: [Public]
+      summary: Register a new user.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                name:
+                  type: string
+      responses:
+        '302':
+          description: Redirect on successful registration.
+        '400':
+          description: Invalid input or user already exists.
+
+  /logout:
+    get:
+      tags: [User]
+      summary: Logout the current user.
+      responses:
+        '302':
+          description: Redirected after logout.
+
+  /events:
+    get:
+      tags: [User]
+      summary: View events and booking slots.
+      responses:
+        '200':
+          description: Event calendar data returned.
+    post:
+      tags: [User]
+      summary: Create a new event.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_title:
+                  type: string
+                event_description:
+                  type: string
+                event_date:
+                  type: string
+                opening_time:
+                  type: string
+                closing_time:
+                  type: string
+      responses:
+        '201':
+          description: Event created.
+        '400':
+          description: Invalid input.
+
+  /booking:
+    post:
+      tags: [User]
+      summary: Book a slot for an event.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slot_id:
+                  type: string
+      responses:
+        '200':
+          description: Booking confirmed.
+        '400':
+          description: Slot unavailable or invalid input.
+
+  /cancel_booking/{slot_id}:
+    post:
+      tags: [User]
+      summary: Cancel an existing booking.
+      parameters:
+        - name: slot_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Booking cancelled.
+        '404':
+          description: Slot not found.
+
+  /change_password:
+    get:
+      tags: [User]
+      summary: Show the change password form.
+      responses:
+        '200':
+          description: Change password form.
+    post:
+      tags: [User]
+      summary: Update user password.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                new_password:
+                  type: string
+      responses:
+        '200':
+          description: Password changed successfully.
+        '400':
+          description: Validation error or incorrect password.
+
+  /admin:
+    get:
+      tags: [Admin]
+      summary: Admin dashboard view.
+      responses:
+        '200':
+          description: Dashboard HTML page.
+
+  /admin/config:
+    post:
+      tags: [Admin]
+      summary: Update system configuration.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                timezone:
+                  type: string
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+      responses:
+        '200':
+          description: Configuration updated.
+        '400':
+          description: Invalid config parameters.
+
+  /admin/confirm_event:
+    post:
+      tags: [Admin]
+      summary: Confirm a scheduled event.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                event_id:
+                  type: string
+      responses:
+        '200':
+          description: Event confirmed.
+        '404':
+          description: Event not found.
+
+  /admin/delete_event/{event_id}:
+    post:
+      tags: [Admin]
+      summary: Delete a scheduled event.
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event deleted.
+        '404':
+          description: Event not found.
+
+  /admin/update_events_weather:
+    get:
+      tags: [Admin]
+      summary: Refresh weather data for all events.
+      responses:
+        '200':
+          description: Weather data updated.
+
+  /admin/user/role:
+    post:
+      tags: [Admin]
+      summary: Change a user's role.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                role:
+                  type: string
+      responses:
+        '200':
+          description: Role updated.
+        '403':
+          description: Forbidden.
+
+  /admin/user/block:
+    post:
+      tags: [Admin]
+      summary: Block or unblock a user.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                block:
+                  type: boolean
+      responses:
+        '200':
+          description: User updated.
+        '403':
+          description: Not allowed.
+
+  /js/events.js:
+    get:
+      tags:
+        - Utility
+      summary: Serve events.js static script
+      responses:
+        '200':
+          description: JavaScript file served successfully.
+        '404':
+          description: File not found.
+
+  /js/change_password.js:
+    get:
+      tags:
+        - Utility
+      summary: Serve change_password.js static script
+      responses:
+        '200':
+          description: JavaScript file served successfully.
+        '404':
+          description: File not found.
+
+  /js/admin.js:
+    get:
+      tags: [Utility]
+      summary: Serve admin.js static script
+      responses:
+        '200':
+          description: JavaScript file served successfully.
+        '404':
+          description: File not found.
+
+  /js/user_accounts.js:
+    get:
+      tags: [Utility]
+      summary: Serve user_accounts.js static script
+      responses:
+        '200':
+          description: JavaScript file served successfully.
+        '404':
+          description: File not found.
+
+  /js/events_calendar.js:
+    get:
+      tags: [Utility]
+      summary: Serve events_calendar.js static script
+      responses:
+        '200':
+          description: JavaScript file served successfully.
+        '404':
+          description: File not found.
+
+components:
+  responses:
+    NotFound:
+      description: Resource not found (custom 404 page).
+    Forbidden:
+      description: Access denied (custom 403 page).
+    InternalServerError:
+      description: Unexpected server error (custom 500 page).

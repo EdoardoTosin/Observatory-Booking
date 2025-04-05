@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Components &#8212; Observatory Booking  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9ae7186b" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'components/index';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Entry Point" href="app.html" />
+    <link rel="prev" title="API Endpoints" href="../endpoints.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt=""/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">Observatory Booking</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="#">
+    Components
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../usage.html">
+    Usage Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../architecture.html">
+    System Architecture
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../endpoints.html">
+    API Endpoints
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Entry Point</a></li>
+<li class="toctree-l1"><a class="reference internal" href="booking_system.html">Booking System module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_transfer_objects.html">Data Transfer Objects module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database_setup.html">Database Setup Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Database Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes/index.html">Routes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services/index.html">Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Components</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="components">
+<h1>Components<a class="headerlink" href="#components" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Entry Point</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.html#app.app.create_instance"><code class="docutils literal notranslate"><span class="pre">create_instance()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="app.html#app.app.run_app"><code class="docutils literal notranslate"><span class="pre">run_app()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="app.html#app.app.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="booking_system.html">Booking System module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem"><code class="docutils literal notranslate"><span class="pre">BookingSystem</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.session_local"><code class="docutils literal notranslate"><span class="pre">BookingSystem.session_local</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.lock"><code class="docutils literal notranslate"><span class="pre">BookingSystem.lock</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.weather_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.weather_service</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.admin_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.admin_service</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.user_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.user_service</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.booking_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.booking_service</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.shutdown"><code class="docutils literal notranslate"><span class="pre">BookingSystem.shutdown()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.update_user_role"><code class="docutils literal notranslate"><span class="pre">BookingSystem.update_user_role()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.block_user"><code class="docutils literal notranslate"><span class="pre">BookingSystem.block_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.delete_user"><code class="docutils literal notranslate"><span class="pre">BookingSystem.delete_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.update_configuration"><code class="docutils literal notranslate"><span class="pre">BookingSystem.update_configuration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.confirm_event"><code class="docutils literal notranslate"><span class="pre">BookingSystem.confirm_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.update_events_weather"><code class="docutils literal notranslate"><span class="pre">BookingSystem.update_events_weather()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.book_slot"><code class="docutils literal notranslate"><span class="pre">BookingSystem.book_slot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.cancel_booking"><code class="docutils literal notranslate"><span class="pre">BookingSystem.cancel_booking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.create_user_account"><code class="docutils literal notranslate"><span class="pre">BookingSystem.create_user_account()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="booking_system.html#app.booking_system.BookingSystem.change_user_password"><code class="docutils literal notranslate"><span class="pre">BookingSystem.change_user_password()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_transfer_objects.html">Data Transfer Objects module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.latitude"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.latitude</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.longitude"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.longitude</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.timezone_str"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.timezone_str</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.weather_threshold"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.weather_threshold</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.max_bookings_per_event"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.max_bookings_per_event</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.default_opening_time"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.default_opening_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.ConfigurationUpdate.default_closing_time"><code class="docutils literal notranslate"><span class="pre">ConfigurationUpdate.default_closing_time</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData"><code class="docutils literal notranslate"><span class="pre">EventData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData.event_title"><code class="docutils literal notranslate"><span class="pre">EventData.event_title</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData.event_description"><code class="docutils literal notranslate"><span class="pre">EventData.event_description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData.event_date"><code class="docutils literal notranslate"><span class="pre">EventData.event_date</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData.opening_time"><code class="docutils literal notranslate"><span class="pre">EventData.opening_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData.closing_time"><code class="docutils literal notranslate"><span class="pre">EventData.closing_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventData.max_bookings"><code class="docutils literal notranslate"><span class="pre">EventData.max_bookings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherInfo"><code class="docutils literal notranslate"><span class="pre">WeatherInfo</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherInfo.condition_rating"><code class="docutils literal notranslate"><span class="pre">WeatherInfo.condition_rating</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherInfo.weather_warning"><code class="docutils literal notranslate"><span class="pre">WeatherInfo.weather_warning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherInfo.weather_forecast"><code class="docutils literal notranslate"><span class="pre">WeatherInfo.weather_forecast</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData"><code class="docutils literal notranslate"><span class="pre">WeatherData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData.times"><code class="docutils literal notranslate"><span class="pre">WeatherData.times</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData.dew_points"><code class="docutils literal notranslate"><span class="pre">WeatherData.dew_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData.precip_probs"><code class="docutils literal notranslate"><span class="pre">WeatherData.precip_probs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData.cloud_covers"><code class="docutils literal notranslate"><span class="pre">WeatherData.cloud_covers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData.visibilities"><code class="docutils literal notranslate"><span class="pre">WeatherData.visibilities</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.WeatherData.tz_str"><code class="docutils literal notranslate"><span class="pre">WeatherData.tz_str</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventTimes"><code class="docutils literal notranslate"><span class="pre">EventTimes</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventTimes.start_local"><code class="docutils literal notranslate"><span class="pre">EventTimes.start_local</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventTimes.end_local"><code class="docutils literal notranslate"><span class="pre">EventTimes.end_local</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventTimes.start_utc"><code class="docutils literal notranslate"><span class="pre">EventTimes.start_utc</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_transfer_objects.html#app.data_transfer_objects.EventTimes.end_utc"><code class="docutils literal notranslate"><span class="pre">EventTimes.end_utc</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="database_setup.html">Database Setup Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="database_setup.html#app.database_setup.get_database_url"><code class="docutils literal notranslate"><span class="pre">get_database_url()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="database_setup.html#app.database_setup.create_db_session"><code class="docutils literal notranslate"><span class="pre">create_db_session()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="filters.html">Filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="filters.html#app.filters.inject_globals"><code class="docutils literal notranslate"><span class="pre">inject_globals()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="filters.html#app.filters.init_filters"><code class="docutils literal notranslate"><span class="pre">init_filters()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Database Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#app.models.Base"><code class="docutils literal notranslate"><span class="pre">Base</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Base.registry"><code class="docutils literal notranslate"><span class="pre">Base.registry</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#app.models.Configuration"><code class="docutils literal notranslate"><span class="pre">Configuration</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.id"><code class="docutils literal notranslate"><span class="pre">Configuration.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.latitude"><code class="docutils literal notranslate"><span class="pre">Configuration.latitude</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.longitude"><code class="docutils literal notranslate"><span class="pre">Configuration.longitude</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.timezone"><code class="docutils literal notranslate"><span class="pre">Configuration.timezone</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.weather_threshold"><code class="docutils literal notranslate"><span class="pre">Configuration.weather_threshold</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.max_bookings_per_event"><code class="docutils literal notranslate"><span class="pre">Configuration.max_bookings_per_event</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.default_opening_time"><code class="docutils literal notranslate"><span class="pre">Configuration.default_opening_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.default_closing_time"><code class="docutils literal notranslate"><span class="pre">Configuration.default_closing_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Configuration.get_config"><code class="docutils literal notranslate"><span class="pre">Configuration.get_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#app.models.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.id"><code class="docutils literal notranslate"><span class="pre">User.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.name_encrypted"><code class="docutils literal notranslate"><span class="pre">User.name_encrypted</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.email_encrypted"><code class="docutils literal notranslate"><span class="pre">User.email_encrypted</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.password_hash"><code class="docutils literal notranslate"><span class="pre">User.password_hash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.role"><code class="docutils literal notranslate"><span class="pre">User.role</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.blocked"><code class="docutils literal notranslate"><span class="pre">User.blocked</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.admin_rank"><code class="docutils literal notranslate"><span class="pre">User.admin_rank</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.bookings"><code class="docutils literal notranslate"><span class="pre">User.bookings</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.set_password"><code class="docutils literal notranslate"><span class="pre">User.set_password()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.verify_password"><code class="docutils literal notranslate"><span class="pre">User.verify_password()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.set_email"><code class="docutils literal notranslate"><span class="pre">User.set_email()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.get_email"><code class="docutils literal notranslate"><span class="pre">User.get_email()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.set_name"><code class="docutils literal notranslate"><span class="pre">User.set_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.User.get_name"><code class="docutils literal notranslate"><span class="pre">User.get_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#app.models.Slot"><code class="docutils literal notranslate"><span class="pre">Slot</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.id"><code class="docutils literal notranslate"><span class="pre">Slot.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.title"><code class="docutils literal notranslate"><span class="pre">Slot.title</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.description"><code class="docutils literal notranslate"><span class="pre">Slot.description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.start_time"><code class="docutils literal notranslate"><span class="pre">Slot.start_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.end_time"><code class="docutils literal notranslate"><span class="pre">Slot.end_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.available"><code class="docutils literal notranslate"><span class="pre">Slot.available</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.weather_rating"><code class="docutils literal notranslate"><span class="pre">Slot.weather_rating</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.max_bookings"><code class="docutils literal notranslate"><span class="pre">Slot.max_bookings</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.weather_warning"><code class="docutils literal notranslate"><span class="pre">Slot.weather_warning</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.weather_forecast"><code class="docutils literal notranslate"><span class="pre">Slot.weather_forecast</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Slot.bookings"><code class="docutils literal notranslate"><span class="pre">Slot.bookings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#app.models.Booking"><code class="docutils literal notranslate"><span class="pre">Booking</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Booking.id"><code class="docutils literal notranslate"><span class="pre">Booking.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Booking.user_id"><code class="docutils literal notranslate"><span class="pre">Booking.user_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Booking.slot_id"><code class="docutils literal notranslate"><span class="pre">Booking.slot_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Booking.status"><code class="docutils literal notranslate"><span class="pre">Booking.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Booking.user"><code class="docutils literal notranslate"><span class="pre">Booking.user</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#app.models.Booking.slot"><code class="docutils literal notranslate"><span class="pre">Booking.slot</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routes/index.html">Routes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="routes/core_views.html">Core Routes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/core_views.html#app.routes.core_views.favicon"><code class="docutils literal notranslate"><span class="pre">favicon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/core_views.html#app.routes.core_views.index"><code class="docutils literal notranslate"><span class="pre">index()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes/authentication.html">Authentication Routes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/authentication.html#app.routes.authentication.redirect_if_logged_in"><code class="docutils literal notranslate"><span class="pre">redirect_if_logged_in()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/authentication.html#app.routes.authentication.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/authentication.html#app.routes.authentication.register"><code class="docutils literal notranslate"><span class="pre">register()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/authentication.html#app.routes.authentication.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes/user_actions.html">User Actions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/user_actions.html#app.routes.user_actions.events_js"><code class="docutils literal notranslate"><span class="pre">events_js()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/user_actions.html#app.routes.user_actions.events"><code class="docutils literal notranslate"><span class="pre">events()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/user_actions.html#app.routes.user_actions.booking"><code class="docutils literal notranslate"><span class="pre">booking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/user_actions.html#app.routes.user_actions.cancel_booking"><code class="docutils literal notranslate"><span class="pre">cancel_booking()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/user_actions.html#app.routes.user_actions.change_password_js"><code class="docutils literal notranslate"><span class="pre">change_password_js()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/user_actions.html#app.routes.user_actions.change_password"><code class="docutils literal notranslate"><span class="pre">change_password()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes/admin_dashboard.html">Admin Dashboard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.convert_utc_time_to_local_str"><code class="docutils literal notranslate"><span class="pre">convert_utc_time_to_local_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.admin_js"><code class="docutils literal notranslate"><span class="pre">admin_js()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.user_accounts_js"><code class="docutils literal notranslate"><span class="pre">user_accounts_js()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.events_calendar_js"><code class="docutils literal notranslate"><span class="pre">events_calendar_js()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.get_config_details"><code class="docutils literal notranslate"><span class="pre">get_config_details()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.build_events_data"><code class="docutils literal notranslate"><span class="pre">build_events_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.admin"><code class="docutils literal notranslate"><span class="pre">admin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.update_configuration"><code class="docutils literal notranslate"><span class="pre">update_configuration()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.validate_config_inputs"><code class="docutils literal notranslate"><span class="pre">validate_config_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.process_time_inputs"><code class="docutils literal notranslate"><span class="pre">process_time_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.update_events_weather"><code class="docutils literal notranslate"><span class="pre">update_events_weather()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.confirm_event"><code class="docutils literal notranslate"><span class="pre">confirm_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.handle_confirm_event"><code class="docutils literal notranslate"><span class="pre">handle_confirm_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.delete_event"><code class="docutils literal notranslate"><span class="pre">delete_event()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.update_user_role"><code class="docutils literal notranslate"><span class="pre">update_user_role()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.block_user"><code class="docutils literal notranslate"><span class="pre">block_user()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.handle_block_user_logic"><code class="docutils literal notranslate"><span class="pre">handle_block_user_logic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/admin_dashboard.html#app.routes.admin_dashboard.delete_user"><code class="docutils literal notranslate"><span class="pre">delete_user()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes/static_pages.html">Static Pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/static_pages.html#app.routes.static_pages.render_static_page"><code class="docutils literal notranslate"><span class="pre">render_static_page()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/static_pages.html#app.routes.static_pages.contact"><code class="docutils literal notranslate"><span class="pre">contact()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/static_pages.html#app.routes.static_pages.faq"><code class="docutils literal notranslate"><span class="pre">faq()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/static_pages.html#app.routes.static_pages.terms_of_service"><code class="docutils literal notranslate"><span class="pre">terms_of_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/static_pages.html#app.routes.static_pages.privacy_policy"><code class="docutils literal notranslate"><span class="pre">privacy_policy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/static_pages.html#app.routes.static_pages.cookie_policy"><code class="docutils literal notranslate"><span class="pre">cookie_policy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes/error_handlers.html">Error Handling Routes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/error_handlers.html#app.routes.error_handlers.page_not_found"><code class="docutils literal notranslate"><span class="pre">page_not_found()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/error_handlers.html#app.routes.error_handlers.forbidden"><code class="docutils literal notranslate"><span class="pre">forbidden()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/error_handlers.html#app.routes.error_handlers.internal_error"><code class="docutils literal notranslate"><span class="pre">internal_error()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="routes/security_decorators.html">Security Decorators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="routes/security_decorators.html#app.routes.security_decorators.login_required"><code class="docutils literal notranslate"><span class="pre">login_required()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="routes/security_decorators.html#app.routes.security_decorators.admin_required"><code class="docutils literal notranslate"><span class="pre">admin_required()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="services/index.html">Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="services/booking_service.html">Booking Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="services/booking_service.html#app.services.booking_service.BookingService"><code class="docutils literal notranslate"><span class="pre">BookingService</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="services/user_service.html">User Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="services/user_service.html#app.services.user_service.UserService"><code class="docutils literal notranslate"><span class="pre">UserService</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="services/admin_service.html">Admin Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="services/admin_service.html#app.services.admin_service.AdminService"><code class="docutils literal notranslate"><span class="pre">AdminService</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="services/weather_service.html">Weather Service</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.get_or_generate_env_key"><code class="docutils literal notranslate"><span class="pre">get_or_generate_env_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.get_secret_key"><code class="docutils literal notranslate"><span class="pre">get_secret_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.get_encryption_keys"><code class="docutils literal notranslate"><span class="pre">get_encryption_keys()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.get_env_value"><code class="docutils literal notranslate"><span class="pre">get_env_value()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.encrypt_data"><code class="docutils literal notranslate"><span class="pre">encrypt_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.decrypt_data"><code class="docutils literal notranslate"><span class="pre">decrypt_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.is_rate_limited"><code class="docutils literal notranslate"><span class="pre">is_rate_limited()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.ttl_cache"><code class="docutils literal notranslate"><span class="pre">ttl_cache()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.is_email_valid"><code class="docutils literal notranslate"><span class="pre">is_email_valid()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#app.utils.is_password_strong"><code class="docutils literal notranslate"><span class="pre">is_password_strong()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../endpoints.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">API Endpoints</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="app.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Entry Point</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/components/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Tosin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
