@@ -31,7 +31,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -460,6 +460,8 @@
 
 
 
+<div class="viewcode-block" id="_handle_login_post">
+<a class="viewcode-back" href="../../../components/routes/authentication.html#app.routes.authentication._handle_login_post">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">_handle_login_post</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes the POST request for user login and returns a redirect response.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -503,7 +505,8 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-caught</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Login error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred during login.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.login&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.login&quot;</span><span class="p">))</span></div>
+
 
 
 <div class="viewcode-block" id="register">
@@ -527,6 +530,8 @@
 
 
 
+<div class="viewcode-block" id="_handle_register_post">
+<a class="viewcode-back" href="../../../components/routes/authentication.html#app.routes.authentication._handle_register_post">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">_handle_register_post</span><span class="p">():</span>  <span class="c1"># pylint: disable=too-many-return-statements</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Processes the POST request for user registration and returns a redirect response.</span>
 
@@ -591,7 +596,8 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-caught</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Registration error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred during registration.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.register&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.register&quot;</span><span class="p">))</span></div>
+
 
 
 <div class="viewcode-block" id="logout">

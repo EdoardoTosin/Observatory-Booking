@@ -31,7 +31,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -438,6 +438,8 @@
 <span class="sd">    - User permission checks</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="BookingService.__init__">
+<a class="viewcode-back" href="../../../components/services/booking_service.html#app.services.booking_service.BookingService.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_session</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the BookingService with a database session factory.</span>
@@ -446,8 +448,11 @@
 <span class="sd">            db_session (Callable[[], Session]): A callable returning a new database session.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db_session</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span></div>
 
+
+<div class="viewcode-block" id="BookingService._get_timezone">
+<a class="viewcode-back" href="../../../components/services/booking_service.html#app.services.booking_service.BookingService._get_timezone">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_timezone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the configured timezone from the system configuration.</span>
@@ -459,8 +464,11 @@
 <span class="sd">            ZoneInfo: The configured timezone object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">))</span></div>
 
+
+<div class="viewcode-block" id="BookingService._get_current_time">
+<a class="viewcode-back" href="../../../components/services/booking_service.html#app.services.booking_service.BookingService._get_current_time">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_current_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve the current system time adjusted to the configured timezone.</span>
@@ -471,8 +479,11 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            datetime: Current time in the configured timezone.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timezone</span><span class="p">(</span><span class="n">db</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timezone</span><span class="p">(</span><span class="n">db</span><span class="p">))</span></div>
 
+
+<div class="viewcode-block" id="BookingService._validate_user_and_slot">
+<a class="viewcode-back" href="../../../components/services/booking_service.html#app.services.booking_service.BookingService._validate_user_and_slot">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_validate_user_and_slot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validate user and slot existence and eligibility.</span>
@@ -498,7 +509,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">slot</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;Event not found.&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">slot</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">slot</span></div>
+
 
 <div class="viewcode-block" id="BookingService.book_slot">
 <a class="viewcode-back" href="../../../components/services/booking_service.html#app.services.booking_service.BookingService.book_slot">[docs]</a>

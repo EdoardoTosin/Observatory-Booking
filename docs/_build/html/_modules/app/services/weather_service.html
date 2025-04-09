@@ -31,7 +31,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -463,6 +463,8 @@
     <span class="n">DEW_POINT_THRESHOLD_HIGH</span> <span class="o">=</span> <span class="mf">10.0</span>
     <span class="n">IDEAL_VISIBILITY</span> <span class="o">=</span> <span class="mf">20000.0</span>  <span class="c1"># in meters</span>
 
+<div class="viewcode-block" id="WeatherService.__init__">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_session</span><span class="p">,</span> <span class="n">cache_time</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the WeatherService.</span>
@@ -491,7 +493,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
         <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shutdown</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;WeatherService initialized with background scheduler.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;WeatherService initialized with background scheduler.&quot;</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="WeatherService.shutdown">
 <a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.shutdown">[docs]</a>
@@ -552,6 +555,8 @@
         <span class="k">return</span> <span class="p">{}</span></div>
 
 
+<div class="viewcode-block" id="WeatherService._process_hourly_data">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService._process_hourly_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_process_hourly_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process raw hourly weather data.</span>
@@ -587,7 +592,8 @@
             <span class="p">}</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Parsed weather data for </span><span class="si">%d</span><span class="s2"> hourly entries.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">weather_by_time</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">weather_by_time</span>
+        <span class="k">return</span> <span class="n">weather_by_time</span></div>
+
 
 <div class="viewcode-block" id="WeatherService.calculate_hourly_rating">
 <a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService.calculate_hourly_rating">[docs]</a>
@@ -713,6 +719,8 @@
             <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
+<div class="viewcode-block" id="WeatherService._update_event_weather">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService._update_event_weather">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_event_weather</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">event</span><span class="p">,</span>
@@ -739,8 +747,11 @@
             <span class="n">event</span><span class="o">.</span><span class="n">weather_warning</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">weather_rating</span> <span class="o">&lt;</span> <span class="n">config</span><span class="o">.</span><span class="n">weather_threshold</span>
             <span class="n">event</span><span class="o">.</span><span class="n">weather_forecast</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">event</span><span class="o">.</span><span class="n">weather_forecast</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">weather_forecast</span> <span class="o">=</span> <span class="kc">False</span></div>
 
+
+<div class="viewcode-block" id="WeatherService._generate_hourly_range">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService._generate_hourly_range">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_hourly_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">tz_str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -768,8 +779,11 @@
 
         <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">total_hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_hours</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_hours</span><span class="p">)]</span></div>
 
+
+<div class="viewcode-block" id="WeatherService._get_upcoming_events">
+<a class="viewcode-back" href="../../../components/services/weather_service.html#app.services.weather_service.WeatherService._get_upcoming_events">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_upcoming_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">timezone_str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve upcoming events from the database.</span>
@@ -791,6 +805,7 @@
         <span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Retrieved </span><span class="si">%d</span><span class="s2"> upcoming events.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">events</span></div>
+</div>
 
 </pre></div>
 

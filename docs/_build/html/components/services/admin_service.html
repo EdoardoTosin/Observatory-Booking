@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -463,6 +463,40 @@ forecasting. Defaults to None.</p></li>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the AdminService.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db_session</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><em>Session</em><em>]</em>) – A callable returning a new database session.</p></li>
+<li><p><strong>lock</strong> (<em>Any</em>) – A threading lock to ensure thread-safe operations.</p></li>
+<li><p><strong>weather_service</strong> (<em>Optional</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>optional</em>) – A weather service instance for event
+forecasting. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._initialize_superadmin">
+<span class="sig-name descname"><span class="pre">_initialize_superadmin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._initialize_superadmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._initialize_superadmin" title="Link to this definition">#</a></dt>
+<dd><p>Ensure that a superadmin account exists in the system.</p>
+<p>If no superadmin exists, a new one is created using environment-configured credentials.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._create_superadmin">
+<span class="sig-name descname"><span class="pre">_create_superadmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._create_superadmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._create_superadmin" title="Link to this definition">#</a></dt>
+<dd><p>Create a new superadmin user and save credentials to log.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>session</strong> (<em>Session</em>) – Active database session.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.services.admin_service.AdminService.update_user_role">
 <span class="sig-name descname"><span class="pre">update_user_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_role</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService.update_user_role"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService.update_user_role" title="Link to this definition">#</a></dt>
 <dd><p>Update the role of a user.</p>
@@ -545,6 +579,130 @@ forecasting. Defaults to None.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._process_event_confirmation">
+<span class="sig-name descname"><span class="pre">_process_event_confirmation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._process_event_confirmation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._process_event_confirmation" title="Link to this definition">#</a></dt>
+<dd><p>Process event confirmation with validation and weather integration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> – The event details encapsulated in an EventData instance.</p></li>
+<li><p><strong>event_id</strong> (<em>int</em>) – The event ID.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A confirmation message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._prepare_event_data">
+<span class="sig-name descname"><span class="pre">_prepare_event_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._prepare_event_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._prepare_event_data" title="Link to this definition">#</a></dt>
+<dd><p>Validate and prepare event times and weather data.</p>
+<p>Performs input validation, computes local and UTC event time ranges,
+and fetches weather data for the event duration. Returns a tuple of
+event time info, weather info, and an optional error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – Active database session.</p></li>
+<li><p><strong>event</strong> (<a class="reference internal" href="../data_transfer_objects.html#app.data_transfer_objects.EventData" title="app.data_transfer_objects.EventData"><em>EventData</em></a>) – Event input data from the client.</p></li>
+<li><p><strong>tz</strong> (<em>ZoneInfo</em>) – Timezone for the event.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>EventTimes: Local and UTC event start/end times.</p></li>
+<li><p>WeatherInfo: Weather rating and warnings, if available.</p></li>
+<li><p>str: Error message if validation fails, otherwise None.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Optional[<a class="reference internal" href="../data_transfer_objects.html#app.data_transfer_objects.EventTimes" title="app.data_transfer_objects.EventTimes">EventTimes</a>], Optional[<a class="reference internal" href="../data_transfer_objects.html#app.data_transfer_objects.WeatherInfo" title="app.data_transfer_objects.WeatherInfo">WeatherInfo</a>], Optional[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._validate_event_input">
+<span class="sig-name descname"><span class="pre">_validate_event_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bookings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._validate_event_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._validate_event_input" title="Link to this definition">#</a></dt>
+<dd><p>Validate event input parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._calculate_event_times">
+<span class="sig-name descname"><span class="pre">_calculate_event_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._calculate_event_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._calculate_event_times" title="Link to this definition">#</a></dt>
+<dd><p>Calculate local start and end times for the event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._calculate_event_times_full">
+<span class="sig-name descname"><span class="pre">_calculate_event_times_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opening_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">closing_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data_transfer_objects.html#app.data_transfer_objects.EventTimes" title="app.data_transfer_objects.EventTimes"><span class="pre">EventTimes</span></a></span></span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._calculate_event_times_full"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._calculate_event_times_full" title="Link to this definition">#</a></dt>
+<dd><p>Calculate both local and UTC start and end times for the event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._get_existing_event">
+<span class="sig-name descname"><span class="pre">_get_existing_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_start_utc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._get_existing_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._get_existing_event" title="Link to this definition">#</a></dt>
+<dd><p>Get existing event for the given start time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._can_modify_event">
+<span class="sig-name descname"><span class="pre">_can_modify_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._can_modify_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._can_modify_event" title="Link to this definition">#</a></dt>
+<dd><p>Check if an existing event can be modified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._get_weather_data">
+<span class="sig-name descname"><span class="pre">_get_weather_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../models.html#app.models.Configuration" title="app.models.Configuration"><span class="pre">Configuration</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._get_weather_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._get_weather_data" title="Link to this definition">#</a></dt>
+<dd><p>Get weather data for the event time period.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._save_event">
+<span class="sig-name descname"><span class="pre">_save_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._save_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._save_event" title="Link to this definition">#</a></dt>
+<dd><p>Save a new event or update an existing event, ensuring no time overlap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> – The database session.</p></li>
+<li><p><strong>existing_event</strong> – An existing event to update, or None for a new event.</p></li>
+<li><p><strong>event_data</strong> – Dictionary containing event information.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success message or overlap error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._check_same_day_start">
+<span class="sig-name descname"><span class="pre">_check_same_day_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._check_same_day_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._check_same_day_start" title="Link to this definition">#</a></dt>
+<dd><p>Check if any event starts on the same UTC day.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._check_prev_day_overlap">
+<span class="sig-name descname"><span class="pre">_check_prev_day_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._check_prev_day_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._check_prev_day_overlap" title="Link to this definition">#</a></dt>
+<dd><p>Check if an event from the previous day overlaps into the new event’s start time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.admin_service.AdminService._check_next_day_overlap">
+<span class="sig-name descname"><span class="pre">_check_next_day_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService._check_next_day_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService._check_next_day_overlap" title="Link to this definition">#</a></dt>
+<dd><p>Check if the current event’s end time overlaps into the next day’s event start.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.services.admin_service.AdminService.update_events_weather">
 <span class="sig-name descname"><span class="pre">update_events_weather</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/admin_service.html#AdminService.update_events_weather"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.admin_service.AdminService.update_events_weather" title="Link to this definition">#</a></dt>
 <dd><p>Update weather conditions for upcoming events.</p>
@@ -608,11 +766,26 @@ forecasting. Defaults to None.</p></li>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService"><code class="docutils literal notranslate"><span class="pre">AdminService</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.__init__"><code class="docutils literal notranslate"><span class="pre">AdminService.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._initialize_superadmin"><code class="docutils literal notranslate"><span class="pre">AdminService._initialize_superadmin()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._create_superadmin"><code class="docutils literal notranslate"><span class="pre">AdminService._create_superadmin()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.update_user_role"><code class="docutils literal notranslate"><span class="pre">AdminService.update_user_role()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.block_user"><code class="docutils literal notranslate"><span class="pre">AdminService.block_user()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.delete_user"><code class="docutils literal notranslate"><span class="pre">AdminService.delete_user()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.update_configuration"><code class="docutils literal notranslate"><span class="pre">AdminService.update_configuration()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.confirm_event"><code class="docutils literal notranslate"><span class="pre">AdminService.confirm_event()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._process_event_confirmation"><code class="docutils literal notranslate"><span class="pre">AdminService._process_event_confirmation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._prepare_event_data"><code class="docutils literal notranslate"><span class="pre">AdminService._prepare_event_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._validate_event_input"><code class="docutils literal notranslate"><span class="pre">AdminService._validate_event_input()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._calculate_event_times"><code class="docutils literal notranslate"><span class="pre">AdminService._calculate_event_times()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._calculate_event_times_full"><code class="docutils literal notranslate"><span class="pre">AdminService._calculate_event_times_full()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._get_existing_event"><code class="docutils literal notranslate"><span class="pre">AdminService._get_existing_event()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._can_modify_event"><code class="docutils literal notranslate"><span class="pre">AdminService._can_modify_event()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._get_weather_data"><code class="docutils literal notranslate"><span class="pre">AdminService._get_weather_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._save_event"><code class="docutils literal notranslate"><span class="pre">AdminService._save_event()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._check_same_day_start"><code class="docutils literal notranslate"><span class="pre">AdminService._check_same_day_start()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._check_prev_day_overlap"><code class="docutils literal notranslate"><span class="pre">AdminService._check_prev_day_overlap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService._check_next_day_overlap"><code class="docutils literal notranslate"><span class="pre">AdminService._check_next_day_overlap()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.admin_service.AdminService.update_events_weather"><code class="docutils literal notranslate"><span class="pre">AdminService.update_events_weather()</span></code></a></li>
 </ul>
 </li>

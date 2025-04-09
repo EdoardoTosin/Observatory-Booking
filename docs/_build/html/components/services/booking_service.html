@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -462,6 +462,77 @@ It ensures concurrency safety, rate-limiting, and event availability checks.</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="app.services.booking_service.BookingService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_session</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/app/services/booking_service.html#BookingService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.booking_service.BookingService.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the BookingService with a database session factory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_session</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><em>Session</em><em>]</em>) – A callable returning a new database session.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.booking_service.BookingService._get_timezone">
+<span class="sig-name descname"><span class="pre">_get_timezone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/booking_service.html#BookingService._get_timezone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.booking_service.BookingService._get_timezone" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve the configured timezone from the system configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Active database session.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The configured timezone object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ZoneInfo</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.booking_service.BookingService._get_current_time">
+<span class="sig-name descname"><span class="pre">_get_current_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/booking_service.html#BookingService._get_current_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.booking_service.BookingService._get_current_time" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve the current system time adjusted to the configured timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Active database session.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Current time in the configured timezone.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.booking_service.BookingService._validate_user_and_slot">
+<span class="sig-name descname"><span class="pre">_validate_user_and_slot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slot_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/booking_service.html#BookingService._validate_user_and_slot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.booking_service.BookingService._validate_user_and_slot" title="Link to this definition">#</a></dt>
+<dd><p>Validate user and slot existence and eligibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db</strong> (<em>Session</em>) – Database session.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – ID of the user.</p></li>
+<li><p><strong>slot_id</strong> (<em>str</em>) – ID of the slot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Error message (if any)</p></li>
+<li><p>User object (if valid)</p></li>
+<li><p>Slot object (if valid)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Optional[str], Optional[<a class="reference internal" href="../models.html#app.models.User" title="app.models.User">User</a>], Optional[<a class="reference internal" href="../models.html#app.models.Slot" title="app.models.Slot">Slot</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.services.booking_service.BookingService.book_slot">
 <span class="sig-name descname"><span class="pre">book_slot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slot_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/booking_service.html#BookingService.book_slot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.booking_service.BookingService.book_slot" title="Link to this definition">#</a></dt>
 <dd><p>Book an event slot for a user if all conditions are met.</p>
@@ -553,6 +624,10 @@ It ensures concurrency safety, rate-limiting, and event availability checks.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService"><code class="docutils literal notranslate"><span class="pre">BookingService</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService.__init__"><code class="docutils literal notranslate"><span class="pre">BookingService.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService._get_timezone"><code class="docutils literal notranslate"><span class="pre">BookingService._get_timezone()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService._get_current_time"><code class="docutils literal notranslate"><span class="pre">BookingService._get_current_time()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService._validate_user_and_slot"><code class="docutils literal notranslate"><span class="pre">BookingService._validate_user_and_slot()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService.book_slot"><code class="docutils literal notranslate"><span class="pre">BookingService.book_slot()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.booking_service.BookingService.cancel_booking"><code class="docutils literal notranslate"><span class="pre">BookingService.cancel_booking()</span></code></a></li>
 </ul>

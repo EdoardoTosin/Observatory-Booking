@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -496,6 +496,20 @@
 
 <dl class="py method">
 <dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Initialize the WeatherService.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db_session</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><em>Session</em><em>]</em>) – A callable that returns a new database session.</p></li>
+<li><p><strong>cache_time</strong> (<em>int</em><em>, </em><em>optional</em>) – Cache time (in hours) for API responses. Defaults to 3.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Gracefully shuts down the background scheduler.</p>
 </dd></dl>
@@ -514,6 +528,23 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A mapping of datetime to weather parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[datetime, Dict[str, float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_process_hourly_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weather_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService._process_hourly_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Process raw hourly weather data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>weather_data</strong> (<a class="reference internal" href="../data_transfer_objects.html#app.data_transfer_objects.WeatherData" title="app.data_transfer_objects.WeatherData"><em>WeatherData</em></a>) – The retrieved weather data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping datetimes to weather parameters.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict[datetime, Dict[str, float]]</p>
@@ -588,6 +619,63 @@
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">update_events_weather</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService.update_events_weather"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Update weather conditions for all upcoming events.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_update_event_weather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forecast_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService._update_event_weather"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Update weather data for a single event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> – The event to update</p></li>
+<li><p><strong>forecast_data</strong> – The forecast data dictionary</p></li>
+<li><p><strong>config</strong> – The configuration object with weather thresholds</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_generate_hourly_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService._generate_hourly_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Generate a list of hourly timestamps between start and end, inclusive.
+Ensures that the datetimes are timezone-aware and in the specified timezone.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>datetime</em>) – The start datetime.</p></li>
+<li><p><strong>end</strong> (<em>datetime</em>) – The end datetime.</p></li>
+<li><p><strong>tz_str</strong> (<em>str</em>) – Timezone string (e.g., ‘UTC’, ‘Europe/Rome’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Hourly datetime objects covering the entire period.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[datetime]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_get_upcoming_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timezone_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/weather_service.html#WeatherService._get_upcoming_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Retrieve upcoming events from the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> (<em>Any</em>) – The database session.</p></li>
+<li><p><strong>timezone_str</strong> (<em>str</em>) – The timezone string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of upcoming events within the next 7 days.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="../models.html#app.models.Slot" title="app.models.Slot">Slot</a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -475,12 +475,32 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="app.routes.authentication._handle_login_post">
+<span class="sig-name descname"><span class="pre">_handle_login_post</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/authentication.html#_handle_login_post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.authentication._handle_login_post" title="Link to this definition">#</a></dt>
+<dd><p>Processes the POST request for user login and returns a redirect response.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="app.routes.authentication.register">
 <span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/authentication.html#register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.authentication.register" title="Link to this definition">#</a></dt>
 <dd><p>Handles user registration with validation and rate limiting.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The rendered registration template for GET requests or a redirect response for POST.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.authentication._handle_register_post">
+<span class="sig-name descname"><span class="pre">_handle_register_post</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/authentication.html#_handle_register_post"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.authentication._handle_register_post" title="Link to this definition">#</a></dt>
+<dd><p>Processes the POST request for user registration and returns a redirect response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A redirect response based on the outcome of the registration process.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Any</p>
@@ -553,7 +573,9 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.authentication.redirect_if_logged_in"><code class="docutils literal notranslate"><span class="pre">redirect_if_logged_in()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.authentication.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.authentication._handle_login_post"><code class="docutils literal notranslate"><span class="pre">_handle_login_post()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.authentication.register"><code class="docutils literal notranslate"><span class="pre">register()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.authentication._handle_register_post"><code class="docutils literal notranslate"><span class="pre">_handle_register_post()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.authentication.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
 </ul>
   </nav></div>

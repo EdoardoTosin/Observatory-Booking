@@ -14,3 +14,8 @@ img.theme-sensitive {
         content: url('_static/screenshots/landing-page-dark-mode.jpg');
     }
 }
+
+/* Fix HTTP Routing Table dark mode <tr> background */
+table.indextable tr.cap {
+    background-color: transparent !important;
+}

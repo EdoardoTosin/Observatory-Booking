@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -518,6 +518,51 @@ exposes unified methods for both administrative and user-facing functionalities.
 - Instantiate core services with their dependencies.
 - Ensure a superadmin user exists for initial access.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="app.booking_system.BookingSystem.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/booking_system.html#BookingSystem.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.booking_system.BookingSystem.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the BookingSystem instance.</p>
+<p>Steps:
+- Set up a scoped SQLAlchemy session and create database tables if not present.
+- Instantiate core services with their dependencies.
+- Ensure a superadmin user exists for initial access.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.booking_system.BookingSystem.__enter__">
+<span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/booking_system.html#BookingSystem.__enter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.booking_system.BookingSystem.__enter__" title="Link to this definition">#</a></dt>
+<dd><p>Enter the context manager for resource setup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The active scoped session for database interaction.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>scoped_session</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.booking_system.BookingSystem.__exit__">
+<span class="sig-name descname"><span class="pre">__exit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traceback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/booking_system.html#BookingSystem.__exit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.booking_system.BookingSystem.__exit__" title="Link to this definition">#</a></dt>
+<dd><p>Exit the context manager and perform cleanup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>exc_type</strong> – Exception type, if raised.</p></li>
+<li><p><strong>exc_value</strong> – Exception instance, if raised.</p></li>
+<li><p><strong>traceback</strong> – Traceback object, if exception occurred.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False to propagate any exception that occurred.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.booking_system.BookingSystem.shutdown">
 <span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/booking_system.html#BookingSystem.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.booking_system.BookingSystem.shutdown" title="Link to this definition">#</a></dt>
 <dd><p>Shutdown the booking system gracefully.</p>
@@ -734,6 +779,9 @@ the scoped session to release database connections.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.admin_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.admin_service</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.user_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.user_service</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.booking_service"><code class="docutils literal notranslate"><span class="pre">BookingSystem.booking_service</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.__init__"><code class="docutils literal notranslate"><span class="pre">BookingSystem.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.__enter__"><code class="docutils literal notranslate"><span class="pre">BookingSystem.__enter__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.__exit__"><code class="docutils literal notranslate"><span class="pre">BookingSystem.__exit__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.shutdown"><code class="docutils literal notranslate"><span class="pre">BookingSystem.shutdown()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.update_user_role"><code class="docutils literal notranslate"><span class="pre">BookingSystem.update_user_role()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.booking_system.BookingSystem.block_user"><code class="docutils literal notranslate"><span class="pre">BookingSystem.block_user()</span></code></a></li>

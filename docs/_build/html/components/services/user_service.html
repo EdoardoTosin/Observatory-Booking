@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=4f897e25" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -469,6 +469,20 @@ including:</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="app.services.user_service.UserService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/user_service.html#UserService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.user_service.UserService.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the UserService.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>db_session</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><em>Session</em><em>]</em>) – A callable returning a new database session.</p></li>
+<li><p><strong>lock</strong> (<em>Any</em>) – A lock object to ensure thread-safe operations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="app.services.user_service.UserService.validate_input">
 <em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/services/user_service.html#UserService.validate_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.user_service.UserService.validate_input" title="Link to this definition">#</a></dt>
 <dd><p>Validate that the input value is of the expected type.</p>
@@ -600,6 +614,7 @@ including:</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.user_service.UserService"><code class="docutils literal notranslate"><span class="pre">UserService</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.user_service.UserService.__init__"><code class="docutils literal notranslate"><span class="pre">UserService.__init__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.user_service.UserService.validate_input"><code class="docutils literal notranslate"><span class="pre">UserService.validate_input()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.user_service.UserService.create_user_account"><code class="docutils literal notranslate"><span class="pre">UserService.create_user_account()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#app.services.user_service.UserService.change_user_password"><code class="docutils literal notranslate"><span class="pre">UserService.change_user_password()</span></code></a></li>
