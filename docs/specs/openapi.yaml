@@ -171,31 +171,6 @@ paths:
       responses:
         '200':
           description: Event calendar data returned.
-    post:
-      tags: [User]
-      summary: Create a new event.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                event_title:
-                  type: string
-                event_description:
-                  type: string
-                event_date:
-                  type: string
-                opening_time:
-                  type: string
-                closing_time:
-                  type: string
-      responses:
-        '201':
-          description: Event created.
-        '400':
-          description: Invalid input.
 
   /booking:
     post:
