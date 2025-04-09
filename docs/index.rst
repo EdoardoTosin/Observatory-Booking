@@ -5,7 +5,12 @@ Welcome to the documentation for the **Observatory Booking Web App** - a self-ho
 
 .. raw:: html
 
-   <img src="_static/screenshots/landing-page.jpg" alt="Homepage Preview"
+    <img src="_static/screenshots/landing-page-light-mode.jpg" class="only-light" alt="Homepage Preview"
+        style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); filter: none !important;" />
+
+.. raw:: html
+
+    <img src="_static/screenshots/landing-page-dark-mode.jpg" class="only-dark" alt="Homepage Preview"
         style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); filter: none !important;" />
 
 .. admonition:: Artwork Credit

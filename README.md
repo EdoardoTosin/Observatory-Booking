@@ -9,9 +9,11 @@
   <em>A Flask-based, self-hostable <strong>observatory booking web app</strong> with role-based access control, weather-aware scheduling, and encrypted user data. Built with <strong>Tailwind CSS</strong> for a modern, responsive UI.</em>
 </p>
 
-<p align="center">
-  <img src="assets/screenshots/landing-page.jpg" alt="Homepage Preview" style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);" />
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/landing-page-dark-mode.jpg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/screenshots/landing-page-light-mode.jpg">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="assets/screenshots/landing-page-dark-mode.jpg">
+</picture>
 
 <p align="center" style="font-size: 0.95rem; color: #555;">
   <strong><i>Artwork by <a href="https://alexrockheart.artstation.com/" target="_blank" rel="noopener noreferrer" style="color: #4f46E5;">Alexandra Kostecka</a></strong></i>
