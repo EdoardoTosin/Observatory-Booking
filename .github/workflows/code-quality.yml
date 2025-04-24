@@ -9,6 +9,7 @@ on:
       - hotfix/**
     paths:
       - 'app/**'
+      - 'docs/**'
 
   pull_request:
     branches:
@@ -16,6 +17,8 @@ on:
       - dev
     paths:
       - 'app/**'
+      - 'docs/**'
+  workflow_dispatch:
 
 jobs:
   quality:
