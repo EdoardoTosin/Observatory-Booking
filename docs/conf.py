@@ -48,7 +48,7 @@ napoleon_use_rtype = True
 # httpdomain settings
 http_strict_mode = True
 http_index_localname = "HTTP Routing Table"
-http_index_shortname = 'api'
+http_index_shortname = "api"
 
 # Theme settings
 html_theme = "pydata_sphinx_theme"
