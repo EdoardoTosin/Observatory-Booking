@@ -9,6 +9,7 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from sqlalchemy.exc import SQLAlchemyError
+from flask import session, redirect, url_for, flash
 
 from ..models import Configuration, User, Slot
 from ..utils import logger, get_env_value
@@ -49,23 +50,23 @@ class AdminService:
 
         If no superadmin exists, a new one is created using environment-configured credentials.
         """
-        session = self.db()
+        db_session = self.db()
         try:
-            superadmin = session.query(User).filter_by(admin_rank="super").first()
+            superadmin = db_session.query(User).filter_by(admin_rank="super").first()
             if not superadmin:
-                self._create_superadmin(session)
+                self._create_superadmin(db_session)
         except SQLAlchemyError as e:
             logger.exception("Error during superadmin initialization: %s", e)
             raise
         finally:
-            session.close()
+            db_session.close()
 
-    def _create_superadmin(self, session):
+    def _create_superadmin(self, db_session):
         """
         Create a new superadmin user and save credentials to log.
 
         Args:
-            session (Session): Active database session.
+            db_session (Session): Active database session.
         """
         email = get_env_value("DEFAULT_ADMIN_EMAIL", "admin@example.com")
         password = get_env_value("DEFAULT_ADMIN_PASSWORD", secrets.token_urlsafe(16))
@@ -76,10 +77,32 @@ class AdminService:
             role="Admin",
             admin_rank="super",
         )
-        session.add(superadmin)
-        session.commit()
+        db_session.add(superadmin)
+        db_session.commit()
         logger.info("Default superadmin created. Email: %s", email)
         print(f"Default superadmin created.\nEmail: {email}\nPassword: {password}")
+
+    def _safe_query_user(self, db_session, user_id):
+        """
+        Safely query a user from the database after validating the session context.
+
+        This method checks whether a user is authenticated and not blocked by inspecting
+        the Flask session. If the session is invalid or the user is blocked, it returns
+        a rendered 403 error response. Otherwise, it queries and returns the user object
+        from the database by user ID.
+
+        Args:
+            db_session (Session): Active SQLAlchemy session for querying the database.
+            user_id (int): ID of the user to retrieve.
+
+        Returns:
+            User | Response: A `User` object if access is allowed, or a rendered 403 error response.
+        """
+        user_session = session.get("user")
+        if not user_session or user_session.get("blocked", False):
+            flash("Permission denied: account access restricted.", "error")
+            return redirect(url_for("bp.403"))
+        return db_session.query(User).filter_by(id=user_id).first()
 
     def update_user_role(self, user_id, new_role):
         """
@@ -94,22 +117,22 @@ class AdminService:
         Raises:
             ValueError: If the user does not exist or is a superadmin.
         """
-        session = self.db()
+        db_session = self.db()
         try:
-            user = session.query(User).filter_by(id=user_id).first()
+            user = self._safe_query_user(db_session, user_id)
             if not user:
                 raise ValueError("User not found")
             if user.admin_rank == "super":
                 raise ValueError("Cannot change role for superadmin")
             user.role = new_role
             user.admin_rank = "admin" if new_role == "Admin" else None
-            session.commit()
+            db_session.commit()
         except (SQLAlchemyError, ValueError) as e:
-            session.rollback()
+            db_session.rollback()
             logger.exception("Error updating role for user %s: %s", user_id, e)
             raise
         finally:
-            session.close()
+            db_session.close()
 
     def block_user(self, user_id, block):
         """
@@ -121,23 +144,23 @@ class AdminService:
             user_id (int): The ID of the user.
             block (bool): True to block the user, False to unblock.
         """
-        session = self.db()
+        db_session = self.db()
         try:
-            user = session.query(User).filter_by(id=user_id).first()
+            user = self._safe_query_user(db_session, user_id)
             if not user:
                 raise ValueError("User not found")
             if user.role == "Admin":
                 raise ValueError("Cannot block admin")
             user.blocked = block
-            session.commit()
+            db_session.commit()
         except (SQLAlchemyError, ValueError) as e:
-            session.rollback()
+            db_session.rollback()
             logger.exception(
                 "Error updating blocked status for user %s: %s", user_id, e
             )
             raise
         finally:
-            session.close()
+            db_session.close()
 
     def delete_user(self, user_id):
         """
@@ -148,22 +171,22 @@ class AdminService:
         Args:
             user_id (int): The ID of the user.
         """
-        session = self.db()
+        db_session = self.db()
         try:
-            user = session.query(User).filter_by(id=user_id).first()
+            user = self._safe_query_user(db_session, user_id)
             if not user:
                 raise ValueError("User not found.")
             if user.admin_rank == "super":
                 raise ValueError("Cannot delete superadmin account.")
-            session.delete(user)
-            session.commit()
+            db_session.delete(user)
+            db_session.commit()
             logger.info("User ID %s deleted successfully.", user_id)
         except (SQLAlchemyError, ValueError) as e:
-            session.rollback()
+            db_session.rollback()
             logger.exception("Error deleting user %s: %s", user_id, e)
             raise
         finally:
-            session.close()
+            db_session.close()
 
     def update_configuration(self, **config_params):
         """
@@ -176,21 +199,21 @@ class AdminService:
             Configuration: The updated configuration object.
         """
         with self.lock:
-            session = self.db()
+            db_session = self.db()
             try:
-                config = Configuration.get_config(session)
+                config = Configuration.get_config(db_session)
                 for key, value in config_params.items():
                     setattr(config, key, value)
-                session.commit()
+                db_session.commit()
                 if self.weather_service:
                     self.weather_service.update_events_weather()
                 return config
             except (SQLAlchemyError, ValueError) as e:
-                session.rollback()
+                db_session.rollback()
                 logger.exception("Error updating configuration: %s", e)
                 raise
             finally:
-                session.close()
+                db_session.close()
 
     def confirm_event(self, event, event_id=None):
         """
@@ -216,20 +239,20 @@ class AdminService:
         Returns:
             str: A confirmation message.
         """
-        session = self.db()
+        db_session = self.db()
         try:
-            config = Configuration.get_config(session)
+            config = Configuration.get_config(db_session)
             tz = ZoneInfo(str(config.timezone))
 
             event_times, weather_info, error_msg = self._prepare_event_data(
-                session, event, tz
+                db_session, event, tz
             )
             if error_msg:
                 return error_msg
 
             current_time = datetime.now(tz)
             existing_event = (
-                session.query(Slot).filter(Slot.id == int(event_id)).first()
+                db_session.query(Slot).filter(Slot.id == int(event_id)).first()
                 if event_id
                 else None
             )
@@ -248,16 +271,16 @@ class AdminService:
                 "weather_info": weather_info,
             }
 
-            return self._save_event(session, existing_event, event_data)
+            return self._save_event(db_session, existing_event, event_data)
 
         except (SQLAlchemyError, ValueError) as e:
-            session.rollback()
+            db_session.rollback()
             logger.exception("Error confirming event: %s", e)
             raise
         finally:
-            session.close()
+            db_session.close()
 
-    def _prepare_event_data(self, session, event, tz):
+    def _prepare_event_data(self, db_session, event, tz):
         """
         Validate and prepare event times and weather data.
 
@@ -299,7 +322,7 @@ class AdminService:
                 "Cannot schedule or edit an event with closing time in the past.",
             )
 
-        config = Configuration.get_config(session)
+        config = Configuration.get_config(db_session)
         weather_info = self._get_weather_data(
             event_times.start_local, event_times.end_local, config
         )
@@ -354,9 +377,9 @@ class AdminService:
             end_utc=event_end_utc,
         )
 
-    def _get_existing_event(self, session, event_start_utc):
+    def _get_existing_event(self, db_session, event_start_utc):
         """Get existing event for the given start time."""
-        return session.query(Slot).filter(Slot.start_time == event_start_utc).first()
+        return db_session.query(Slot).filter(Slot.start_time == event_start_utc).first()
 
     def _can_modify_event(self, event, current_time, tz):
         """Check if an existing event can be modified."""
@@ -379,12 +402,12 @@ class AdminService:
             weather_forecast=weather_forecast,
         )
 
-    def _save_event(self, session, existing_event, event_data):
+    def _save_event(self, db_session, existing_event, event_data):
         """
         Save a new event or update an existing event, ensuring no time overlap.
 
         Args:
-            session: The database session.
+            db_session: The database session.
             existing_event: An existing event to update, or None for a new event.
             event_data: Dictionary containing event information.
 
@@ -394,16 +417,16 @@ class AdminService:
         start_time = event_data["start_time"]
         end_time = event_data["end_time"]
 
-        if self._check_same_day_start(session, existing_event, start_time):
+        if self._check_same_day_start(db_session, existing_event, start_time):
             return "Only one event can start per day."
 
-        if self._check_prev_day_overlap(session, existing_event, start_time):
+        if self._check_prev_day_overlap(db_session, existing_event, start_time):
             return "Start time overlaps with previous day's event."
 
-        if self._check_next_day_overlap(session, existing_event, end_time):
+        if self._check_next_day_overlap(db_session, existing_event, end_time):
             return "End time overlaps with next day's event."
 
-        query = session.query(Slot).filter(
+        query = db_session.query(Slot).filter(
             Slot.end_time > start_time, Slot.start_time < end_time
         )
         if existing_event:
@@ -428,7 +451,7 @@ class AdminService:
             existing_event.weather_warning = weather_info.weather_warning
             existing_event.weather_forecast = weather_info.weather_forecast
             existing_event.available = True
-            session.commit()
+            db_session.commit()
             logger.info("Existing event updated for start time %s.", start_time)
             return "Event updated successfully."
 
@@ -443,16 +466,16 @@ class AdminService:
             weather_forecast=weather_info.weather_forecast,
             available=True,
         )
-        session.add(new_event)
-        session.commit()
+        db_session.add(new_event)
+        db_session.commit()
         logger.info("New event created for start time %s.", start_time)
         return "Event created successfully."
 
-    def _check_same_day_start(self, session, existing_event, start_time):
+    def _check_same_day_start(self, db_session, existing_event, start_time):
         """Check if any event starts on the same UTC day."""
         start_day_utc = start_time.replace(hour=0, minute=0, second=0, microsecond=0)
         next_day_utc = start_day_utc + timedelta(days=1)
-        query = session.query(Slot).filter(
+        query = db_session.query(Slot).filter(
             Slot.start_time >= start_day_utc,
             Slot.start_time < next_day_utc,
         )
@@ -460,13 +483,13 @@ class AdminService:
             query = query.filter(Slot.id != existing_event.id)
         return query.first() is not None
 
-    def _check_prev_day_overlap(self, session, existing_event, start_time):
+    def _check_prev_day_overlap(self, db_session, existing_event, start_time):
         """Check if an event from the previous day overlaps into the new event's start time."""
         start_day_utc = start_time.replace(hour=0, minute=0, second=0, microsecond=0)
         prev_day_start_utc = start_day_utc - timedelta(days=1)
         prev_day_end_utc = start_day_utc
 
-        query = session.query(Slot).filter(
+        query = db_session.query(Slot).filter(
             Slot.start_time >= prev_day_start_utc,
             Slot.start_time < prev_day_end_utc,
             Slot.end_time > start_time,
@@ -475,12 +498,12 @@ class AdminService:
             query = query.filter(Slot.id != existing_event.id)
         return query.first() is not None
 
-    def _check_next_day_overlap(self, session, existing_event, end_time):
+    def _check_next_day_overlap(self, db_session, existing_event, end_time):
         """Check if the current event's end time overlaps into the next day's event start."""
         end_day_utc = end_time.replace(hour=0, minute=0, second=0, microsecond=0)
         next_day_utc = end_day_utc + timedelta(days=1)
 
-        query = session.query(Slot).filter(
+        query = db_session.query(Slot).filter(
             Slot.start_time >= next_day_utc,
             Slot.start_time < next_day_utc + timedelta(days=1),
             Slot.start_time < end_time,

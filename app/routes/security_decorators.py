@@ -21,8 +21,12 @@ def login_required(f):
 
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "user" not in session:
+        user = session.get("user")
+        if not user:
             flash("You must be logged in to access this page.", "error")
+            return redirect(url_for("bp.login"))
+        if user.get("blocked", False):
+            flash("Your account has been blocked.", "error")
             return redirect(url_for("bp.login"))
         return f(*args, **kwargs)
 
