@@ -8,7 +8,7 @@ Prerequisites
 
 Ensure you have the following software installed:
 
-- Python 3.9 or higher: https://www.python.org/downloads/
+- Python 3.10 or higher: https://www.python.org/downloads/
 - Git (to clone the repository): https://git-scm.com/
 - SQLite (default) or PostgreSQL (optional for production)
 
@@ -29,7 +29,7 @@ Install required Python packages:
 
 .. code-block:: bash
 
-    pip install -r requirements.txt
+    uv sync
 
 Environment Configuration
 -------------------------
@@ -61,7 +61,7 @@ Start the Flask app:
 
 .. code-block:: bash
 
-    python -m app
+    uv run python -m app
 
 Note: The Superadmin account is automatically created on first run using credentials from the `.env` file.
 

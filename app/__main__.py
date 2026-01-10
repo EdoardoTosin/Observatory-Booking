@@ -2,7 +2,7 @@
 
 This file enables the Flask application to be executed using Python's module execution syntax:
 
-    $ python -m app
+    $ uv run python -m app
 
 When executed, it delegates control to the `main()` function defined in `app.py`,
 which is responsible for initializing the Flask application instance and starting

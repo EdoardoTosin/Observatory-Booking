@@ -28,7 +28,7 @@
 
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/github/license/EdoardoTosin/Observatory-Booking?style=for-the-badge&logo=open-source-initiative" alt="License" /></a>
-    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python Version" /></a>
+    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python Version" /></a>
     <a href="https://edoardotosin.github.io/Observatory-Booking"><img src="https://img.shields.io/badge/Docs-GitHub%20Pages-0366d6?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Project Documentation" /></a>
   </p>
 
@@ -91,7 +91,8 @@
 
 ## 📦 Prerequisites
 
-- **Python 3.9+**
+- **Python 3.10+**
+- **uv**
 - **SQLite** (default, or PostgreSQL via `DATABASE_URL`)
 - (Optional) Reverse proxy (e.g., Nginx, Apache) for production deployments.
 
@@ -107,7 +108,7 @@ cd Observatory-Booking
 ### 2. Python Setup
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 3. Environment Configuration
@@ -135,7 +136,7 @@ LOGGING_LEVEL=DEBUG
 ### 4. Start the Application
 
 ```bash
-python -m app
+uv run python -m app
 ```
 
 > ℹ️ **Note**: A Superadmin account is automatically created on first run using `.env` credentials.
