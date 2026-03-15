@@ -10,7 +10,7 @@ User Workflow
 
    - Go to `/register`.
    - Provide name, email, and password.
-   - Passwords must be 8–30 characters, with at least one uppercase, one lowercase, and one digit.
+   - Passwords must be 8-30 characters, with at least one uppercase, one lowercase, and one digit.
    - Name and email are AES-encrypted; passwords are hashed with bcrypt.
 
 2. **Login**

@@ -9,7 +9,7 @@ The **Observatory Booking Web App** is a Flask-based, self-hostable application 
 Purpose
 -------
 
-The web app enables users to book events by evalating the weather rating, using real-time **Open-Meteo weather data**, with a user-friendly interface. For admins, it supports seamless management of events, users, and weather evaluations.
+The web app enables users to book events by evaluating the weather rating, using real-time **Open-Meteo weather data**, with a user-friendly interface. For admins, it supports seamless management of events, users, and weather evaluations.
 
 Key Features
 ------------
@@ -26,7 +26,7 @@ Key Features
 
 - **Weather-Aware Booking**
   - Uses hourly forecasts (cloud cover, dew point, visibility, precipitation).
-  - Events are scored from 0–100 and flagged if below configured threshold.
+  - Events are scored from 0-100 and flagged if below configured threshold.
   - Background updates run every 3 hours via APScheduler.
 
 - **Time Zone & Location Awareness**

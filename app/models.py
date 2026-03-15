@@ -21,7 +21,7 @@ from sqlalchemy import (
     UniqueConstraint,
     Time,
 )
-from sqlalchemy.orm import relationship, DeclarativeBase
+from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from .utils import encrypt_data, decrypt_data
 
 if TYPE_CHECKING:
@@ -112,8 +112,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name_encrypted = Column(String(50), nullable=False, unique=True)
-    email_encrypted = Column(String(255), nullable=False, unique=True, index=True)
+    name_encrypted: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
+    email_encrypted: Mapped[str] = mapped_column(
+        String(255), nullable=False, unique=True, index=True
+    )
     password_hash = Column(String(255), nullable=False)
     role = Column(String(10), default="User")
     blocked = Column(Boolean, default=False)
@@ -145,7 +147,9 @@ class User(Base):
             email (str): Plaintext email address.
             password (str): Plaintext password.
             role (str): Role (default is 'User').
+            admin_rank (Optional[str]): Admin rank if applicable (e.g., 'super'). Defaults to None.
         """
+        super().__init__()
         self.set_name(name)
         self.set_email(email)
         self.set_password(password)

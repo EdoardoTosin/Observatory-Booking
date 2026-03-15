@@ -9,7 +9,13 @@ from flask import (
     flash,
     current_app,
 )
-from ..utils import encrypt_data, is_email_valid, is_password_strong, is_rate_limited
+from ..utils import (
+    encrypt_data,
+    is_email_valid,
+    is_password_strong,
+    is_rate_limited,
+    logger,
+)
 from ..models import User
 from .blueprint import bp
 
@@ -68,13 +74,24 @@ def _handle_login_post():
                 db.query(User).filter(User.email_encrypted == encrypted_email).first()
             )
             if not user or not user.verify_password(password):
+                logger.warning("Failed login attempt from IP %s", request.remote_addr)
                 flash("Invalid credentials", "error")
                 return redirect(url_for("bp.login"))
 
             if user.blocked:
+                logger.warning(
+                    "Login attempt by blocked user ID %s from IP %s",
+                    user.id,
+                    request.remote_addr,
+                )
                 flash("Your account is blocked.", "error")
                 return redirect(url_for("bp.login"))
 
+            logger.info(
+                "User ID %s logged in from IP %s.", user.id, request.remote_addr
+            )
+            # Regenerate session to prevent session fixation.
+            session.clear()
             session["user"] = {
                 "id": user.id,
                 "name": user.get_name(),
@@ -161,6 +178,8 @@ def _handle_register_post():  # pylint: disable=too-many-return-statements
         with system as db:
             user = system.create_user_account(name, email, password)
 
+        # Regenerate session to prevent session fixation.
+        session.clear()
         session["user"] = {
             "id": user.id,
             "name": user.get_name(),

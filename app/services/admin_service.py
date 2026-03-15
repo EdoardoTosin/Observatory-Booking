@@ -79,8 +79,16 @@ class AdminService:
         )
         db_session.add(superadmin)
         db_session.commit()
-        logger.info("Default superadmin created. Email: %s", email)
-        print(f"Default superadmin created.\nEmail: {email}\nPassword: {password}")
+        logger.info("First-time setup: superadmin account created.")
+        # Print credentials to stdout for the operator performing first-time setup.
+        # Passwords are never written to log files.
+        separator = "=" * 60
+        print(separator)
+        print("FIRST-TIME SETUP: Superadmin account created.")
+        print(f"  Email:    {email}")
+        print(f"  Password: {password}")
+        print("IMPORTANT: Log in immediately and change this password.")
+        print(separator)
 
     def _safe_query_user(self, db_session, user_id):
         """
@@ -271,7 +279,7 @@ class AdminService:
                 "weather_info": weather_info,
             }
 
-            return self._save_event(db_session, existing_event, event_data)
+            return self._save_event(db_session, existing_event, event_data, tz)
 
         except (SQLAlchemyError, ValueError) as e:
             db_session.rollback()
@@ -402,7 +410,7 @@ class AdminService:
             weather_forecast=weather_forecast,
         )
 
-    def _save_event(self, db_session, existing_event, event_data):
+    def _save_event(self, db_session, existing_event, event_data, tz):
         """
         Save a new event or update an existing event, ensuring no time overlap.
 
@@ -417,7 +425,7 @@ class AdminService:
         start_time = event_data["start_time"]
         end_time = event_data["end_time"]
 
-        if self._check_same_day_start(db_session, existing_event, start_time):
+        if self._check_same_day_start(db_session, existing_event, start_time, tz):
             return "Only one event can start per day."
 
         if self._check_prev_day_overlap(db_session, existing_event, start_time):
@@ -471,13 +479,18 @@ class AdminService:
         logger.info("New event created for start time %s.", start_time)
         return "Event created successfully."
 
-    def _check_same_day_start(self, db_session, existing_event, start_time):
-        """Check if any event starts on the same UTC day."""
-        start_day_utc = start_time.replace(hour=0, minute=0, second=0, microsecond=0)
-        next_day_utc = start_day_utc + timedelta(days=1)
+    def _check_same_day_start(self, db_session, existing_event, start_time, tz):
+        """Check if any event starts on the same local calendar day."""
+        local_day = start_time.astimezone(tz).date()
+        local_day_start_utc = datetime.combine(
+            local_day, datetime.min.time(), tzinfo=tz
+        ).astimezone(timezone.utc)
+        local_day_end_utc = datetime.combine(
+            local_day + timedelta(days=1), datetime.min.time(), tzinfo=tz
+        ).astimezone(timezone.utc)
         query = db_session.query(Slot).filter(
-            Slot.start_time >= start_day_utc,
-            Slot.start_time < next_day_utc,
+            Slot.start_time >= local_day_start_utc,
+            Slot.start_time < local_day_end_utc,
         )
         if existing_event:
             query = query.filter(Slot.id != existing_event.id)

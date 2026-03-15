@@ -27,21 +27,21 @@ Project Overview
 
 **Key Features:**
 
-- 🔒 **Role-based access control**: User, Admin, Superadmin with enforced permissions
-- 📅 **Event booking system**: Event-based reservations with limits
-- 🌤️ **Weather-aware scheduling**: Real-time data from the Open-Meteo API
-- ⚙️ **Admin dashboard**: Manage users, events, system config
-- 🔐 **Secure user data**: AES-encrypted name/email, bcrypt passwords, session hardening
-- 🚀 **Responsive UI**: Mobile-first, Tailwind-based with support for dark mode
-- ⏱️ **Rate limiting**: Prevent brute-force and abuse
-- 🕒 **Timezone-aware**: All logic respects configured IANA timezone
+- **Role-based access control**: User, Admin, Superadmin with enforced permissions
+- **Event booking system**: Event-based reservations with limits
+- **Weather-aware scheduling**: Real-time data from the Open-Meteo API
+- **Admin dashboard**: Manage users, events, system config
+- **Secure user data**: AES-256-GCM encrypted name/email, bcrypt passwords, CSRF protection, session hardening
+- **Responsive UI**: Mobile-first, Tailwind-based with support for dark mode
+- **Rate limiting**: Prevent brute-force and abuse
+- **Timezone-aware**: All logic respects configured IANA timezone
 
 Contents
 --------
 
 .. toctree::
    :maxdepth: 1
-   :caption: 🚀 Introduction
+   :caption: Introduction
 
    introduction
    installation
@@ -50,13 +50,13 @@ Contents
 
 .. toctree::
    :maxdepth: 1
-   :caption: 🔐 API Endpoints
+   :caption: API Endpoints
 
    endpoints
 
 .. toctree::
    :maxdepth: 1
-   :caption: 🧱 Application Structure
+   :caption: Application Structure
 
    components/index
 

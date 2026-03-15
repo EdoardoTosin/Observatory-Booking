@@ -5,7 +5,9 @@ const config = window.CALENDAR_CONFIG || {
   timezone: "UTC",
 };
 
-let currentDate = new Date();
+const _nowInObs = new Date().toLocaleDateString("en-CA", { timeZone: config.timezone });
+const [_obsYear, _obsMonth, _obsDay] = _nowInObs.split("-").map(Number);
+let currentDate = new Date(_obsYear, _obsMonth - 1, _obsDay);
 
 function renderCalendar(date) {
   const calendarGrid = document.getElementById("calendarGrid");
@@ -27,8 +29,7 @@ function renderCalendar(date) {
     });
   }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const todayStr = new Date().toLocaleDateString("en-CA", { timeZone: config.timezone });
 
   for (let i = 0; i < startDay; i++) {
     calendarGrid.appendChild(createEmptyDay());
@@ -42,19 +43,13 @@ function renderCalendar(date) {
 
     const eventForDay =
       window.events &&
-      window.events.find((e) => {
-        const eventDate = new Date(e.effective_date + "T00:00:00Z");
-        const eventLocalDate = eventDate.toLocaleDateString("en-CA", {
-          timeZone: config.timezone,
-        });
-        return eventLocalDate === dayStr;
-      });
+      window.events.find((e) => e.effective_date === dayStr);
 
     const dayElement = document.createElement("div");
     dayElement.className = "text-center p-2 rounded-lg";
     dayElement.textContent = day;
 
-    if (cellDate < today) {
+    if (dayStr < todayStr) {
       dayElement.classList.add(
         "text-gray-400",
         "cursor-not-allowed",
@@ -104,22 +99,8 @@ function openEventModal(date, event = null) {
   if (event) {
     document.getElementById("eventId").value = event.id;
 
-    const openingDateUTC = new Date(`2000-01-01T${event.opening_time}Z`);
-    const closingDateUTC = new Date(`2000-01-01T${event.closing_time}Z`);
-    document.getElementById("openingTime").value =
-      openingDateUTC.toLocaleTimeString("en-GB", {
-        hour12: false,
-        timeZone: config.timezone,
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    document.getElementById("closingTime").value =
-      closingDateUTC.toLocaleTimeString("en-GB", {
-        hour12: false,
-        timeZone: config.timezone,
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+    document.getElementById("openingTime").value = event.opening_time;
+    document.getElementById("closingTime").value = event.closing_time;
 
     document.getElementById("maxBookings").value = event.max_bookings;
     document.getElementById("eventTitle").value = event.title || "";
@@ -172,7 +153,11 @@ function closeEventModal() {
 
 function deleteEvent() {
   if (confirm("Are you sure you want to delete this event?")) {
-    const eventId = document.getElementById("eventId").value;
+    const rawId = document.getElementById("eventId").value;
+    const eventId = parseInt(rawId, 10);
+    if (!Number.isInteger(eventId) || eventId <= 0) {
+      return;
+    }
     const deleteForm = document.getElementById("deleteForm");
     deleteForm.action = "/admin/delete_event/" + eventId;
     deleteForm.submit();

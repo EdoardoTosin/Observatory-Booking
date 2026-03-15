@@ -34,25 +34,27 @@ Install required Python packages:
 Environment Configuration
 -------------------------
 
-Create a `.env` file in the project root with the following variables:
+Create a `.env` file in the project root. Cryptographic keys that are absent are generated automatically on first start and written back to `.env`.
 
 .. code-block:: ini
 
     DATABASE_URL=sqlite:///observatory_booking.db
     DEFAULT_ADMIN_EMAIL=admin@example.com
-    DEFAULT_ADMIN_PASSWORD=admin
+    DEFAULT_ADMIN_PASSWORD=
     SECRET_KEY=<secure_random_string>
     AES_SECRET_KEY=<base64_encoded_key>
+    AES_HMAC_KEY=<base64_encoded_key>
     AES_IV=<base64_encoded_iv>
-    FLASK_ENV=development
-    DEBUG_MODE=True
-    HOST=0.0.0.0
+    ENV=development
+    DEBUG_MODE=False
+    HOST=127.0.0.1
     PORT=5000
-    WTF_CSRF_ENABLED=False
+    SESSION_COOKIE_HTTPONLY=True
     SESSION_COOKIE_SECURE=False
-    LOGGING_LEVEL=DEBUG
+    SESSION_COOKIE_SAMESITE=Lax
+    LOGGING_LEVEL=INFO
 
-**Note:** For production, set `FLASK_ENV=production`, use strong secrets, and enable CSRF and secure cookies.
+Leave ``DEFAULT_ADMIN_PASSWORD`` empty. On first run the application generates a secure random password and prints it once to stdout -- change it immediately after logging in. For production set ``DEBUG_MODE=False``, ``SESSION_COOKIE_SECURE=True`` (requires HTTPS), and ``SESSION_COOKIE_SAMESITE=Strict``.
 
 Running the Application
 -----------------------
@@ -63,7 +65,7 @@ Start the Flask app:
 
     uv run python -m app
 
-Note: The Superadmin account is automatically created on first run using credentials from the `.env` file.
+The Superadmin account is created automatically on first run. Credentials are printed once to stdout and are never written to log files.
 
 Access the application at `http://127.0.0.1:5000/`.
 

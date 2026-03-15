@@ -40,8 +40,8 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/utils';</script>
@@ -417,6 +417,8 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_hmac_module</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
@@ -435,7 +437,9 @@
     <span class="n">cast</span><span class="p">,</span>
 <span class="p">)</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidTag</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.ciphers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.ciphers.aead</span><span class="w"> </span><span class="kn">import</span> <span class="n">AESGCM</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.backends</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_backend</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span><span class="p">,</span> <span class="n">set_key</span>
 
@@ -521,14 +525,19 @@
 <a class="viewcode-back" href="../../components/utils.html#app.utils.get_encryption_keys">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_encryption_keys</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Retrieve AES encryption key and IV from environment variables.</span>
+<span class="sd">    Retrieve AES encryption key, legacy IV, and HMAC key from environment variables.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tuple[bytes, bytes]: AES key (32 bytes) and initialization vector (16 bytes).</span>
+<span class="sd">        Tuple[bytes, bytes, bytes]: AES key (32 bytes), legacy IV (16 bytes), HMAC key (32 bytes).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">secret_key</span> <span class="o">=</span> <span class="n">get_or_generate_env_key</span><span class="p">(</span><span class="s2">&quot;AES_SECRET_KEY&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">is_base64</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">iv</span> <span class="o">=</span> <span class="n">get_or_generate_env_key</span><span class="p">(</span><span class="s2">&quot;AES_IV&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">is_base64</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">secret_key</span><span class="p">),</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">iv</span><span class="p">)</span></div>
+    <span class="n">hmac_key</span> <span class="o">=</span> <span class="n">get_or_generate_env_key</span><span class="p">(</span><span class="s2">&quot;AES_HMAC_KEY&quot;</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">is_base64</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">secret_key</span><span class="p">),</span>
+        <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">iv</span><span class="p">),</span>
+        <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">hmac_key</span><span class="p">),</span>
+    <span class="p">)</span></div>
 
 
 
@@ -552,37 +561,47 @@
 
 
 
-<span class="n">AES_SECRET_KEY</span><span class="p">,</span> <span class="n">AES_IV</span> <span class="o">=</span> <span class="n">get_encryption_keys</span><span class="p">()</span>
+<span class="n">_AES_KEY</span><span class="p">,</span> <span class="n">_AES_IV_LEGACY</span><span class="p">,</span> <span class="n">_AES_HMAC_KEY</span> <span class="o">=</span> <span class="n">get_encryption_keys</span><span class="p">()</span>
+
+<span class="c1"># GCM nonce size (96 bits, recommended by NIST for AES-GCM)</span>
+<span class="n">_GCM_NONCE_SIZE</span> <span class="o">=</span> <span class="mi">12</span>
 
 
 <div class="viewcode-block" id="encrypt_data">
 <a class="viewcode-back" href="../../components/utils.html#app.utils.encrypt_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">encrypt_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">encrypt_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Encrypt plaintext using AES encryption (CBC mode, PKCS#7 padding).</span>
+<span class="sd">    Encrypt plaintext using AES-256-GCM with a deterministic nonce.</span>
+
+<span class="sd">    The nonce is derived from the plaintext via HMAC-SHA256 so that identical</span>
+<span class="sd">    plaintexts always produce identical ciphertexts - required for database</span>
+<span class="sd">    equality lookups (e.g. finding a user by encrypted email).  GCM provides</span>
+<span class="sd">    authenticated encryption, preventing ciphertext tampering.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data (str): Plaintext to encrypt.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: Base64-encoded encrypted data.</span>
+<span class="sd">        str: Base64-encoded payload: 12-byte nonce || ciphertext || 16-byte GCM tag.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span>
-        <span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">AES_SECRET_KEY</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">AES_IV</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">()</span>
-    <span class="p">)</span>
-    <span class="n">encryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encryptor</span><span class="p">()</span>
-    <span class="n">pad_length</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span> <span class="o">%</span> <span class="mi">16</span><span class="p">)</span>
-    <span class="n">padded_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">pad_length</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_length</span><span class="p">)</span>
-    <span class="n">encrypted_bytes</span> <span class="o">=</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">padded_data</span><span class="p">)</span> <span class="o">+</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">encrypted_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+    <span class="n">plaintext</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="c1"># Derive a deterministic 12-byte nonce from the plaintext using HMAC-SHA256.</span>
+    <span class="n">nonce</span> <span class="o">=</span> <span class="n">_hmac_module</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">_AES_HMAC_KEY</span><span class="p">,</span> <span class="n">plaintext</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()[</span>
+        <span class="p">:</span><span class="n">_GCM_NONCE_SIZE</span>
+    <span class="p">]</span>
+    <span class="n">ciphertext_with_tag</span> <span class="o">=</span> <span class="n">AESGCM</span><span class="p">(</span><span class="n">_AES_KEY</span><span class="p">)</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">nonce</span><span class="p">,</span> <span class="n">plaintext</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">nonce</span> <span class="o">+</span> <span class="n">ciphertext_with_tag</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="decrypt_data">
 <a class="viewcode-back" href="../../components/utils.html#app.utils.decrypt_data">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">decrypt_data</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">decrypt_data</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Decrypt AES CBC mode encrypted data.</span>
+<span class="sd">    Decrypt data produced by encrypt_data, with a fallback for legacy AES-CBC payloads.</span>
+
+<span class="sd">    New format: base64(12-byte nonce || ciphertext || 16-byte GCM tag) - minimum 29 bytes decoded.</span>
+<span class="sd">    Legacy format: base64(AES-CBC ciphertext with PKCS#7 padding) - always a multiple of 16 bytes.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        encrypted_data (str): Base64-encoded ciphertext.</span>
@@ -590,14 +609,24 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        str: Decrypted plaintext.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">)</span>
+
+    <span class="c1"># Attempt AES-256-GCM decryption (new format).</span>
+    <span class="c1"># Minimum valid size: 12-byte nonce + 1-byte plaintext + 16-byte tag = 29 bytes.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">_GCM_NONCE_SIZE</span> <span class="o">+</span> <span class="mi">16</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">nonce</span><span class="p">,</span> <span class="n">ciphertext</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[:</span><span class="n">_GCM_NONCE_SIZE</span><span class="p">],</span> <span class="n">raw</span><span class="p">[</span><span class="n">_GCM_NONCE_SIZE</span><span class="p">:]</span>
+            <span class="k">return</span> <span class="n">AESGCM</span><span class="p">(</span><span class="n">_AES_KEY</span><span class="p">)</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">nonce</span><span class="p">,</span> <span class="n">ciphertext</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">InvalidTag</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>  <span class="c1"># GCM tag mismatch - fall through to legacy</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># Legacy fallback: AES-256-CBC with static IV (data from before this version).</span>
     <span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span>
-        <span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">AES_SECRET_KEY</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">AES_IV</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">()</span>
+        <span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">_AES_KEY</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">_AES_IV_LEGACY</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">()</span>
     <span class="p">)</span>
     <span class="n">decryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decryptor</span><span class="p">()</span>
-    <span class="n">decrypted_bytes</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">decryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encrypted_data</span><span class="p">))</span> <span class="o">+</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">decrypted_bytes</span><span class="p">[:</span> <span class="o">-</span><span class="n">decrypted_bytes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span></div>
+    <span class="n">decrypted_bytes</span> <span class="o">=</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">+</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">decrypted_bytes</span><span class="p">[:</span> <span class="o">-</span><span class="n">decrypted_bytes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
 
 
 
@@ -749,7 +778,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>

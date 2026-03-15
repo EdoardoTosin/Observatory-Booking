@@ -8,6 +8,8 @@ and caching results.
 
 import os
 import base64
+import hashlib
+import hmac as _hmac_module
 import secrets
 import logging
 import re
@@ -26,7 +28,9 @@ from typing import (
     cast,
 )
 
+from cryptography.exceptions import InvalidTag
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.backends import default_backend
 from dotenv import load_dotenv, set_key
 
@@ -101,14 +105,19 @@ def get_secret_key():
 
 def get_encryption_keys():
     """
-    Retrieve AES encryption key and IV from environment variables.
+    Retrieve AES encryption key, legacy IV, and HMAC key from environment variables.
 
     Returns:
-        Tuple[bytes, bytes]: AES key (32 bytes) and initialization vector (16 bytes).
+        Tuple[bytes, bytes, bytes]: AES key (32 bytes), legacy IV (16 bytes), HMAC key (32 bytes).
     """
     secret_key = get_or_generate_env_key("AES_SECRET_KEY", 32, is_base64=True)
     iv = get_or_generate_env_key("AES_IV", 16, is_base64=True)
-    return base64.b64decode(secret_key), base64.b64decode(iv)
+    hmac_key = get_or_generate_env_key("AES_HMAC_KEY", 32, is_base64=True)
+    return (
+        base64.b64decode(secret_key),
+        base64.b64decode(iv),
+        base64.b64decode(hmac_key),
+    )
 
 
 def get_env_value(key_name, default=None):
@@ -128,32 +137,42 @@ def get_env_value(key_name, default=None):
     return value
 
 
-AES_SECRET_KEY, AES_IV = get_encryption_keys()
+_AES_KEY, _AES_IV_LEGACY, _AES_HMAC_KEY = get_encryption_keys()
+
+# GCM nonce size (96 bits, recommended by NIST for AES-GCM)
+_GCM_NONCE_SIZE = 12
 
 
-def encrypt_data(data):
+def encrypt_data(data: str) -> str:
     """
-    Encrypt plaintext using AES encryption (CBC mode, PKCS#7 padding).
+    Encrypt plaintext using AES-256-GCM with a deterministic nonce.
+
+    The nonce is derived from the plaintext via HMAC-SHA256 so that identical
+    plaintexts always produce identical ciphertexts - required for database
+    equality lookups (e.g. finding a user by encrypted email).  GCM provides
+    authenticated encryption, preventing ciphertext tampering.
 
     Args:
         data (str): Plaintext to encrypt.
 
     Returns:
-        str: Base64-encoded encrypted data.
+        str: Base64-encoded payload: 12-byte nonce || ciphertext || 16-byte GCM tag.
     """
-    cipher = Cipher(
-        algorithms.AES(AES_SECRET_KEY), modes.CBC(AES_IV), backend=default_backend()
-    )
-    encryptor = cipher.encryptor()
-    pad_length = 16 - (len(data.encode()) % 16)
-    padded_data = data.encode() + bytes([pad_length] * pad_length)
-    encrypted_bytes = encryptor.update(padded_data) + encryptor.finalize()
-    return base64.b64encode(encrypted_bytes).decode()
+    plaintext = data.encode("utf-8")
+    # Derive a deterministic 12-byte nonce from the plaintext using HMAC-SHA256.
+    nonce = _hmac_module.new(_AES_HMAC_KEY, plaintext, hashlib.sha256).digest()[
+        :_GCM_NONCE_SIZE
+    ]
+    ciphertext_with_tag = AESGCM(_AES_KEY).encrypt(nonce, plaintext, None)
+    return base64.b64encode(nonce + ciphertext_with_tag).decode("utf-8")
 
 
-def decrypt_data(encrypted_data):
+def decrypt_data(encrypted_data: str) -> str:
     """
-    Decrypt AES CBC mode encrypted data.
+    Decrypt data produced by encrypt_data, with a fallback for legacy AES-CBC payloads.
+
+    New format: base64(12-byte nonce || ciphertext || 16-byte GCM tag) - minimum 29 bytes decoded.
+    Legacy format: base64(AES-CBC ciphertext with PKCS#7 padding) - always a multiple of 16 bytes.
 
     Args:
         encrypted_data (str): Base64-encoded ciphertext.
@@ -161,14 +180,24 @@ def decrypt_data(encrypted_data):
     Returns:
         str: Decrypted plaintext.
     """
+    raw = base64.b64decode(encrypted_data)
+
+    # Attempt AES-256-GCM decryption (new format).
+    # Minimum valid size: 12-byte nonce + 1-byte plaintext + 16-byte tag = 29 bytes.
+    if len(raw) >= _GCM_NONCE_SIZE + 16:
+        try:
+            nonce, ciphertext = raw[:_GCM_NONCE_SIZE], raw[_GCM_NONCE_SIZE:]
+            return AESGCM(_AES_KEY).decrypt(nonce, ciphertext, None).decode("utf-8")
+        except (InvalidTag, ValueError):  # GCM tag mismatch - fall through to legacy
+            pass
+
+    # Legacy fallback: AES-256-CBC with static IV (data from before this version).
     cipher = Cipher(
-        algorithms.AES(AES_SECRET_KEY), modes.CBC(AES_IV), backend=default_backend()
+        algorithms.AES(_AES_KEY), modes.CBC(_AES_IV_LEGACY), backend=default_backend()
     )
     decryptor = cipher.decryptor()
-    decrypted_bytes = (
-        decryptor.update(base64.b64decode(encrypted_data)) + decryptor.finalize()
-    )
-    return decrypted_bytes[: -decrypted_bytes[-1]].decode()
+    decrypted_bytes = decryptor.update(raw) + decryptor.finalize()
+    return decrypted_bytes[: -decrypted_bytes[-1]].decode("utf-8")
 
 
 def is_rate_limited(user_id):

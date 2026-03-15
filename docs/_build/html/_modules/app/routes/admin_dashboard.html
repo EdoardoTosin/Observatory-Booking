@@ -40,8 +40,8 @@
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/routes/admin_dashboard';</script>
@@ -409,7 +409,6 @@
   <h1>Source code for app.routes.admin_dashboard</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Admin Dashboard routes for managing configurations, events, and users.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span><span class="p">,</span> <span class="n">available_timezones</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">timezone</span>
 
@@ -427,6 +426,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..booking_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">User</span><span class="p">,</span> <span class="n">Slot</span><span class="p">,</span> <span class="n">Booking</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..data_transfer_objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigurationUpdate</span><span class="p">,</span> <span class="n">EventData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.blueprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">bp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.security_decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin_required</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.static_pages</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_static_page</span>
@@ -505,7 +505,7 @@
     <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">:</span>
         <span class="n">start_local</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">config_timezone</span><span class="p">)</span>
         <span class="n">end_local</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">config_timezone</span><span class="p">)</span>
-        <span class="n">effective_date</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="n">effective_date</span> <span class="o">=</span> <span class="n">start_local</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
 
         <span class="n">rating</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">slot</span><span class="o">.</span><span class="n">weather_rating</span>
@@ -548,14 +548,14 @@
             <span class="n">users</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="n">bookings</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Booking</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="n">slots</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">bookings</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-            <span class="n">events_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">build_events_data</span><span class="p">(</span><span class="n">slots</span><span class="p">,</span> <span class="n">config_timezone</span><span class="p">))</span>
+            <span class="n">events_data</span> <span class="o">=</span> <span class="n">build_events_data</span><span class="p">(</span><span class="n">slots</span><span class="p">,</span> <span class="n">config_timezone</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span>
             <span class="s2">&quot;admin/admin.html&quot;</span><span class="p">,</span>
             <span class="n">config</span><span class="o">=</span><span class="n">config_dict</span><span class="p">,</span>
             <span class="n">users</span><span class="o">=</span><span class="n">users</span><span class="p">,</span>
             <span class="n">bookings</span><span class="o">=</span><span class="n">bookings</span><span class="p">,</span>
             <span class="n">slots</span><span class="o">=</span><span class="n">slots</span><span class="p">,</span>
-            <span class="n">events_json</span><span class="o">=</span><span class="n">events_json</span><span class="p">,</span>
+            <span class="n">events_data</span><span class="o">=</span><span class="n">events_data</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Admin dashboard error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
@@ -601,7 +601,8 @@
             <span class="n">default_opening_time_str</span><span class="p">,</span> <span class="n">default_closing_time_str</span><span class="p">,</span> <span class="n">timezone_str</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">SQLAlchemyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input error: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Config input error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid input. Please check your configuration values.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
@@ -691,7 +692,7 @@
         <span class="k">return</span> <span class="n">handle_confirm_event</span><span class="p">()</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Confirm event error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing event: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Error processing event.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
 
 
@@ -770,7 +771,7 @@
             <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Event deleted successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Delete event error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error deleting event: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Error deleting event.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
 
 
@@ -782,13 +783,25 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">update_user_role</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates a user&#39;s role via the admin dashboard.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">))</span>
+        <span class="n">raw_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_id</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid user ID.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
         <span class="n">new_role</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;new_role&quot;</span><span class="p">)</span>
+        <span class="n">actor_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">update_user_role</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">new_role</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Admin ID </span><span class="si">%s</span><span class="s2"> updated role of user ID </span><span class="si">%s</span><span class="s2"> to &#39;</span><span class="si">%s</span><span class="s2">&#39;.&quot;</span><span class="p">,</span>
+            <span class="n">actor_id</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="p">,</span>
+            <span class="n">new_role</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;User role updated successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Update role error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-        <span class="n">flash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Failed to update user role.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
 
 
@@ -800,18 +813,28 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">block_user</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Blocks or unblocks a user via the admin dashboard.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing &#39;user_id&#39; value in request.&quot;</span><span class="p">)</span>
+        <span class="n">raw_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raw_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Missing user ID.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid user ID.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
         <span class="n">block_value</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;block&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">block_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing &#39;block&#39; value in request.&quot;</span><span class="p">)</span>
+            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Missing block value.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
         <span class="n">block</span> <span class="o">=</span> <span class="n">handle_block_user_logic</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">block_value</span><span class="p">)</span>
+        <span class="n">actor_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">block_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
-        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User </span><span class="si">{</span><span class="s1">&#39;blocked&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">block</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;unblocked&#39;</span><span class="si">}</span><span class="s2"> successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="s2">&quot;blocked&quot;</span> <span class="k">if</span> <span class="n">block</span> <span class="k">else</span> <span class="s2">&quot;unblocked&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Admin ID </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> user ID </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">actor_id</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User </span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s2"> successfully&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="n">SQLAlchemyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Block user error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
-        <span class="n">flash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Failed to update user block status.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
 
 
@@ -841,13 +864,20 @@
     <span class="k">if</span> <span class="n">current_user_rank</span> <span class="o">!=</span> <span class="s2">&quot;super&quot;</span><span class="p">:</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Only superadmin can delete user accounts.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+    <span class="n">raw_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw_id</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid user ID.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span>
+    <span class="n">actor_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">delete_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>  <span class="c1"># type: ignore[attr-defined]</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Superadmin ID </span><span class="si">%s</span><span class="s2"> deleted user ID </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">actor_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;User account deleted successfully.&quot;</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">SQLAlchemyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;User deletion failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-        <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to delete user: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Failed to delete user.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.admin&quot;</span><span class="p">))</span></div>
 
 </pre></div>
@@ -900,7 +930,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>

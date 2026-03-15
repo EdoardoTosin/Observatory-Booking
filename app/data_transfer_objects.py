@@ -62,7 +62,7 @@ class WeatherInfo:
     DTO for summarizing weather evaluation results.
 
     Attributes:
-        condition_rating (Optional[int]): Weather condition rating (0–100%).
+        condition_rating (Optional[int]): Weather condition rating (0-100%).
         weather_warning (bool): True if warning triggered.
         weather_forecast (bool): True if forecast data is present.
     """

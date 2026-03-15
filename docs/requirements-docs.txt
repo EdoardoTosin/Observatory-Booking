@@ -1,5 +1,0 @@
-sphinx
-pydata-sphinx-theme
-sphinxcontrib-httpdomain
-sphinx-copybutton
-sphinxcontrib-openapi

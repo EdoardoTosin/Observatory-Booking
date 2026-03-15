@@ -9,6 +9,7 @@ endblock %} {% block content %}
     Register
   </h2>
   <form id="registerForm" method="post" action="{{ url_for('bp.register') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <div class="mb-4">
       <label for="name" class="block text-gray-700 dark:text-gray-300"
         >Name</label

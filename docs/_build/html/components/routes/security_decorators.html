@@ -41,8 +41,8 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'components/routes/security_decorators';</script>
@@ -445,8 +445,31 @@
                   
   <section id="module-app.routes.security_decorators">
 <span id="security-decorators"></span><h1>Security Decorators<a class="headerlink" href="#module-app.routes.security_decorators" title="Link to this heading">#</a></h1>
-<p>Module containing security decorators for route access control.</p>
-<p>This module provides decorators to enforce login and admin access for Flask routes.</p>
+<p>Module containing security decorators and CSRF helpers for route access control.</p>
+<p>This module provides decorators to enforce login and admin access for Flask routes,
+and utility functions for session-based CSRF token generation and validation.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.security_decorators.generate_csrf_token">
+<span class="sig-name descname"><span class="pre">generate_csrf_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/app/routes/security_decorators.html#generate_csrf_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.security_decorators.generate_csrf_token" title="Link to this definition">#</a></dt>
+<dd><p>Return the current session CSRF token, creating one if absent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A hex-encoded 32-byte random token stored in the session.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.security_decorators.validate_csrf">
+<span class="sig-name descname"><span class="pre">validate_csrf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/app/routes/security_decorators.html#validate_csrf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.security_decorators.validate_csrf" title="Link to this definition">#</a></dt>
+<dd><p>Validate the CSRF token for state-changing requests (POST/PUT/DELETE/PATCH).</p>
+<p>Aborts with HTTP 403 if the submitted token does not match the session token.
+GET, HEAD, and OPTIONS requests are exempt.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="app.routes.security_decorators.login_required">
 <span class="sig-name descname"><span class="pre">login_required</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/security_decorators.html#login_required"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.security_decorators.login_required" title="Link to this definition">#</a></dt>
@@ -532,6 +555,8 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.security_decorators.generate_csrf_token"><code class="docutils literal notranslate"><span class="pre">generate_csrf_token()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.security_decorators.validate_csrf"><code class="docutils literal notranslate"><span class="pre">validate_csrf()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.security_decorators.login_required"><code class="docutils literal notranslate"><span class="pre">login_required()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.security_decorators.admin_required"><code class="docutils literal notranslate"><span class="pre">admin_required()</span></code></a></li>
 </ul>
@@ -580,7 +605,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>

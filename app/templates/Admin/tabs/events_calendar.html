@@ -98,6 +98,7 @@
         method="post"
         action="{{ url_for('bp.confirm_event') }}"
       >
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
         <input type="hidden" id="eventId" name="event_id" value="" />
         <div class="mb-4">
           <label
@@ -245,7 +246,9 @@
     </div>
   </div>
 
-  <form id="deleteForm" method="post" style="display: none"></form>
+  <form id="deleteForm" method="post" style="display: none">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+  </form>
 
   <div class="flex justify-end space-x-4 mt-4">
     <button
@@ -263,10 +266,10 @@
   window.CALENDAR_CONFIG = {
     defaultOpeningTime: "{{ config.default_opening_time }}",
     defaultClosingTime: "{{ config.default_closing_time }}",
-    maxBookingsPerEvent: {{ config.max_bookings_per_event }},
-    timezone: "{{ config.timezone }}"
+    maxBookingsPerEvent: {{ config.max_bookings_per_event | tojson }},
+    timezone: {{ config.timezone | tojson }}
   };
-  window.events = {{ events_json | safe }};
+  window.events = {{ events_data | tojson }};
 </script>
 
 <script

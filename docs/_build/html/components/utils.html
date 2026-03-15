@@ -41,8 +41,8 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'components/utils';</script>
@@ -492,13 +492,13 @@ and caching results.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="app.utils.get_encryption_keys">
 <span class="sig-name descname"><span class="pre">get_encryption_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/utils.html#get_encryption_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.utils.get_encryption_keys" title="Link to this definition">#</a></dt>
-<dd><p>Retrieve AES encryption key and IV from environment variables.</p>
+<dd><p>Retrieve AES encryption key, legacy IV, and HMAC key from environment variables.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>AES key (32 bytes) and initialization vector (16 bytes).</p>
+<dd class="field-odd"><p>AES key (32 bytes), legacy IV (16 bytes), HMAC key (32 bytes).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Tuple[bytes, bytes]</p>
+<dd class="field-even"><p>Tuple[bytes, bytes, bytes]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -525,14 +525,18 @@ and caching results.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="app.utils.encrypt_data">
-<span class="sig-name descname"><span class="pre">encrypt_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/utils.html#encrypt_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.utils.encrypt_data" title="Link to this definition">#</a></dt>
-<dd><p>Encrypt plaintext using AES encryption (CBC mode, PKCS#7 padding).</p>
+<span class="sig-name descname"><span class="pre">encrypt_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/app/utils.html#encrypt_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.utils.encrypt_data" title="Link to this definition">#</a></dt>
+<dd><p>Encrypt plaintext using AES-256-GCM with a deterministic nonce.</p>
+<p>The nonce is derived from the plaintext via HMAC-SHA256 so that identical
+plaintexts always produce identical ciphertexts - required for database
+equality lookups (e.g. finding a user by encrypted email).  GCM provides
+authenticated encryption, preventing ciphertext tampering.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – Plaintext to encrypt.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Base64-encoded encrypted data.</p>
+<dd class="field-even"><p>Base64-encoded payload: 12-byte nonce || ciphertext || 16-byte GCM tag.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
@@ -542,8 +546,10 @@ and caching results.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="app.utils.decrypt_data">
-<span class="sig-name descname"><span class="pre">decrypt_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encrypted_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/app/utils.html#decrypt_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.utils.decrypt_data" title="Link to this definition">#</a></dt>
-<dd><p>Decrypt AES CBC mode encrypted data.</p>
+<span class="sig-name descname"><span class="pre">decrypt_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encrypted_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/app/utils.html#decrypt_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.utils.decrypt_data" title="Link to this definition">#</a></dt>
+<dd><p>Decrypt data produced by encrypt_data, with a fallback for legacy AES-CBC payloads.</p>
+<p>New format: base64(12-byte nonce || ciphertext || 16-byte GCM tag) - minimum 29 bytes decoded.
+Legacy format: base64(AES-CBC ciphertext with PKCS#7 padding) - always a multiple of 16 bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>encrypted_data</strong> (<em>str</em>) – Base64-encoded ciphertext.</p>
@@ -727,7 +733,7 @@ and caching results.</p>
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>

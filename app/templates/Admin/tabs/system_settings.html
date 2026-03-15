@@ -1,5 +1,6 @@
 <div class="mb-8">
   <form method="post" action="{{ url_for('bp.update_configuration') }}">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <label

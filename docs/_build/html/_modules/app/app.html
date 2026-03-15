@@ -40,8 +40,8 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/app';</script>
@@ -423,6 +423,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span><span class="p">,</span> <span class="n">get_secret_key</span><span class="p">,</span> <span class="n">get_env_value</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.filters</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_filters</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.routes.blueprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">bp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.routes.security_decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_csrf_token</span><span class="p">,</span> <span class="n">validate_csrf</span>
 
 
 <div class="viewcode-block" id="create_instance">
@@ -459,6 +460,36 @@
     <span class="n">init_filters</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 
     <span class="n">instance</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">bp</span><span class="p">)</span>
+
+    <span class="c1"># --- CSRF protection ---</span>
+    <span class="nd">@instance</span><span class="o">.</span><span class="n">context_processor</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inject_csrf_token</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;csrf_token&quot;</span><span class="p">:</span> <span class="n">generate_csrf_token</span><span class="p">}</span>
+
+    <span class="nd">@instance</span><span class="o">.</span><span class="n">before_request</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">csrf_protect</span><span class="p">():</span>
+        <span class="n">validate_csrf</span><span class="p">()</span>
+
+    <span class="c1"># --- Security headers ---</span>
+    <span class="nd">@instance</span><span class="o">.</span><span class="n">after_request</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_security_headers</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-Frame-Options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;SAMEORIGIN&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-Content-Type-Options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;nosniff&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-XSS-Protection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1; mode=block&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Referrer-Policy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;strict-origin-when-cross-origin&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Permissions-Policy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;geolocation=(), microphone=(), camera=()&quot;</span>
+        <span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Content-Security-Policy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;default-src &#39;self&#39;; &quot;</span>
+            <span class="s2">&quot;script-src &#39;self&#39; &#39;unsafe-inline&#39;; &quot;</span>
+            <span class="s2">&quot;style-src &#39;self&#39; &#39;unsafe-inline&#39;; &quot;</span>
+            <span class="s2">&quot;img-src &#39;self&#39; data:; &quot;</span>
+            <span class="s2">&quot;font-src &#39;self&#39;; &quot;</span>
+            <span class="s2">&quot;connect-src &#39;self&#39;; &quot;</span>
+            <span class="s2">&quot;frame-ancestors &#39;self&#39;;&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
 
     <span class="k">return</span> <span class="n">instance</span></div>
 
@@ -556,7 +587,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>

@@ -1,6 +1,5 @@
 """Admin Dashboard routes for managing configurations, events, and users."""
 
-import json
 from zoneinfo import ZoneInfo, available_timezones
 from datetime import datetime, date, timezone
 
@@ -18,6 +17,7 @@ from flask import (
 
 from ..booking_system import Configuration, User, Slot, Booking
 from ..data_transfer_objects import ConfigurationUpdate, EventData
+from ..utils import logger
 from .blueprint import bp
 from .security_decorators import admin_required
 from .static_pages import render_static_page
@@ -79,7 +79,7 @@ def build_events_data(slots, config_timezone):
     for slot in slots:
         start_local = slot.start_time.astimezone(config_timezone)
         end_local = slot.end_time.astimezone(config_timezone)
-        effective_date = slot.start_time.date().isoformat()
+        effective_date = start_local.date().isoformat()
 
         rating = (
             slot.weather_rating
@@ -119,14 +119,14 @@ def admin():
             users = db.query(User).all()
             bookings = db.query(Booking).all()
             slots = db.query(Slot).options(joinedload(Slot.bookings)).all()
-            events_json = json.dumps(build_events_data(slots, config_timezone))
+            events_data = build_events_data(slots, config_timezone)
         return render_template(
             "admin/admin.html",
             config=config_dict,
             users=users,
             bookings=bookings,
             slots=slots,
-            events_json=events_json,
+            events_data=events_data,
         )
     except (SQLAlchemyError, ValueError) as error:
         current_app.logger.error("Admin dashboard error: %s", error)
@@ -169,7 +169,8 @@ def update_configuration():  # pylint: disable=too-many-locals
             default_opening_time_str, default_closing_time_str, timezone_str
         )
     except (ValueError, TypeError, SQLAlchemyError) as error:
-        flash(f"Input error: {error}", "error")
+        current_app.logger.error("Config input error: %s", error)
+        flash("Invalid input. Please check your configuration values.", "error")
         return redirect(url_for("bp.admin"))
     try:
         system = current_app.system  # type: ignore[attr-defined]
@@ -247,7 +248,7 @@ def confirm_event():
         return handle_confirm_event()
     except (SQLAlchemyError, ValueError) as error:
         current_app.logger.error("Confirm event error: %s", error)
-        flash(f"Error processing event: {error}", "error")
+        flash("Error processing event.", "error")
     return redirect(url_for("bp.admin"))
 
 
@@ -320,7 +321,7 @@ def delete_event(event_id):
             flash("Event deleted successfully", "success")
     except (SQLAlchemyError, ValueError) as error:
         current_app.logger.error("Delete event error: %s", error)
-        flash(f"Error deleting event: {error}", "error")
+        flash("Error deleting event.", "error")
     return redirect(url_for("bp.admin"))
 
 
@@ -329,13 +330,25 @@ def delete_event(event_id):
 def update_user_role():
     """Updates a user's role via the admin dashboard."""
     try:
-        user_id = str(request.form.get("user_id"))
+        raw_id = request.form.get("user_id")
+        try:
+            user_id = int(raw_id)  # type: ignore[arg-type]
+        except (ValueError, TypeError):
+            flash("Invalid user ID.", "error")
+            return redirect(url_for("bp.admin"))
         new_role = request.form.get("new_role")
+        actor_id = session.get("user", {}).get("id")
         current_app.system.update_user_role(user_id, new_role)  # type: ignore[attr-defined]
+        logger.info(
+            "Admin ID %s updated role of user ID %s to '%s'.",
+            actor_id,
+            user_id,
+            new_role,
+        )
         flash("User role updated successfully", "success")
     except (SQLAlchemyError, ValueError) as error:
         current_app.logger.error("Update role error: %s", error)
-        flash(str(error), "error")
+        flash("Failed to update user role.", "error")
     return redirect(url_for("bp.admin"))
 
 
@@ -344,18 +357,28 @@ def update_user_role():
 def block_user():
     """Blocks or unblocks a user via the admin dashboard."""
     try:
-        user_id = str(request.form.get("user_id"))
-        if user_id is None:
-            raise ValueError("Missing 'user_id' value in request.")
+        raw_id = request.form.get("user_id")
+        if raw_id is None:
+            flash("Missing user ID.", "error")
+            return redirect(url_for("bp.admin"))
+        try:
+            user_id = int(raw_id)
+        except (ValueError, TypeError):
+            flash("Invalid user ID.", "error")
+            return redirect(url_for("bp.admin"))
         block_value = request.form.get("block")
         if block_value is None:
-            raise ValueError("Missing 'block' value in request.")
+            flash("Missing block value.", "error")
+            return redirect(url_for("bp.admin"))
         block = handle_block_user_logic(user_id, block_value)
+        actor_id = session.get("user", {}).get("id")
         current_app.system.block_user(user_id, block)  # type: ignore[attr-defined]
-        flash(f"User {'blocked' if block else 'unblocked'} successfully", "success")
+        action = "blocked" if block else "unblocked"
+        logger.info("Admin ID %s %s user ID %s.", actor_id, action, user_id)
+        flash(f"User {action} successfully", "success")
     except (SQLAlchemyError, ValueError) as error:
         current_app.logger.error("Block user error: %s", error)
-        flash(str(error), "error")
+        flash("Failed to update user block status.", "error")
     return redirect(url_for("bp.admin"))
 
 
@@ -379,11 +402,18 @@ def delete_user():
     if current_user_rank != "super":
         flash("Only superadmin can delete user accounts.", "error")
         return redirect(url_for("bp.admin"))
-    user_id = request.form.get("user_id")
+    raw_id = request.form.get("user_id")
+    try:
+        user_id = int(raw_id)  # type: ignore[arg-type]
+    except (ValueError, TypeError):
+        flash("Invalid user ID.", "error")
+        return redirect(url_for("bp.admin"))
+    actor_id = session.get("user", {}).get("id")
     try:
         current_app.system.delete_user(user_id)  # type: ignore[attr-defined]
+        logger.info("Superadmin ID %s deleted user ID %s.", actor_id, user_id)
         flash("User account deleted successfully.", "success")
     except (ValueError, SQLAlchemyError) as e:
         current_app.logger.error("User deletion failed: %s", e)
-        flash(f"Failed to delete user: {str(e)}", "error")
+        flash("Failed to delete user.", "error")
     return redirect(url_for("bp.admin"))

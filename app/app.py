@@ -14,6 +14,7 @@ from .booking_system import BookingSystem
 from .utils import logger, get_secret_key, get_env_value
 from .filters import init_filters
 from .routes.blueprint import bp
+from .routes.security_decorators import generate_csrf_token, validate_csrf
 
 
 def create_instance(debug=False):
@@ -48,6 +49,36 @@ def create_instance(debug=False):
     init_filters(instance)
 
     instance.register_blueprint(bp)
+
+    # --- CSRF protection ---
+    @instance.context_processor
+    def inject_csrf_token():
+        return {"csrf_token": generate_csrf_token}
+
+    @instance.before_request
+    def csrf_protect():
+        validate_csrf()
+
+    # --- Security headers ---
+    @instance.after_request
+    def add_security_headers(response):
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = (
+            "geolocation=(), microphone=(), camera=()"
+        )
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data:; "
+            "font-src 'self'; "
+            "connect-src 'self'; "
+            "frame-ancestors 'self';"
+        )
+        return response
 
     return instance
 

@@ -29,15 +29,15 @@ function toggleLegend() {
 }
 
 function initializeEventSlots() {
-  const { nowUtc, slots } = window.eventData;
+  const { configTimezone, nowUtc, slots } = window.eventData;
   const nowUtcDate = new Date(nowUtc);
 
   slots.forEach((slot) => {
     const startTime = new Date(slot.startTime);
     const endTime = new Date(slot.endTime);
-    const eventDate = startTime.toISOString().split("T")[0];
+    const eventDate = startTime.toLocaleDateString("en-CA", { timeZone: configTimezone });
 
-    updateDateTimeElements(slot.id, eventDate, startTime, endTime);
+    updateDateTimeElements(slot.id, eventDate, startTime, endTime, configTimezone);
 
     updateBookingButton(slot.id, startTime, nowUtcDate);
   });
@@ -56,7 +56,7 @@ function initializeDescriptionToggles() {
   });
 }
 
-function updateDateTimeElements(slotId, eventDate, startTime, endTime) {
+function updateDateTimeElements(slotId, eventDate, startTime, endTime, timezone) {
   const dateElement = document.getElementById(`event-date-${slotId}`);
   const timeElement = document.getElementById(`event-time-${slotId}`);
 
@@ -65,8 +65,9 @@ function updateDateTimeElements(slotId, eventDate, startTime, endTime) {
   }
 
   if (timeElement) {
-    timeElement.textContent = `${formatTime(startTime)} - ${formatTime(
-      endTime
+    timeElement.textContent = `${formatTime(startTime, timezone)} - ${formatTime(
+      endTime,
+      timezone
     )}`;
   }
 }
@@ -80,9 +81,10 @@ function updateBookingButton(slotId, startTime, nowUtcDate) {
   }
 }
 
-function formatTime(date) {
+function formatTime(date, timezone) {
   return date.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: timezone,
   });
 }

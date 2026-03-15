@@ -41,8 +41,8 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'installation';</script>
@@ -440,37 +440,39 @@
 <section id="python-setup">
 <h2>Python Setup<a class="headerlink" href="#python-setup" title="Link to this heading">#</a></h2>
 <p>Install required Python packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>sync
 </pre></div>
 </div>
 </section>
 <section id="environment-configuration">
 <h2>Environment Configuration<a class="headerlink" href="#environment-configuration" title="Link to this heading">#</a></h2>
-<p>Create a <cite>.env</cite> file in the project root with the following variables:</p>
+<p>Create a <cite>.env</cite> file in the project root. Cryptographic keys that are absent are generated automatically on first start and written back to <cite>.env</cite>.</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">DATABASE_URL</span><span class="o">=</span><span class="s">sqlite:///observatory_booking.db</span>
 <span class="na">DEFAULT_ADMIN_EMAIL</span><span class="o">=</span><span class="s">admin@example.com</span>
-<span class="na">DEFAULT_ADMIN_PASSWORD</span><span class="o">=</span><span class="s">admin</span>
+<span class="na">DEFAULT_ADMIN_PASSWORD</span><span class="o">=</span>
 <span class="na">SECRET_KEY</span><span class="o">=</span><span class="s">&lt;secure_random_string&gt;</span>
 <span class="na">AES_SECRET_KEY</span><span class="o">=</span><span class="s">&lt;base64_encoded_key&gt;</span>
+<span class="na">AES_HMAC_KEY</span><span class="o">=</span><span class="s">&lt;base64_encoded_key&gt;</span>
 <span class="na">AES_IV</span><span class="o">=</span><span class="s">&lt;base64_encoded_iv&gt;</span>
-<span class="na">FLASK_ENV</span><span class="o">=</span><span class="s">development</span>
-<span class="na">DEBUG_MODE</span><span class="o">=</span><span class="s">True</span>
-<span class="na">HOST</span><span class="o">=</span><span class="s">0.0.0.0</span>
+<span class="na">ENV</span><span class="o">=</span><span class="s">development</span>
+<span class="na">DEBUG_MODE</span><span class="o">=</span><span class="s">False</span>
+<span class="na">HOST</span><span class="o">=</span><span class="s">127.0.0.1</span>
 <span class="na">PORT</span><span class="o">=</span><span class="s">5000</span>
-<span class="na">WTF_CSRF_ENABLED</span><span class="o">=</span><span class="s">False</span>
+<span class="na">SESSION_COOKIE_HTTPONLY</span><span class="o">=</span><span class="s">True</span>
 <span class="na">SESSION_COOKIE_SECURE</span><span class="o">=</span><span class="s">False</span>
-<span class="na">LOGGING_LEVEL</span><span class="o">=</span><span class="s">DEBUG</span>
+<span class="na">SESSION_COOKIE_SAMESITE</span><span class="o">=</span><span class="s">Lax</span>
+<span class="na">LOGGING_LEVEL</span><span class="o">=</span><span class="s">INFO</span>
 </pre></div>
 </div>
-<p><strong>Note:</strong> For production, set <cite>FLASK_ENV=production</cite>, use strong secrets, and enable CSRF and secure cookies.</p>
+<p>Leave <code class="docutils literal notranslate"><span class="pre">DEFAULT_ADMIN_PASSWORD</span></code> empty. On first run the application generates a secure random password and prints it once to stdout – change it immediately after logging in. For production set <code class="docutils literal notranslate"><span class="pre">DEBUG_MODE=False</span></code>, <code class="docutils literal notranslate"><span class="pre">SESSION_COOKIE_SECURE=True</span></code> (requires HTTPS), and <code class="docutils literal notranslate"><span class="pre">SESSION_COOKIE_SAMESITE=Strict</span></code>.</p>
 </section>
 <section id="running-the-application">
 <h2>Running the Application<a class="headerlink" href="#running-the-application" title="Link to this heading">#</a></h2>
 <p>Start the Flask app:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>app
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>app
 </pre></div>
 </div>
-<p>Note: The Superadmin account is automatically created on first run using credentials from the <cite>.env</cite> file.</p>
+<p>The Superadmin account is created automatically on first run. Credentials are printed once to stdout and are never written to log files.</p>
 <p>Access the application at <cite>http://127.0.0.1:5000/</cite>.</p>
 <p>For production, use Waitress behind a reverse proxy (e.g., Nginx, Apache).</p>
 </section>
@@ -574,7 +576,7 @@
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
     <br/>
   </p>
 </div>

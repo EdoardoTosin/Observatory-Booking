@@ -7,7 +7,7 @@ If you discover a potential security issue or vulnerability, please report it di
 - Email: [Edoardo Tosin](https://github.com/edoardotosin)
 - GitHub: [Security Advisories](https://github.com/EdoardoTosin/Observatory-Booking/security/advisories)
 
-Please do **not** create a public issue. I will review and respond as soon as possible, typically within **48–72 hours**.
+Please do **not** create a public issue. I will review and respond as soon as possible, typically within **48-72 hours**.
 
 ## Project Scope
 
@@ -24,7 +24,7 @@ If you're deploying this project yourself:
 
 - Use HTTPS in production
 - Store `.env` secrets securely
-- Keep dependencies up to date (`pip install --upgrade -r requirements.txt`)
+- Keep dependencies up to date (`uv sync --upgrade`)
 - Review and configure access controls before going live
 
 ## Contributions

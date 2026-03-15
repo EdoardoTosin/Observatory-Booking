@@ -107,7 +107,6 @@ if (isHomePage && deepSkyText) {
     tooltip.classList.toggle("hidden");
 
     if (!document.documentElement.classList.contains("dark")) {
-      console.log("Activating Dark Mode via Deep Sky Easter Egg!");
       document.documentElement.classList.add("dark");
       localStorage.setItem("color-theme", "dark");
 

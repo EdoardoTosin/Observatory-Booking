@@ -1,9 +1,0 @@
-apscheduler
-bcrypt
-cryptography
-dotenv
-flask
-requests
-sqlalchemy
-waitress
-werkzeug

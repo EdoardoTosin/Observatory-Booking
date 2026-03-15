@@ -308,6 +308,7 @@ endblock %} {% block content %}
           method="post"
           action="{{ url_for('bp.cancel_booking', slot_id=slot.id) }}"
         >
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
           <button
             type="submit"
             class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-lg transition-colors duration-200"
@@ -318,6 +319,7 @@ endblock %} {% block content %}
         </form>
         {% elif not slot.is_fully_booked %}
         <form method="post" action="{{ url_for('bp.events') }}">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
           <input type="hidden" name="slot_id" value="{{ slot.id }}" />
           <button
             type="submit"

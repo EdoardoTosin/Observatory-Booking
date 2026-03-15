@@ -19,7 +19,7 @@
   <strong><i>Artwork by <a href="https://alexrockheart.artstation.com/" target="_blank" rel="noopener noreferrer" style="color: #4f46E5;">Alexandra Kostecka</a></strong></i>
 </p>
 
-<h2 align="center">📊 Project Status & Tech Stack</h2>
+<h2 align="center">Project Status &amp; Tech Stack</h2>
 
 <div align="center">
   <p>
@@ -39,7 +39,7 @@
   </p>
 </div>
 
-## 🚀 Features
+## Features
 
 - **User Management**
   - Secure registration and authentication (password hashing with bcrypt).
@@ -61,7 +61,9 @@
   - Evaluate weather conditions (cloud cover, precipitation, visibility).
 
 - **System Security**
-  - AES-encrypted personal data.
+  - AES-256-GCM authenticated encryption for personal data.
+  - CSRF protection on all state-changing endpoints.
+  - HTTP security headers (X-Frame-Options, CSP, etc.) on every response.
   - Concurrency-safe operations with thread locking.
   - Deleted users are automatically logged out upon next request.
 
@@ -69,7 +71,7 @@
   - Tailwind CSS and PostCSS for responsive and customizable styling.
   - Mobile-friendly interface.
 
-## 📸 Screenshots
+## Screenshots
 
 ### Admin Pages
 
@@ -89,14 +91,14 @@
 |-----|------------|
 | ![FAQ](assets/screenshots/FAQ.jpg) | ![Contact Us](assets/screenshots/contact-us.jpg) |
 
-## 📦 Prerequisites
+## Prerequisites
 
 - **Python 3.10+**
 - **uv**
 - **SQLite** (default, or PostgreSQL via `DATABASE_URL`)
 - (Optional) Reverse proxy (e.g., Nginx, Apache) for production deployments.
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 
@@ -113,25 +115,29 @@ uv sync
 
 ### 3. Environment Configuration
 
-Create or update the `.env` file:
+Copy `.env.example` to `.env` and adjust as needed. Missing cryptographic keys are generated automatically on first start and written back to `.env`.
 
 ```dotenv
 DATABASE_URL=sqlite:///observatory_booking.db
 DEFAULT_ADMIN_EMAIL=admin@example.com
-DEFAULT_ADMIN_PASSWORD=admin
-SECRET_KEY=<generate_secret>
-AES_SECRET_KEY=<generate_base64_key>
-AES_IV=<generate_base64_iv>
-FLASK_ENV=development
-DEBUG_MODE=True
-HOST=0.0.0.0
+DEFAULT_ADMIN_PASSWORD=
+SECRET_KEY=
+AES_SECRET_KEY=
+AES_HMAC_KEY=
+AES_IV=
+ENV=production
+DEBUG_MODE=False
+HOST=127.0.0.1
 PORT=5000
-WTF_CSRF_ENABLED=False
-SESSION_COOKIE_SECURE=False
-LOGGING_LEVEL=DEBUG
+SESSION_COOKIE_HTTPONLY=True
+SESSION_COOKIE_SECURE=True
+SESSION_COOKIE_SAMESITE=Strict
+SESSION_COOKIE_DOMAIN=
+WTF_CSRF_ENABLED=True
+LOGGING_LEVEL=INFO
 ```
 
-> ⚠️ **Security Tip**: In production, use strong, randomly generated values for `SECRET_KEY`, `AES_SECRET_KEY`, and `AES_IV`. Set `WTF_CSRF_ENABLED=True` and `SESSION_COOKIE_SECURE=True`.
+> **Security note:** Leave `DEFAULT_ADMIN_PASSWORD` empty. On first run the app generates a secure random password and prints it once to stdout - change it immediately after logging in. For local HTTP development set `SESSION_COOKIE_SECURE=False`; in production it must be `True` (requires HTTPS).
 
 ### 4. Start the Application
 
@@ -139,34 +145,41 @@ LOGGING_LEVEL=DEBUG
 uv run python -m app
 ```
 
-> ℹ️ **Note**: A Superadmin account is automatically created on first run using `.env` credentials.
+> **Note:** A Superadmin account is automatically created on first run. Credentials are printed once to stdout; they are never written to log files.
 
 Visit: `http://127.0.0.1:5000/` or configured `HOST:PORT`.
 
-## 🧩 Configuration Overview
+## Configuration Overview
 
-| Setting                 | Description                                       | Default                   |
-|-------------------------|---------------------------------------------------|---------------------------|
-| `DATABASE_URL`          | Database connection URI                           | `sqlite:///observatory_booking.db` |
-| `SECRET_KEY`            | Flask session signing key                         | (required)                |
-| `AES_SECRET_KEY`        | Base64 AES key for data encryption                | (required)                |
-| `AES_IV`                | Base64 AES initialization vector                  | (required)                |
-| `DEFAULT_ADMIN_EMAIL`   | Email for first-time superadmin                   | `admin@example.com`       |
-| `DEFAULT_ADMIN_PASSWORD`| Password for first-time superadmin                | `admin`                   |
-| `FLASK_ENV`             | Environment mode                                  | `development`             |
-| `WTF_CSRF_ENABLED`      | Enable CSRF protection                            | `False` (dev)             |
-| `SESSION_COOKIE_SECURE` | Secure cookies over HTTPS                         | `False` (dev)             |
-| `LOGGING_LEVEL`         | Log level (DEBUG, INFO, ERROR)                    | `DEBUG`                   |
+| Setting                    | Description                                                         | Default                            |
+|----------------------------|---------------------------------------------------------------------|------------------------------------|
+| `DATABASE_URL`             | SQLAlchemy connection URI                                           | `sqlite:///observatory_booking.db` |
+| `SECRET_KEY`               | Flask session signing key (auto-generated if absent)                | (auto-generated)                   |
+| `AES_SECRET_KEY`           | Base64 AES-256 key for personal data encryption (auto-generated)    | (auto-generated)                   |
+| `AES_HMAC_KEY`             | Base64 HMAC key for nonce derivation (auto-generated)               | (auto-generated)                   |
+| `AES_IV`                   | Base64 legacy IV for migration compatibility (auto-generated)       | (auto-generated)                   |
+| `DEFAULT_ADMIN_EMAIL`      | Email for first-time superadmin account                             | `admin@example.com`                |
+| `DEFAULT_ADMIN_PASSWORD`   | Password for first-time superadmin - leave empty                    | (auto-generated)                   |
+| `ENV`                      | Set to `development` to enable SQLAlchemy SQL logging               | `production`                       |
+| `DEBUG_MODE`               | Enable Flask debug mode (`True`/`False`)                            | `False`                            |
+| `HOST`                     | Host address to bind the server to                                  | `127.0.0.1`                        |
+| `PORT`                     | Port to bind the server to                                          | `5000`                             |
+| `WTF_CSRF_ENABLED`         | Enable CSRF protection on all state-changing endpoints              | `True`                             |
+| `SESSION_COOKIE_HTTPONLY`  | Prevent JavaScript access to the session cookie                     | `True`                             |
+| `SESSION_COOKIE_SECURE`    | Require HTTPS for the session cookie - must be `True` in production | `True`                             |
+| `SESSION_COOKIE_SAMESITE`  | SameSite policy for the session cookie                              | `Strict`                           |
+| `SESSION_COOKIE_DOMAIN`    | Domain for the session cookie (blank = current host)                | (unset)                            |
+| `LOGGING_LEVEL`            | Log verbosity: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`      | `INFO`                             |
 
-## 🗓️ User Roles & Permissions
+## User Roles & Permissions
 
-| Role         | Capabilities |
-|--------------|--------------|
-| **User**     | Book/cancel events, view events, change password |
-| **Admin**    | Block/unblock users, update user roles, configure system, events |
+| Role           | Capabilities                                                              |
+|----------------|---------------------------------------------------------------------------|
+| **User**       | Book/cancel events, view events, change password                          |
+| **Admin**      | Block/unblock users, update user roles, configure system, manage events   |
 | **Superadmin** | Full control: delete users, manage admins, immune to role changes/deletion |
 
-## 🌦️ Automated Weather Updates
+## Automated Weather Updates
 
 - API: [Open-Meteo](https://open-meteo.com/)
 - Runs every 3 hours (background scheduler).
@@ -177,13 +190,13 @@ Visit: `http://127.0.0.1:5000/` or configured `HOST:PORT`.
   - Dew point
 - Cached for 3 hours (reduces API load).
 
-## ⏱️ Rate Limiting
+## Rate Limiting
 
 - Users: **10 requests per 20 seconds**.
 - Applies to login, booking, and cancellation endpoints.
 - Prevents system abuse and ensures fair access.
 
-## 🧪 API Endpoints Overview
+## API Endpoints Overview
 
 | Endpoint                       | Method   | Auth Required  | Description                                |
 |--------------------------------|----------|----------------|--------------------------------------------|
@@ -197,12 +210,12 @@ Visit: `http://127.0.0.1:5000/` or configured `HOST:PORT`.
 | `/admin`                       | GET      | Admin          | Access admin control panel                 |
 | `/admin/confirm_event`         | POST     | Admin          | Create/update events                       |
 | `/admin/delete_event/<id>`     | POST     | Admin          | Delete event                               |
-| `/admin/update_events_weather` | POST     | Admin          | Refresh weather data for all events        |
+| `/admin/update_events_weather` | GET      | Admin          | Refresh weather data for all events        |
 | `/admin/config`                | POST     | Admin          | Update system configuration                |
 | `/admin/user/block`            | POST     | Admin          | Block or unblock a user                    |
 | `/admin/user/role`             | POST     | Admin          | Change user role                           |
 | `/admin/user/delete`           | POST     | Superadmin     | Permanently delete user account            |
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
