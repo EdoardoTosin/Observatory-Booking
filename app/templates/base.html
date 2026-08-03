@@ -47,14 +47,16 @@
               {% if is_admin %}
               <a
                 href="{{ url_for('bp.admin') }}"
-                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 font-semibold text-blue-200 hover:text-white before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50 before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 {% if request.endpoint == 'bp.admin' %}text-white before:bg-white/50 before:scale-x-100{% else %}text-blue-200 hover:text-white before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50{% endif %} before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                aria-current="{% if request.endpoint == 'bp.admin' %}page{% endif %}"
               >
                 Admin
               </a>
               {% endif %} {% if current_user %}
               <a
                 href="{{ url_for('bp.events') }}"
-                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 font-semibold text-blue-200 hover:text-white before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50 before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 {% if request.endpoint == 'bp.events' %}text-white before:bg-white/50 before:scale-x-100{% else %}text-blue-200 hover:text-white before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50{% endif %} before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                aria-current="{% if request.endpoint == 'bp.events' %}page{% endif %}"
               >
                 Events
               </a>
@@ -62,14 +64,16 @@
 
               <a
                 href="{{ url_for('bp.contact') }}"
-                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 font-semibold text-blue-200 hover:text-white before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50 before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 {% if request.endpoint == 'bp.contact' %}text-white before:bg-white/50 before:scale-x-100{% else %}text-blue-200 hover:text-white before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50{% endif %} before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                aria-current="{% if request.endpoint == 'bp.contact' %}page{% endif %}"
               >
                 Contact
               </a>
 
               <a
                 href="{{ url_for('bp.faq') }}"
-                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 font-semibold text-blue-200 hover:text-white before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50 before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                class="relative py-2 px-4 font-semibold text-lg transition-colors duration-200 {% if request.endpoint == 'bp.faq' %}text-white before:bg-white/50 before:scale-x-100{% else %}text-blue-200 hover:text-white before:bg-transparent before:scale-x-0 hover:before:scale-x-100 hover:before:bg-white/50{% endif %} before:absolute before:inset-x-0 before:bottom-0 before:mx-auto before:h-1 before:w-full before:max-w-[50%] before:transition-transform before:duration-200 dark:text-blue-300 dark:hover:text-gray-100"
+                aria-current="{% if request.endpoint == 'bp.faq' %}page{% endif %}"
               >
                 FAQ
               </a>
@@ -107,7 +111,7 @@
 
               <div
                 id="account-dropdown-menu"
-                class="fixed top-full mt-2 w-64 origin-top rounded-lg bg-white dark:bg-gray-800 shadow-xl ring-1 ring-black/5 hidden z-50 transition-all duration-200 ease-in-out"
+                class="fixed top-full mt-2 w-64 origin-top rounded-lg bg-white dark:bg-gray-800 shadow-xl ring-1 ring-black/5 hidden z-50"
               >
                 <div
                   class="text-center px-6 py-4 border-b border-gray-200 dark:border-gray-700"
@@ -226,30 +230,32 @@
           {% if is_admin %}
           <a
             href="{{ url_for('bp.admin') }}"
-            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'admin' %}border-white text-white dark:border-gray-100 dark:text-gray-100{% else %}border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100{% endif %}"
-            aria-current="{% if request.endpoint == 'admin' %}page{% endif %}"
+            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'bp.admin' %}border-white text-white dark:border-gray-100 dark:text-gray-100{% else %}border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100{% endif %}"
+            aria-current="{% if request.endpoint == 'bp.admin' %}page{% endif %}"
           >
             Admin
           </a>
           {% endif %} {% if current_user %}
           <a
             href="{{ url_for('bp.events') }}"
-            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'events' %}border-white text-white dark:border-gray-100 dark:text-gray-100{% else %}border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100{% endif %}"
-            aria-current="{% if request.endpoint == 'events' %}page{% endif %}"
+            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'bp.events' %}border-white text-white dark:border-gray-100 dark:text-gray-100{% else %}border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100{% endif %}"
+            aria-current="{% if request.endpoint == 'bp.events' %}page{% endif %}"
           >
             Events
           </a>
           {% endif %}
           <a
             href="{{ url_for('bp.contact') }}"
-            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'contact' %} border-white text-white dark:border-gray-100 dark:text-gray-100 {% else %} border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100 {% endif %}"
+            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'bp.contact' %} border-white text-white dark:border-gray-100 dark:text-gray-100 {% else %} border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100 {% endif %}"
+            aria-current="{% if request.endpoint == 'bp.contact' %}page{% endif %}"
           >
             Contact
           </a>
 
           <a
             href="{{ url_for('bp.faq') }}"
-            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'faq' %} border-white text-white dark:border-gray-100 dark:text-gray-100 {% else %} border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100 {% endif %}"
+            class="block pl-3 pr-4 py-2 border-l-4 font-bold text-base transition-colors duration-200 {% if request.endpoint == 'bp.faq' %} border-white text-white dark:border-gray-100 dark:text-gray-100 {% else %} border-transparent text-blue-200 hover:border-white hover:text-white dark:text-blue-300 dark:hover:text-gray-100 dark:hover:border-gray-100 {% endif %}"
+            aria-current="{% if request.endpoint == 'bp.faq' %}page{% endif %}"
           >
             FAQ
           </a>

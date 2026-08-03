@@ -47,6 +47,10 @@ endblock %} {% block content %}
 </div>
 <script
   type="text/javascript"
+  src="{{ url_for('static', filename='js/form_utils.js') }}"
+></script>
+<script
+  type="text/javascript"
   src="{{ url_for('static', filename='js/authentication/login.js') }}"
 ></script>
 {% endblock %}

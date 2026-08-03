@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
     <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
@@ -45,26 +45,33 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/models';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -90,7 +97,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -168,23 +175,13 @@
   </a>
 </li>
 
-            <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-controls="pst-nav-more-links">
-                    More
-                </button>
-                <ul id="pst-nav-more-links" class="dropdown-menu">
-                    
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../components/index.html">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../components/index.html">
     Components
   </a>
 </li>
 
-                </ul>
-            </li>
-            
   </ul>
 </nav></div>
       
@@ -206,11 +203,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -223,8 +227,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -325,11 +328,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -342,8 +352,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -411,7 +420,7 @@
 <span class="sd">Database Models Module</span>
 
 <span class="sd">This module defines the ORM models for the application using SQLAlchemy.</span>
-<span class="sd">It includes models for application configuration, users, event slots, and bookings.</span>
+<span class="sd">It includes models for application configuration, users, events, and bookings.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
@@ -430,8 +439,9 @@
     <span class="n">UniqueConstraint</span><span class="p">,</span>
     <span class="n">Time</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegrityError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">relationship</span><span class="p">,</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">Mapped</span><span class="p">,</span> <span class="n">mapped_column</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">encrypt_data</span><span class="p">,</span> <span class="n">decrypt_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">encrypt_data</span><span class="p">,</span> <span class="n">decrypt_data</span><span class="p">,</span> <span class="n">MAX_NAME_LENGTH</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
@@ -459,9 +469,9 @@
 <span class="sd">        longitude (float): Geographic longitude (-180 to 180).</span>
 <span class="sd">        timezone (str): IANA timezone string.</span>
 <span class="sd">        weather_threshold (int): Minimum acceptable weather rating (0-100).</span>
-<span class="sd">        max_bookings_per_event (int): Default maximum bookings allowed per slot.</span>
-<span class="sd">        default_opening_time (time): Default slot start time (local time).</span>
-<span class="sd">        default_closing_time (time): Default slot end time (local time).</span>
+<span class="sd">        max_bookings_per_event (int): Default maximum bookings allowed per event.</span>
+<span class="sd">        default_opening_time (time): Default event start time (local time).</span>
+<span class="sd">        default_closing_time (time): Default event end time (local time).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;configuration&quot;</span>
@@ -482,6 +492,11 @@
             <span class="s2">&quot;0 &lt;= weather_threshold &lt;= 100&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_weather_threshold&quot;</span>
         <span class="p">),</span>
         <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;max_bookings_per_event &gt;= 1&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_max_bookings&quot;</span><span class="p">),</span>
+        <span class="c1"># Only one configuration row may ever exist. Without this, concurrent</span>
+        <span class="c1"># first-time get_config() calls could each insert their own row, and</span>
+        <span class="c1"># subsequent reads/writes would nondeterministically target different</span>
+        <span class="c1"># rows depending on query order.</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;id = 1&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_configuration_singleton&quot;</span><span class="p">),</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="Configuration.get_config">
@@ -492,6 +507,9 @@
 <span class="sd">        Retrieve the current configuration from the database.</span>
 
 <span class="sd">        If none exists, a default configuration is created and persisted.</span>
+<span class="sd">        Concurrent first-time creation is handled safely: if another thread</span>
+<span class="sd">        wins the race to insert the singleton row, this falls back to</span>
+<span class="sd">        reading the row it created instead of failing.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            session (Session): SQLAlchemy session instance.</span>
@@ -499,11 +517,19 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Configuration: The configuration object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configuration</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Configuration</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configuration</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Configuration</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">:</span>
-            <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">IntegrityError</span><span class="p">:</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Configuration</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Failed to load or create the configuration row.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">config</span></div>
 </div>
 
@@ -520,7 +546,9 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        id (int): Primary key.</span>
-<span class="sd">        name_encrypted (str): AES-encrypted user name.</span>
+<span class="sd">        name (str): Plaintext user name. Low-sensitivity, frequently-displayed</span>
+<span class="sd">            data (admin dashboard, bookings), so it is not encrypted like</span>
+<span class="sd">            email; this avoids an AES-GCM decrypt on every row rendered.</span>
 <span class="sd">        email_encrypted (str): AES-encrypted email address.</span>
 <span class="sd">        password_hash (str): Bcrypt-hashed password.</span>
 <span class="sd">        role (str): Role (User/Admin), default is &#39;User&#39;.</span>
@@ -532,9 +560,13 @@
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;users&quot;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">name_encrypted</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span>
+        <span class="n">String</span><span class="p">(</span><span class="n">MAX_NAME_LENGTH</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># Sized for base64(nonce + ciphertext + tag) of a MAX_EMAIL_LENGTH</span>
+    <span class="c1"># plaintext, not the plaintext length itself.</span>
     <span class="n">email_encrypted</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span>
-        <span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">String</span><span class="p">(</span><span class="mi">400</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
     <span class="n">password_hash</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">role</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;User&quot;</span><span class="p">)</span>
@@ -613,40 +645,40 @@
 <div class="viewcode-block" id="User.set_name">
 <a class="viewcode-back" href="../../components/models.html#app.models.User.set_name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Encrypt and store the user&#39;s name.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name_encrypted</span> <span class="o">=</span> <span class="n">encrypt_data</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store the user&#39;s name.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span></div>
 
 
 <div class="viewcode-block" id="User.get_name">
 <a class="viewcode-back" href="../../components/models.html#app.models.User.get_name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Decrypt and return the user&#39;s name.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">decrypt_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name_encrypted</span><span class="p">)</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the user&#39;s name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
 </div>
 
 
 
-<div class="viewcode-block" id="Slot">
-<a class="viewcode-back" href="../../components/models.html#app.models.Slot">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Slot</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
+<div class="viewcode-block" id="Event">
+<a class="viewcode-back" href="../../components/models.html#app.models.Event">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Event</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Slot model representing an event slot available for booking.</span>
+<span class="sd">    Event model representing an observatory event available for booking.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        id (int): Primary key.</span>
-<span class="sd">        title (str): Short title for the slot.</span>
-<span class="sd">        description (str): Description or purpose of the slot.</span>
-<span class="sd">        start_time (datetime): Slot start time (UTC).</span>
-<span class="sd">        end_time (datetime): Slot end time (UTC).</span>
-<span class="sd">        available (bool): True if the slot is available.</span>
+<span class="sd">        title (str): Short title for the event.</span>
+<span class="sd">        description (str): Description or purpose of the event.</span>
+<span class="sd">        start_time (datetime): Event start time (UTC).</span>
+<span class="sd">        end_time (datetime): Event end time (UTC).</span>
+<span class="sd">        available (bool): True if the event is available.</span>
 <span class="sd">        weather_rating (Optional[float]): Weather suitability rating (0-100).</span>
-<span class="sd">        max_bookings (int): Max bookings allowed for this slot.</span>
+<span class="sd">        max_bookings (int): Max bookings allowed for this event.</span>
 <span class="sd">        weather_warning (bool): True if weather is unfavorable.</span>
 <span class="sd">        weather_forecast (bool): True if forecast data is present.</span>
 <span class="sd">        bookings (relationship): One-to-many relationship with Booking.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;slots&quot;</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;events&quot;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">title</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -660,16 +692,21 @@
     <span class="n">weather_forecast</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Boolean</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">bookings</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
-        <span class="s2">&quot;Booking&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;slot&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span>
+        <span class="s2">&quot;Booking&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;event&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span>
     <span class="p">)</span>
 
     <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;start_time &lt; end_time&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_slot_time_range&quot;</span><span class="p">),</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;start_time &lt; end_time&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_event_time_range&quot;</span><span class="p">),</span>
         <span class="n">CheckConstraint</span><span class="p">(</span>
             <span class="s2">&quot;weather_rating IS NULL OR (weather_rating &gt;= 0 AND weather_rating &lt;= 100)&quot;</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_weather_rating_range&quot;</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;max_bookings &gt;= 0&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_max_bookings_per_slot&quot;</span><span class="p">),</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;max_bookings &gt;= 0&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_max_bookings_per_event&quot;</span><span class="p">),</span>
+        <span class="c1"># Mirrors the length limits already enforced in AdminService, at the</span>
+        <span class="c1"># database level, so a validation gap can&#39;t silently persist an</span>
+        <span class="c1"># oversized title/description.</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;LENGTH(title) &lt;= 30&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_title_length&quot;</span><span class="p">),</span>
+        <span class="n">CheckConstraint</span><span class="p">(</span><span class="s2">&quot;LENGTH(description) &lt;= 255&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_description_length&quot;</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 
@@ -678,33 +715,35 @@
 <a class="viewcode-back" href="../../components/models.html#app.models.Booking">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Booking</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Booking model representing a user booking for a slot.</span>
+<span class="sd">    Booking model representing a user booking for an event.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        id (int): Primary key.</span>
 <span class="sd">        user_id (int): Foreign key to User.</span>
-<span class="sd">        slot_id (int): Foreign key to Slot.</span>
-<span class="sd">        status (str): Booking status (e.g., &#39;confirmed&#39;).</span>
+<span class="sd">        event_id (int): Foreign key to Event.</span>
+<span class="sd">        status (str): Booking status. Only &#39;confirmed&#39; is ever persisted;</span>
+<span class="sd">            cancellation hard-deletes the row rather than transitioning</span>
+<span class="sd">            status, so no other value is valid.</span>
 <span class="sd">        user (relationship): Many-to-one link to User.</span>
-<span class="sd">        slot (relationship): Many-to-one link to Slot.</span>
+<span class="sd">        event (relationship): Many-to-one link to Event.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;bookings&quot;</span>
 
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">user_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;users.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">slot_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;slots.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">event_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;events.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;confirmed&quot;</span><span class="p">)</span>
 
     <span class="n">user</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;bookings&quot;</span><span class="p">)</span>
-    <span class="n">slot</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Slot&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;bookings&quot;</span><span class="p">)</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;bookings&quot;</span><span class="p">)</span>
 
     <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">CheckConstraint</span><span class="p">(</span>
-            <span class="s2">&quot;status IN (&#39;confirmed&#39;, &#39;pending&#39;, &#39;cancelled&#39;)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;status = &#39;confirmed&#39;&quot;</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;check_booking_status&quot;</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">UniqueConstraint</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;slot_id&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;uq_user_slot_booking&quot;</span><span class="p">),</span>
+        <span class="n">UniqueConstraint</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;event_id&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;uq_user_event_booking&quot;</span><span class="p">),</span>
     <span class="p">)</span></div>
 
 </pre></div>
@@ -736,8 +775,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -771,7 +810,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
 </p></div>
       
     </div>

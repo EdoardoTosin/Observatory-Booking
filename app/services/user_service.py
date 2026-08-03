@@ -13,7 +13,13 @@ It ensures validation and secure interactions with the database.
 
 from sqlalchemy.exc import SQLAlchemyError
 
-from ..utils import logger, is_email_valid, is_password_strong, encrypt_data
+from ..utils import (
+    logger,
+    is_email_valid,
+    is_password_strong,
+    encrypt_data,
+    MAX_NAME_LENGTH,
+)
 from ..models import User
 
 
@@ -85,6 +91,10 @@ class UserService:
                 email = self.validate_input(email, str)
                 password = self.validate_input(password, str)
 
+                if not name or len(name) > MAX_NAME_LENGTH:
+                    raise ValueError(
+                        f"Name must be between 1 and {MAX_NAME_LENGTH} characters."
+                    )
                 if not is_email_valid(email):
                     raise ValueError("Invalid email format.")
                 if not is_password_strong(password):

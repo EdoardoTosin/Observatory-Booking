@@ -58,8 +58,8 @@ Key Components
    SQLAlchemy models:
    
    - `User`: Encrypted PII, hashed passwords, roles.
-   - `Slot`: Time-bound events with weather metrics.
-   - `Booking`: Links users to slots.
+   - `Event`: Time-bound events with weather metrics.
+   - `Booking`: Links users to events.
    - `Configuration`: System-wide settings.
    
    Uses AES encryption for PII, bcrypt for passwords, and ORM relationships.
@@ -80,6 +80,13 @@ Key Components
    - Evaluates hourly data: cloud cover, precipitation, visibility.
    - Automatically rates events and flags poor conditions.
    - Background updates every 3 hours with caching.
+
+8. **JSON API Layer**
+   - Every page still renders its first paint as plain server-rendered Jinja/HTML (works with JavaScript disabled); the ``/api/v1/...`` namespace backs the *subsequent* interactions instead of full page reloads.
+   - Covers filtering/sorting on the Events page, pagination and bulk actions on the admin User Accounts tab, and month navigation plus booking revocation on the admin Events Calendar tab.
+   - Each JSON endpoint is a thin wrapper around the same query-building function its page's first-paint Jinja route already calls (e.g. ``get_paginated_users``, ``get_month_events``), so the two never drift apart.
+   - Every response uses one consistent ``{data, meta, errors}`` envelope (see :doc:`endpoints`); session-cookie authenticated like the rest of the app, with the CSRF token carried via an ``X-CSRF-Token`` header since the body is JSON rather than a form.
+   - The database model backing "events" is named ``Event`` (table ``events``) throughout the codebase, routes, and JSON payloads - an earlier version of this app used ``Slot`` for the same concept in the model layer while every user-facing string and route already said "event"; the model was renamed to match.
 
 Database Diagram
 ----------------
@@ -127,6 +134,12 @@ Extensibility and Maintenance
 
 - Modular structure enables easy extension of services and routes.
 - DTOs (`data_transfer_objects.py`) ensure clean data flow and validation.
+- An automated regression test suite (`tests/`, run with ``uv run pytest``)
+  covers authentication/CSRF, booking business rules, admin user/event
+  management, and the weather timezone-handling logic, running against an
+  isolated temp-file SQLite database (never the real ``observatory_booking.db``).
+  It runs automatically as part of ``pre-commit run --all-files`` alongside
+  ``black``, ``pylint``, and ``mypy``.
 
 Conclusion
 ----------

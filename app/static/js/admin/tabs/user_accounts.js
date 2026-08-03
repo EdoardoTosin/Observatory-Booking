@@ -1,59 +1,141 @@
-function debounce(func, wait, immediate) {
-  let timeout;
-  return function () {
-    const context = this,
-      args = arguments;
-    const later = function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-    const callNow = immediate && !timeout;
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-    if (callNow) func.apply(context, args);
-  };
+// Tracks whether the admin has expanded their selection from "everyone
+// checked on this page" to "every user matching the active filters,
+// across every page" - the same "select all N matching" pattern used by
+// bulk-management UIs like YouTube Studio's video list.
+let selectAllMatchingActive = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+  initializeSelectAll();
+  initializeBulkActionBar();
+});
+
+function rowCheckboxes() {
+  return document.querySelectorAll(".user-row-checkbox");
 }
 
-function filterTable() {
-  const nameFilter = document.getElementById("filter-name").value.toLowerCase();
-  const emailFilter = document
-    .getElementById("filter-email")
-    .value.toLowerCase();
-  const roleFilter = document.getElementById("filter-role").value.toLowerCase();
-  const statusFilter = document.getElementById("filter-status").value;
-  const rows = document.querySelectorAll(".user-row");
+function initializeSelectAll() {
+  const selectAll = document.getElementById("select-all-users");
+  if (!selectAll) return;
 
-  rows.forEach((row) => {
-    const cells = row.querySelectorAll("td");
-    const name = cells[0].innerText.toLowerCase();
-    const email = cells[1].innerText.toLowerCase();
-    const role = cells[2].innerText.toLowerCase();
-    const statusText = cells[3].innerText.toLowerCase();
-    const normalizedStatus = statusText.includes("blocked")
-      ? "blocked"
-      : "active";
+  selectAll.addEventListener("change", () => {
+    rowCheckboxes().forEach((checkbox) => {
+      checkbox.checked = selectAll.checked;
+    });
+    selectAllMatchingActive = false;
+    updateBulkBar();
+  });
 
-    const matchesName = nameFilter ? name.includes(nameFilter) : true;
-    const matchesEmail = emailFilter ? email.includes(emailFilter) : true;
-    const matchesRole = roleFilter ? role.includes(roleFilter) : true;
-    const matchesStatus = statusFilter
-      ? normalizedStatus === statusFilter
-      : true;
+  rowCheckboxes().forEach((checkbox) =>
+    checkbox.addEventListener("change", () => {
+      selectAllMatchingActive = false;
+      updateBulkBar();
+    })
+  );
 
-    const showRow = matchesName && matchesEmail && matchesRole && matchesStatus;
-    row.style.display = showRow ? "" : "none";
+  const bannerAction = document.getElementById("select-all-banner-action");
+  if (bannerAction) {
+    bannerAction.addEventListener("click", () => {
+      if (selectAllMatchingActive) {
+        selectAllMatchingActive = false;
+        selectAll.checked = false;
+        rowCheckboxes().forEach((checkbox) => (checkbox.checked = false));
+      } else {
+        selectAllMatchingActive = true;
+      }
+      updateBulkBar();
+    });
+  }
+}
+
+function updateBulkBar() {
+  const checked = document.querySelectorAll(".user-row-checkbox:checked");
+  const bar = document.getElementById("bulk-action-bar");
+  const count = document.getElementById("bulk-selected-count");
+  const banner = document.getElementById("select-all-banner");
+  const bannerText = document.getElementById("select-all-banner-text");
+  const bannerAction = document.getElementById("select-all-banner-action");
+  if (!bar || !count) return;
+
+  const totalMatching = (window.USERS_META && window.USERS_META.total) || 0;
+  const pageRowCount = rowCheckboxes().length;
+
+  if (selectAllMatchingActive) {
+    bar.classList.remove("hidden");
+    count.textContent = `All ${totalMatching} selected (matching filters)`;
+    if (banner) {
+      banner.classList.remove("hidden");
+      bannerText.textContent = `All ${totalMatching} users matching the current filters are selected.`;
+      bannerAction.textContent = "Clear selection";
+    }
+    return;
+  }
+
+  if (checked.length > 0) {
+    bar.classList.remove("hidden");
+    count.textContent = `${checked.length} selected`;
+  } else {
+    bar.classList.add("hidden");
+  }
+
+  const allOnPageChecked = checked.length > 0 && checked.length === pageRowCount;
+  if (banner) {
+    if (allOnPageChecked && totalMatching > checked.length) {
+      banner.classList.remove("hidden");
+      bannerText.textContent = `All ${checked.length} users on this page are selected.`;
+      bannerAction.textContent = `Select all ${totalMatching} users matching filters`;
+    } else {
+      banner.classList.add("hidden");
+    }
+  }
+}
+
+function initializeBulkActionBar() {
+  const applyButton = document.getElementById("bulk-action-apply");
+  const actionSelect = document.getElementById("bulk-action-select");
+  if (!applyButton || !actionSelect) return;
+
+  applyButton.addEventListener("click", async () => {
+    const action = actionSelect.value;
+    const actionLabel = actionSelect.options[actionSelect.selectedIndex].text;
+
+    let body;
+    let targetCount;
+    if (selectAllMatchingActive) {
+      targetCount = (window.USERS_META && window.USERS_META.total) || 0;
+      body = { action, scope: "all_matching", filters: window.USER_FILTERS || {} };
+    } else {
+      const userIds = Array.from(
+        document.querySelectorAll(".user-row-checkbox:checked")
+      ).map((checkbox) => parseInt(checkbox.value, 10));
+      if (userIds.length === 0) return;
+      targetCount = userIds.length;
+      body = { action, scope: "selected", user_ids: userIds };
+    }
+
+    if (
+      !confirm(
+        `${actionLabel} for ${targetCount} selected user(s)? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    applyButton.disabled = true;
+    try {
+      const result = await apiFetch("/api/v1/admin/users/bulk", {
+        method: "POST",
+        body,
+      });
+      const { succeeded, skipped, failed } = result.data;
+      let message = `${succeeded} updated.`;
+      if (skipped) message += ` ${skipped} skipped (protected).`;
+      if (failed) message += ` ${failed} failed.`;
+      showToast(message, failed ? "error" : "success");
+      selectAllMatchingActive = false;
+      setTimeout(() => window.location.reload(), 800);
+    } catch (error) {
+      showToast(error.message || "Bulk action failed.", "error");
+      applyButton.disabled = false;
+    }
   });
 }
-
-document
-  .getElementById("filter-name")
-  .addEventListener("input", debounce(filterTable, 300));
-document
-  .getElementById("filter-email")
-  .addEventListener("input", debounce(filterTable, 300));
-document
-  .getElementById("filter-role")
-  .addEventListener("input", debounce(filterTable, 300));
-document
-  .getElementById("filter-status")
-  .addEventListener("change", debounce(filterTable, 300));

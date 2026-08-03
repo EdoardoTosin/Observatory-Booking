@@ -13,6 +13,7 @@ import hmac as _hmac_module
 import secrets
 import logging
 import re
+from datetime import datetime, timezone
 from time import time
 from collections import defaultdict
 from functools import wraps
@@ -23,10 +24,11 @@ from typing import (
     DefaultDict,
     Dict,
     List,
-    TypeVar,
     Tuple,
+    TypeVar,
     cast,
 )
+from zoneinfo import available_timezones
 
 from cryptography.exceptions import InvalidTag
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -43,6 +45,12 @@ _rate_limit_store: DefaultDict[int, List[float]] = defaultdict(list)
 _RATE_LIMIT_LOCK = Lock()
 
 EMAIL_REGEX = re.compile(r"^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$")
+
+# Maximum accepted input lengths, enforced here so a value never reaches the
+# database bounds (models.py) in the first place. RFC 5321 caps an email at
+# 254 characters; MAX_NAME_LENGTH is an application-chosen limit.
+MAX_NAME_LENGTH = 100
+MAX_EMAIL_LENGTH = 254
 PASSWORD_REGEX = re.compile(r"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,30}$")
 
 
@@ -279,7 +287,7 @@ def ttl_cache(ttl):
 
 def is_email_valid(email):
     """
-    Validate the format of an email address.
+    Validate the format and length of an email address.
 
     Args:
         email (str): The email string to validate.
@@ -287,6 +295,8 @@ def is_email_valid(email):
     Returns:
         bool: True if valid, False otherwise.
     """
+    if len(email) > MAX_EMAIL_LENGTH:
+        return False
     return bool(EMAIL_REGEX.match(email))
 
 
@@ -307,3 +317,93 @@ def is_password_strong(password):
         bool: True if password is strong, False otherwise.
     """
     return bool(PASSWORD_REGEX.match(password))
+
+
+_LEGACY_TIMEZONE_PREFIXES = ("US/", "Canada/", "Brazil/", "Mexico/", "Chile/")
+
+
+def get_timezone_groups() -> List[Tuple[str, List[str]]]:
+    """
+    Build a curated, continent-grouped list of IANA timezone names for the
+    System Settings timezone selector, derived entirely from stdlib
+    `zoneinfo.available_timezones()` (no extra dependency).
+
+    Drops legacy/backward-compat aliases that would otherwise clutter the
+    list: bare abbreviations with no "/" (e.g. `EST5EDT`), deprecated
+    top-level namespaces superseded by `America/...` (`US/`, `Canada/`,
+    `Brazil/`, `Mexico/`, `Chile/`), and `Etc/*` zones other than `Etc/UTC`
+    (POSIX sign-inverted GMT offsets that routinely confuse users, e.g.
+    `Etc/GMT+5` is actually UTC-5).
+
+    Returns:
+        List[Tuple[str, List[str]]]: (continent, sorted zone names) pairs
+        sorted by continent name, with a standalone "UTC" group first.
+    """
+    groups: DefaultDict[str, List[str]] = defaultdict(list)
+    for name in available_timezones():
+        if name in ("UTC", "Etc/UTC"):
+            continue
+        if "/" not in name:
+            continue
+        if name.startswith(_LEGACY_TIMEZONE_PREFIXES):
+            continue
+        if name.startswith("Etc/"):
+            continue
+        continent = name.split("/", 1)[0]
+        groups[continent].append(name)
+    return [("UTC", ["UTC"])] + [
+        (continent, sorted(zones)) for continent, zones in sorted(groups.items())
+    ]
+
+
+def resolve_calendar_month(args, tz):
+    """
+    Resolve the (year, month) a month-scoped calendar view should display,
+    from optional `year`/`month` query args, falling back to the current
+    local month for missing or invalid values.
+
+    Shared by the user Events page's date-picker and the admin Events
+    Calendar tab, both of which need this exact fallback behavior.
+
+    Args:
+        args: A mapping (e.g. `request.args`) that may contain `year`/`month`.
+        tz (ZoneInfo): Timezone the "current month" fallback is interpreted in.
+
+    Returns:
+        Tuple[int, int]: (year, month).
+    """
+    now_local = datetime.now(tz)
+    try:
+        year = int(args.get("year", now_local.year))
+        month = int(args.get("month", now_local.month))
+        if not 1 <= month <= 12:
+            raise ValueError("month out of range")
+    except (TypeError, ValueError):
+        year, month = now_local.year, now_local.month
+    return year, month
+
+
+def month_utc_bounds(year, month, tz):
+    """
+    Compute the naive-UTC [start, end) bounds of a local calendar month.
+
+    Shared by the events page's date-picker (`get_month_day_set`) and the
+    admin Events Calendar tab (`get_month_events`), both of which need to
+    scope a query to "everything in this local month" against `start_time`
+    columns stored as naive UTC.
+
+    Args:
+        year (int): Local calendar year.
+        month (int): Local calendar month (1-12).
+        tz (ZoneInfo): Timezone the month is interpreted in.
+
+    Returns:
+        Tuple[datetime, datetime]: Naive UTC (start, end) bounds.
+    """
+    month_start_local = datetime(year, month, 1, tzinfo=tz)
+    next_month, next_year = (month + 1, year) if month < 12 else (1, year + 1)
+    month_end_local = datetime(next_year, next_month, 1, tzinfo=tz)
+    return (
+        month_start_local.astimezone(timezone.utc).replace(tzinfo=None),
+        month_end_local.astimezone(timezone.utc).replace(tzinfo=None),
+    )

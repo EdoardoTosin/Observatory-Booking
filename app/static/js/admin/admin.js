@@ -36,9 +36,22 @@ function switchTab(tab) {
     );
 
   localStorage.setItem("lastActiveTab", tab);
+  document.dispatchEvent(new CustomEvent("admin:tabchange", { detail: { tab } }));
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const lastActiveTab = localStorage.getItem("lastActiveTab") || "calendar";
-  switchTab(lastActiveTab);
+  // If the URL carries ?tab=..., the server already rendered that tab's
+  // content/button state correctly (used for pagination/filter links within
+  // a tab) - just persist it and skip re-applying to avoid a visible flash.
+  // Otherwise fall back to whatever tab was last active (plain bookmarked
+  // /admin with no ?tab= param, matching the previous behavior).
+  const urlHasTabParam = new URLSearchParams(window.location.search).has(
+    "tab"
+  );
+  if (urlHasTabParam) {
+    localStorage.setItem("lastActiveTab", window.ACTIVE_TAB_FROM_SERVER);
+  } else {
+    const lastActiveTab = localStorage.getItem("lastActiveTab") || "calendar";
+    switchTab(lastActiveTab);
+  }
 });

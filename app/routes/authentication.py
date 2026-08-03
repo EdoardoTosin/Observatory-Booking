@@ -16,7 +16,7 @@ from ..utils import (
     is_rate_limited,
     logger,
 )
-from ..models import User
+from ..models import User, MAX_NAME_LENGTH
 from .blueprint import bp
 
 
@@ -142,6 +142,10 @@ def _handle_register_post():  # pylint: disable=too-many-return-statements
             flash("All fields are required.", "error")
             return redirect(url_for("bp.register"))
 
+        if len(name) > MAX_NAME_LENGTH:
+            flash(f"Name must not exceed {MAX_NAME_LENGTH} characters.", "error")
+            return redirect(url_for("bp.register"))
+
         encrypted_email = encrypt_data(email)
         if is_rate_limited(encrypted_email):
             flash("Too many registration attempts. Please try again later.", "error")
@@ -149,8 +153,7 @@ def _handle_register_post():  # pylint: disable=too-many-return-statements
 
         system = current_app.system  # type: ignore[attr-defined]
         with system as db:
-            encrypted_name = encrypt_data(name)
-            if db.query(User).filter(User.name_encrypted == encrypted_name).first():
+            if db.query(User).filter(User.name == name).first():
                 flash("Name already in use.", "error")
                 return redirect(url_for("bp.register"))
 

@@ -5,9 +5,30 @@ It supports dynamic inclusion of environment-specific metadata and session-based
 """
 
 from datetime import datetime, timezone
-from flask import session, current_app, flash
+from flask import session, current_app, flash, request, url_for
 
-from .models import User
+from .session_utils import get_live_session_user
+
+
+def preserve_query(endpoint, **overrides):
+    """
+    Build a URL for `endpoint` reusing the current request's query
+    parameters, with `overrides` applied on top (a key set to None or ""
+    is dropped). Used for pagination/filter/sort links that need to keep
+    every other active filter intact - e.g. changing `page` without
+    resetting `role`/`status` on the admin users list.
+
+    Args:
+        endpoint (str): The Flask endpoint name (as passed to `url_for`).
+        **overrides: Query parameters to add, replace, or remove.
+
+    Returns:
+        str: The resulting URL.
+    """
+    params = request.args.to_dict()
+    params.update(overrides)
+    params = {key: value for key, value in params.items() if value not in (None, "")}
+    return url_for(endpoint, **params)  # type: ignore[arg-type]
 
 
 def inject_globals():
@@ -25,7 +46,8 @@ def inject_globals():
     Behavior:
         - Validates that session user exists in DB; clears session if user has been deleted.
         - Adds debug info only when app is in development mode.
-        - Ensures DB session is properly closed after query.
+        - Reuses the same per-request cached lookup as login_required/admin_required
+          (see get_live_session_user) instead of re-querying the database.
 
     Returns:
         dict: A dictionary of variables globally accessible in templates.
@@ -38,25 +60,19 @@ def inject_globals():
         is_admin = False
 
         if user_session:
-            db_session = current_app.system.session_local()  # type: ignore[attr-defined]
-            try:
-                db_user = (
-                    db_session.query(User).filter_by(id=user_session["id"]).first()
-                )
-                if db_user:
-                    current_user = {
-                        "id": user_session.get("id"),
-                        "name": user_session.get("name"),
-                        "email": user_session.get("email"),
-                        "role": user_session.get("role"),
-                    }
-                    is_superadmin = user_session.get("admin_rank") == "super"
-                    is_admin = user_session.get("role") == "Admin"
-                else:
-                    session.clear()
-                    flash("Your account has been deleted.", "error")
-            finally:
-                db_session.close()
+            db_user = get_live_session_user()
+            if db_user:
+                current_user = {
+                    "id": user_session.get("id"),
+                    "name": user_session.get("name"),
+                    "email": user_session.get("email"),
+                    "role": user_session.get("role"),
+                }
+                is_superadmin = user_session.get("admin_rank") == "super"
+                is_admin = user_session.get("role") == "Admin"
+            else:
+                session.clear()
+                flash("Your account has been deleted.", "error")
 
         is_dev = current_app.config.get("ENV", "production") == "development"
 
@@ -89,9 +105,10 @@ def inject_globals():
 
 def init_filters(app):
     """
-    Register context processors (and filters, if any) with the Flask app.
+    Register context processors and template globals with the Flask app.
 
     Args:
         app (Flask): The Flask application instance.
     """
     app.context_processor(inject_globals)
+    app.add_template_global(preserve_query, name="preserve_query")

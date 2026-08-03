@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   initializeLegend();
-  initializeEventSlots();
+  initializeEvents();
   initializeDescriptionToggles();
 });
 
@@ -28,18 +28,18 @@ function toggleLegend() {
   }
 }
 
-function initializeEventSlots() {
-  const { configTimezone, nowUtc, slots } = window.eventData;
+function initializeEvents() {
+  const { configTimezone, nowUtc, events } = window.eventData;
   const nowUtcDate = new Date(nowUtc);
 
-  slots.forEach((slot) => {
-    const startTime = new Date(slot.startTime);
-    const endTime = new Date(slot.endTime);
+  events.forEach((event) => {
+    const startTime = new Date(event.startTime);
+    const endTime = new Date(event.endTime);
     const eventDate = startTime.toLocaleDateString("en-CA", { timeZone: configTimezone });
 
-    updateDateTimeElements(slot.id, eventDate, startTime, endTime, configTimezone);
+    updateDateTimeElements(event.id, eventDate, startTime, endTime, configTimezone);
 
-    updateBookingButton(slot.id, startTime, nowUtcDate);
+    updateBookingButton(event.id, startTime, nowUtcDate);
   });
 }
 
@@ -56,9 +56,9 @@ function initializeDescriptionToggles() {
   });
 }
 
-function updateDateTimeElements(slotId, eventDate, startTime, endTime, timezone) {
-  const dateElement = document.getElementById(`event-date-${slotId}`);
-  const timeElement = document.getElementById(`event-time-${slotId}`);
+function updateDateTimeElements(eventId, eventDate, startTime, endTime, timezone) {
+  const dateElement = document.getElementById(`event-date-${eventId}`);
+  const timeElement = document.getElementById(`event-time-${eventId}`);
 
   if (dateElement) {
     dateElement.textContent = eventDate;
@@ -72,8 +72,8 @@ function updateDateTimeElements(slotId, eventDate, startTime, endTime, timezone)
   }
 }
 
-function updateBookingButton(slotId, startTime, nowUtcDate) {
-  const bookingButton = document.querySelector(`#slot-${slotId} .btn-book-now`);
+function updateBookingButton(eventId, startTime, nowUtcDate) {
+  const bookingButton = document.querySelector(`#event-${eventId} .btn-book-now`);
 
   if (bookingButton && startTime <= nowUtcDate) {
     bookingButton.disabled = true;

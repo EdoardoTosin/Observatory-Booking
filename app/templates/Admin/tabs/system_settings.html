@@ -9,7 +9,10 @@
           >Latitude</label
         >
         <input
-          type="text"
+          type="number"
+          step="any"
+          min="-90"
+          max="90"
           name="latitude"
           id="latitude"
           value="{{ config.latitude }}"
@@ -17,6 +20,9 @@
           class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-100"
           required
         />
+        <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">
+          Set via the map below, or type a value directly.
+        </p>
       </div>
       <div>
         <label
@@ -25,7 +31,10 @@
           >Longitude</label
         >
         <input
-          type="text"
+          type="number"
+          step="any"
+          min="-180"
+          max="180"
           name="longitude"
           id="longitude"
           value="{{ config.longitude }}"
@@ -34,23 +43,50 @@
           required
         />
       </div>
+      <div class="md:col-span-2">
+        <label
+          class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >Location</label
+        >
+        <div
+          id="locationMap"
+          class="mt-1 h-64 w-full rounded-md border border-gray-300 dark:border-gray-500"
+        ></div>
+        <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">
+          Click or drag the marker to set the observatory's coordinates. Map
+          tiles are fetched from OpenStreetMap.
+        </p>
+      </div>
       <div>
         <label
           for="timezone"
           class="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >Timezone</label
         >
-        <input
-          type="text"
+        <select
           name="timezone"
           id="timezone"
-          value="{{ config.timezone }}"
-          placeholder="e.g., UTC or America/New_York"
           class="mt-1 block w-full border border-gray-300 rounded-md shadow-xs p-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-100"
           required
-        />
+        >
+          {% for continent, zones in timezone_groups %}
+            {% if zones | length == 1 and zones[0] == continent %}
+              <option value="{{ zones[0] }}" {% if config.timezone == zones[0] %}selected{% endif %}>
+                {{ zones[0] }}
+              </option>
+            {% else %}
+              <optgroup label="{{ continent }}">
+                {% for zone in zones %}
+                  <option value="{{ zone }}" {% if config.timezone == zone %}selected{% endif %}>
+                    {{ zone.split('/', 1)[1].replace('_', ' ') }}
+                  </option>
+                {% endfor %}
+              </optgroup>
+            {% endif %}
+          {% endfor %}
+        </select>
         <p class="text-xs text-gray-500 mt-1 dark:text-gray-400">
-          Enter a valid IANA timezone name.
+          The IANA timezone the observatory operates in.
         </p>
       </div>
       <div>
@@ -62,6 +98,8 @@
         <input
           type="number"
           step="1"
+          min="0"
+          max="100"
           name="weather_threshold"
           id="weather_threshold"
           value="{{ config.weather_threshold }}"
@@ -140,3 +178,21 @@
     </div>
   </form>
 </div>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='vendor/leaflet/leaflet.css') }}"
+/>
+<script>
+  window.LOCATION_MAP_CONFIG = {
+    latitude: {{ config.latitude | tojson }},
+    longitude: {{ config.longitude | tojson }},
+    iconUrl: "{{ url_for('static', filename='vendor/leaflet/images/marker-icon.png') }}",
+    iconRetinaUrl: "{{ url_for('static', filename='vendor/leaflet/images/marker-icon-2x.png') }}",
+    shadowUrl: "{{ url_for('static', filename='vendor/leaflet/images/marker-shadow.png') }}",
+  };
+</script>
+<script src="{{ url_for('static', filename='vendor/leaflet/leaflet.js') }}"></script>
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/admin/tabs/system_settings.js') }}"
+></script>

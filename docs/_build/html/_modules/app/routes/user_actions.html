@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
     <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
@@ -45,26 +45,33 @@
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/routes/user_actions';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -90,7 +97,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -168,23 +175,13 @@
   </a>
 </li>
 
-            <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-controls="pst-nav-more-links">
-                    More
-                </button>
-                <ul id="pst-nav-more-links" class="dropdown-menu">
-                    
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../../components/index.html">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../components/index.html">
     Components
   </a>
 </li>
 
-                </ul>
-            </li>
-            
   </ul>
 </nav></div>
       
@@ -206,11 +203,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -223,8 +227,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -325,11 +328,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -342,8 +352,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -409,12 +418,13 @@
   <h1>Source code for app.routes.user_actions</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;User actions routes module.</span>
 
-<span class="sd">This module handles event viewing, booking, cancellation, and password management</span>
-<span class="sd">for authenticated users.</span>
+<span class="sd">This module handles event viewing, searching/filtering, booking, cancellation,</span>
+<span class="sd">and password management for authenticated users.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">calendar</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">timezone</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -426,16 +436,25 @@
     <span class="n">flash</span><span class="p">,</span>
     <span class="n">current_app</span><span class="p">,</span>
     <span class="n">make_response</span><span class="p">,</span>
+    <span class="n">jsonify</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">func</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">werkzeug.security</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_password_hash</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..booking_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">Slot</span><span class="p">,</span> <span class="n">Booking</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">User</span><span class="p">,</span> <span class="n">UserService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_password_strong</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..api_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">api_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..booking_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">Event</span><span class="p">,</span> <span class="n">Booking</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">User</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_password_strong</span><span class="p">,</span> <span class="n">month_utc_bounds</span><span class="p">,</span> <span class="n">resolve_calendar_month</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.blueprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">bp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.security_decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">login_required</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.static_pages</span><span class="w"> </span><span class="kn">import</span> <span class="n">render_static_page</span>
+
+<span class="c1"># &quot;Browse by month&quot; substitutes for numbered pagination on the events page</span>
+<span class="c1"># (see Phase 1 of the UX plan): with no explicit date/range filter, show a</span>
+<span class="c1"># rolling window instead of every future event ever scheduled.</span>
+<span class="n">DEFAULT_WINDOW_DAYS</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="c1"># Guardrail against a client requesting an unbounded ?from=&amp;to= span.</span>
+<span class="n">MAX_DATE_RANGE_DAYS</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">_SORT_OPTIONS</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;date_asc&quot;</span><span class="p">,</span> <span class="s2">&quot;date_desc&quot;</span><span class="p">,</span> <span class="s2">&quot;weather_desc&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="events_js">
@@ -452,84 +471,352 @@
 
 
 
+<div class="viewcode-block" id="_get_booked_counts">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._get_booked_counts">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_booked_counts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">event_ids</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return {event_id: confirmed_booking_count} for the given event ids.</span>
+
+<span class="sd">    A single grouped query instead of one COUNT(*) per event, so this stays</span>
+<span class="sd">    flat regardless of how many events are being displayed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">event_ids</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="c1"># pylint: disable-next=not-callable</span>
+    <span class="n">count_column</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">event_id</span><span class="p">,</span> <span class="n">count_column</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">event_id</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">event_ids</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">event_id</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_local_day_bounds_utc">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._local_day_bounds_utc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_local_day_bounds_utc</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="n">tz</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a local YYYY-MM-DD string to naive UTC [start, end) bounds.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If `date_str` isn&#39;t a valid YYYY-MM-DD date.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">local_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+    <span class="n">local_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">local_date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span>
+    <span class="n">local_end</span> <span class="o">=</span> <span class="n">local_start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">local_start</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">local_end</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_parse_event_query_params">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._parse_event_query_params">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_event_query_params</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse and lightly validate the /events (and /api/v1/events) query params.&quot;&quot;&quot;</span>
+    <span class="n">sort</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sort&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()[:</span><span class="mi">100</span><span class="p">],</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+        <span class="s2">&quot;date_from&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;from&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+        <span class="s2">&quot;date_to&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;to&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+        <span class="s2">&quot;avail_only&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;avail&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;no_warning&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;no_warning&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sort&quot;</span><span class="p">:</span> <span class="n">sort</span> <span class="k">if</span> <span class="n">sort</span> <span class="ow">in</span> <span class="n">_SORT_OPTIONS</span> <span class="k">else</span> <span class="s2">&quot;date_asc&quot;</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="_apply_date_range">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._apply_date_range">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_apply_date_range</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">tz</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply an optional ?from=&amp;to= range filter, clamped to MAX_DATE_RANGE_DAYS.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[Query, bool]: The filtered query, and whether the requested</span>
+<span class="sd">            range had to be clamped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">clamped</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">date_from</span><span class="p">,</span> <span class="n">date_to</span> <span class="o">=</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;date_from&quot;</span><span class="p">],</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;date_to&quot;</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">date_from</span><span class="p">:</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_local_day_bounds_utc</span><span class="p">(</span><span class="n">date_from</span><span class="p">,</span> <span class="n">tz</span><span class="p">)</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">date_to</span><span class="p">:</span>
+            <span class="n">to_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_to</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">date_from</span><span class="p">:</span>
+                <span class="n">from_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_from</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">to_date</span> <span class="o">-</span> <span class="n">from_date</span><span class="p">)</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;</span> <span class="n">MAX_DATE_RANGE_DAYS</span><span class="p">:</span>
+                    <span class="n">to_date</span> <span class="o">=</span> <span class="n">from_date</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">MAX_DATE_RANGE_DAYS</span><span class="p">)</span>
+                    <span class="n">clamped</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">_local_day_bounds_utc</span><span class="p">(</span><span class="n">to_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span> <span class="n">tz</span><span class="p">)</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">query</span><span class="p">,</span> <span class="n">clamped</span></div>
+
+
+
+<div class="viewcode-block" id="_apply_sort">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._apply_sort">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_apply_sort</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Order the event query per the resolved `sort` filter value.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sort</span> <span class="o">==</span> <span class="s2">&quot;date_desc&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">sort</span> <span class="o">==</span> <span class="s2">&quot;weather_desc&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">weather_rating</span><span class="o">.</span><span class="n">desc</span><span class="p">()</span><span class="o">.</span><span class="n">nullslast</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">asc</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="_load_events">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._load_events">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_events</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">tz</span><span class="p">,</span> <span class="n">now_utc</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Query and annotate events matching `filters` for the given user.</span>
+
+<span class="sd">    Applies the search/date/sort filters in SQL, then attaches the</span>
+<span class="sd">    per-event `is_fully_booked`/`is_user_booked` flags (one grouped booking</span>
+<span class="sd">    count query, not one per event), and finally applies the `avail_only`</span>
+<span class="sd">    filter in Python against that small, already-bounded result set.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[Event], bool]: The matching events, and whether an</span>
+<span class="sd">            explicit ?from=&amp;to= range had to be clamped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Event</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;</span> <span class="n">now_utc</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;q&quot;</span><span class="p">]:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;%</span><span class="si">{</span><span class="n">filters</span><span class="p">[</span><span class="s1">&#39;q&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">))</span>
+
+    <span class="n">clamped</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">_local_day_bounds_utc</span><span class="p">(</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">tz</span><span class="p">)</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;date_from&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;date_to&quot;</span><span class="p">]:</span>
+        <span class="n">query</span><span class="p">,</span> <span class="n">clamped</span> <span class="o">=</span> <span class="n">_apply_date_range</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">tz</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">now_utc</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">DEFAULT_WINDOW_DAYS</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;no_warning&quot;</span><span class="p">]:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">weather_warning</span><span class="o">.</span><span class="n">isnot</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="n">query</span> <span class="o">=</span> <span class="n">_apply_sort</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;sort&quot;</span><span class="p">])</span>
+    <span class="n">events_list</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="n">user_bookings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">event_id</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">event_id</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">booked_counts</span> <span class="o">=</span> <span class="n">_get_booked_counts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="p">[</span><span class="n">event</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_list</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">booked_count</span> <span class="o">=</span> <span class="n">booked_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">is_fully_booked</span> <span class="o">=</span> <span class="n">booked_count</span> <span class="o">&gt;=</span> <span class="n">event</span><span class="o">.</span><span class="n">max_bookings</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">is_user_booked</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">user_bookings</span>
+
+    <span class="k">if</span> <span class="n">filters</span><span class="p">[</span><span class="s2">&quot;avail_only&quot;</span><span class="p">]:</span>
+        <span class="n">events_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">event</span>
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_list</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">is_fully_booked</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">event</span><span class="o">.</span><span class="n">is_user_booked</span>
+        <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">events_list</span><span class="p">,</span> <span class="n">clamped</span></div>
+
+
+
+<div class="viewcode-block" id="_serialize_event">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._serialize_event">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_serialize_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Serialize an annotated Event row for the JSON API.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+        <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="s2">&quot;max_bookings&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">max_bookings</span><span class="p">,</span>
+        <span class="s2">&quot;weather_rating&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">weather_rating</span><span class="p">,</span>
+        <span class="s2">&quot;weather_warning&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">weather_warning</span><span class="p">,</span>
+        <span class="s2">&quot;is_fully_booked&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">is_fully_booked</span><span class="p">,</span>
+        <span class="s2">&quot;is_user_booked&quot;</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">is_user_booked</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="get_month_day_set">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions.get_month_day_set">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_month_day_set</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">tz</span><span class="p">):</span>
+    <span class="c1"># pylint: disable=duplicate-code</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the set of local ISO date strings with &gt;=1 event in the given month.</span>
+
+<span class="sd">    At most ~31 rows thanks to AdminService&#39;s &quot;one event per day&quot; rule, so</span>
+<span class="sd">    this is always a cheap query regardless of how large the events table is.</span>
+<span class="sd">    (Mirrors admin_dashboard.get_month_events&#39;s shape - both are thin</span>
+<span class="sd">    wrappers around the shared month_utc_bounds helper, returning different</span>
+<span class="sd">    projections of the same month-scoped query.)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">start_utc</span><span class="p">,</span> <span class="n">end_utc</span> <span class="o">=</span> <span class="n">month_utc_bounds</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">tz</span><span class="p">)</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">start_utc</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;</span> <span class="n">end_utc</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="build_calendar_weeks">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions.build_calendar_weeks">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_calendar_weeks</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day_set</span><span class="p">,</span> <span class="n">today_str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Build a Sunday-first month grid for the date-picker.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[List[dict]]: Weeks, each a list of 7 day-cell dicts (leading/</span>
+<span class="sd">            trailing days from adjacent months are included to fill the grid).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cal</span> <span class="o">=</span> <span class="n">calendar</span><span class="o">.</span><span class="n">Calendar</span><span class="p">(</span>
+        <span class="n">firstweekday</span><span class="o">=</span><span class="mi">6</span>
+    <span class="p">)</span>  <span class="c1"># 6 = Sunday, matches admin calendar&#39;s header</span>
+    <span class="n">weeks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">week</span> <span class="ow">in</span> <span class="n">cal</span><span class="o">.</span><span class="n">monthdatescalendar</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">):</span>
+        <span class="n">week_cells</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">week</span><span class="p">:</span>
+            <span class="n">date_str</span> <span class="o">=</span> <span class="n">day</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="n">week_cells</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">date_str</span><span class="p">,</span>
+                    <span class="s2">&quot;day&quot;</span><span class="p">:</span> <span class="n">day</span><span class="o">.</span><span class="n">day</span><span class="p">,</span>
+                    <span class="s2">&quot;in_month&quot;</span><span class="p">:</span> <span class="n">day</span><span class="o">.</span><span class="n">month</span> <span class="o">==</span> <span class="n">month</span><span class="p">,</span>
+                    <span class="s2">&quot;has_events&quot;</span><span class="p">:</span> <span class="n">date_str</span> <span class="ow">in</span> <span class="n">day_set</span><span class="p">,</span>
+                    <span class="s2">&quot;is_past&quot;</span><span class="p">:</span> <span class="n">date_str</span> <span class="o">&lt;</span> <span class="n">today_str</span><span class="p">,</span>
+                    <span class="s2">&quot;is_today&quot;</span><span class="p">:</span> <span class="n">date_str</span> <span class="o">==</span> <span class="n">today_str</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="n">weeks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">week_cells</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">weeks</span></div>
+
+
+
+<div class="viewcode-block" id="_build_event_view_context">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions._build_event_view_context">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_build_event_view_context</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load everything the events page (and its API counterpart) need.</span>
+
+<span class="sd">    Shared by the Jinja route (first paint) and the JSON API route</span>
+<span class="sd">    (re-fetches on filter/date/sort change), so both stay in sync against</span>
+<span class="sd">    one query implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">tz</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">))</span>
+    <span class="n">now_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+
+    <span class="n">filters</span> <span class="o">=</span> <span class="n">_parse_event_query_params</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">events_list</span><span class="p">,</span> <span class="n">clamped</span> <span class="o">=</span> <span class="n">_load_events</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">tz</span><span class="p">,</span> <span class="n">now_utc</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+
+    <span class="n">cal_year</span><span class="p">,</span> <span class="n">cal_month</span> <span class="o">=</span> <span class="n">resolve_calendar_month</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">tz</span><span class="p">)</span>
+    <span class="n">day_set</span> <span class="o">=</span> <span class="n">get_month_day_set</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">cal_year</span><span class="p">,</span> <span class="n">cal_month</span><span class="p">,</span> <span class="n">tz</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;config_timezone&quot;</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">timezone</span><span class="p">,</span>
+        <span class="s2">&quot;now_utc&quot;</span><span class="p">:</span> <span class="n">now_utc</span><span class="p">,</span>
+        <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="n">filters</span><span class="p">,</span>
+        <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">events_list</span><span class="p">,</span>
+        <span class="s2">&quot;clamped&quot;</span><span class="p">:</span> <span class="n">clamped</span><span class="p">,</span>
+        <span class="s2">&quot;calendar_year&quot;</span><span class="p">:</span> <span class="n">cal_year</span><span class="p">,</span>
+        <span class="s2">&quot;calendar_month&quot;</span><span class="p">:</span> <span class="n">cal_month</span><span class="p">,</span>
+        <span class="s2">&quot;calendar_day_set&quot;</span><span class="p">:</span> <span class="n">day_set</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+
 <div class="viewcode-block" id="events">
 <a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions.events">[docs]</a>
-<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/events&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">],</span> <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;events&quot;</span><span class="p">)</span>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/events&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">],</span> <span class="n">endpoint</span><span class="o">=</span><span class="s2">&quot;events&quot;</span><span class="p">)</span>
 <span class="nd">@login_required</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">events</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handle rendering and interaction with the event booking page.</span>
+<span class="sd">    Render the event booking page: search, date/date-range filters,</span>
+<span class="sd">    sorting, and a &quot;browse by month&quot; date-picker.</span>
 
-<span class="sd">    GET: Display available, booked, and fully booked events.</span>
-<span class="sd">    POST: Book a selected slot, if available.</span>
+<span class="sd">    Booking and cancellation are handled by the dedicated /booking and</span>
+<span class="sd">    /cancel_booking/&lt;event_id&gt; routes, not by this view.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
     <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">ctx</span> <span class="o">=</span> <span class="n">_build_event_view_context</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+            <span class="n">today_str</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;config_timezone&quot;</span><span class="p">])))</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="n">calendar_weeks</span> <span class="o">=</span> <span class="n">build_calendar_weeks</span><span class="p">(</span>
+                <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_year&quot;</span><span class="p">],</span>
+                <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_month&quot;</span><span class="p">],</span>
+                <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_day_set&quot;</span><span class="p">],</span>
+                <span class="n">today_str</span><span class="p">,</span>
+            <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">slot_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;slot_id&quot;</span><span class="p">))</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid event selection&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;clamped&quot;</span><span class="p">]:</span>
+            <span class="n">flash</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date range limited to </span><span class="si">{</span><span class="n">MAX_DATE_RANGE_DAYS</span><span class="si">}</span><span class="s2"> days.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">book_slot</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span>
-                <span class="n">flash</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span> <span class="k">if</span> <span class="s2">&quot;confirmed&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
-            <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Booking error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred during booking.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-                <span class="n">config_timezone</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">get_config</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="o">.</span><span class="n">timezone</span>
+        <span class="k">return</span> <span class="n">make_response</span><span class="p">(</span>
+            <span class="n">render_template</span><span class="p">(</span>
+                <span class="s2">&quot;user/events.html&quot;</span><span class="p">,</span>
+                <span class="n">events</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">],</span>
+                <span class="n">config_timezone</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;config_timezone&quot;</span><span class="p">],</span>
+                <span class="n">now_utc</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;now_utc&quot;</span><span class="p">],</span>
+                <span class="n">filters</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;filters&quot;</span><span class="p">],</span>
+                <span class="n">calendar_weeks</span><span class="o">=</span><span class="n">calendar_weeks</span><span class="p">,</span>
+                <span class="n">calendar_year</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_year&quot;</span><span class="p">],</span>
+                <span class="n">calendar_month</span><span class="o">=</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_month&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Events error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred while loading events.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span></div>
 
-                <span class="n">now_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;UTC&quot;</span><span class="p">))</span>
 
-                <span class="n">slots</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;</span> <span class="n">now_utc</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
-                <span class="n">user_bookings</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="n">b</span><span class="o">.</span><span class="n">slot_id</span>
-                    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">slot_id</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-                        <span class="n">Booking</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_id</span>
-                    <span class="p">)</span>
-                <span class="p">}</span>
-                <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">:</span>
-
-                    <span class="k">if</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-                            <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;UTC&quot;</span><span class="p">)</span>
-                        <span class="p">)</span>
-                    <span class="k">if</span> <span class="n">slot</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="n">slot</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">end_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="s2">&quot;UTC&quot;</span><span class="p">))</span>
-
-                    <span class="c1"># pylint: disable=not-callable</span>
-                    <span class="n">booked_count</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
-                        <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Booking</span><span class="o">.</span><span class="n">slot_id</span> <span class="o">==</span> <span class="n">slot</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-                        <span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
-                    <span class="p">)</span>
-                    <span class="n">slot</span><span class="o">.</span><span class="n">is_fully_booked</span> <span class="o">=</span> <span class="n">booked_count</span> <span class="o">&gt;=</span> <span class="n">slot</span><span class="o">.</span><span class="n">max_bookings</span>
-                    <span class="n">slot</span><span class="o">.</span><span class="n">is_user_booked</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">user_bookings</span>
-
-                <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span>
-                    <span class="n">render_template</span><span class="p">(</span>
-                        <span class="s2">&quot;user/events.html&quot;</span><span class="p">,</span>
-                        <span class="n">slots</span><span class="o">=</span><span class="n">slots</span><span class="p">,</span>
-                        <span class="n">config_timezone</span><span class="o">=</span><span class="n">config_timezone</span><span class="p">,</span>
-                        <span class="n">now_utc</span><span class="o">=</span><span class="n">now_utc</span><span class="p">,</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-        <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Events error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An error occurred while loading events.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">response</span></div>
+<div class="viewcode-block" id="api_events">
+<a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions.api_events">[docs]</a>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/api/v1/events&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@login_required</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">api_events</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;JSON API: list events matching the same filters as the /events page.&quot;&quot;&quot;</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
+            <span class="n">ctx</span> <span class="o">=</span> <span class="n">_build_event_view_context</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">_serialize_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">meta</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                <span class="s2">&quot;date_range_clamped&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;clamped&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;calendar_year&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_year&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;calendar_month&quot;</span><span class="p">:</span> <span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_month&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;calendar_days_with_events&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ctx</span><span class="p">[</span><span class="s2">&quot;calendar_day_set&quot;</span><span class="p">]),</span>
+            <span class="p">},</span>
+            <span class="n">errors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;API events error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">api_error</span><span class="p">(</span><span class="s2">&quot;An error occurred while loading events.&quot;</span><span class="p">)</span></div>
 
 
 
@@ -539,12 +826,12 @@
 <span class="nd">@login_required</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">booking</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handle slot booking requests.</span>
+<span class="sd">    Handle event booking requests.</span>
 
 <span class="sd">    Prevents booking if the event has already started or finished.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">slot_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;slot_id&quot;</span><span class="p">))</span>
+        <span class="n">event_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;event_id&quot;</span><span class="p">))</span>
     <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
         <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Invalid event selection&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
@@ -552,23 +839,24 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
         <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-            <span class="n">slot</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">slot_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">slot</span><span class="p">:</span>
+            <span class="c1"># pylint: disable=duplicate-code</span>
+            <span class="n">event</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Event</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">event_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="p">:</span>
                 <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Event not found&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
 
-            <span class="n">slot_start_time_aware</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+            <span class="n">event_start_time_aware</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 
             <span class="n">now_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">slot_start_time_aware</span> <span class="o">&lt;=</span> <span class="n">now_utc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event_start_time_aware</span> <span class="o">&lt;=</span> <span class="n">now_utc</span><span class="p">:</span>
                 <span class="n">flash</span><span class="p">(</span>
                     <span class="s2">&quot;Cannot book an event that has already started or finished.&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;error&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
 
-            <span class="n">result</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">book_slot</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">slot_id</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">book_event</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">event_id</span><span class="p">)</span>
             <span class="n">flash</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span> <span class="k">if</span> <span class="s2">&quot;confirmed&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Booking error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -579,11 +867,11 @@
 
 <div class="viewcode-block" id="cancel_booking">
 <a class="viewcode-back" href="../../../components/routes/user_actions.html#app.routes.user_actions.cancel_booking">[docs]</a>
-<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/cancel_booking/&lt;int:slot_id&gt;&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@bp</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/cancel_booking/&lt;int:event_id&gt;&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
 <span class="nd">@login_required</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">cancel_booking</span><span class="p">(</span><span class="n">slot_id</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cancel_booking</span><span class="p">(</span><span class="n">event_id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Cancel a booking for a specific slot.</span>
+<span class="sd">    Cancel a booking for a specific event.</span>
 
 <span class="sd">    Prevents cancellation if the event has already started or finished.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -591,23 +879,24 @@
         <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
         <span class="n">system</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">system</span>  <span class="c1"># type: ignore[attr-defined]</span>
         <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
-            <span class="n">slot</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">slot_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">slot</span><span class="p">:</span>
+            <span class="c1"># pylint: disable=duplicate-code</span>
+            <span class="n">event</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Event</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">event_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="p">:</span>
                 <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Event not found&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
 
-            <span class="n">slot_start_time_aware</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+            <span class="n">event_start_time_aware</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">start_time</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 
             <span class="n">now_utc</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">slot_start_time_aware</span> <span class="o">&lt;=</span> <span class="n">now_utc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event_start_time_aware</span> <span class="o">&lt;=</span> <span class="n">now_utc</span><span class="p">:</span>
                 <span class="n">flash</span><span class="p">(</span>
                     <span class="s2">&quot;Cannot cancel a booking for an event that has already started or finished.&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;error&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.events&quot;</span><span class="p">))</span>
 
-            <span class="n">result</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">cancel_booking</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">slot_id</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">cancel_booking</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">event_id</span><span class="p">)</span>
             <span class="n">flash</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;success&quot;</span> <span class="k">if</span> <span class="s2">&quot;successfully&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cancel booking error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -674,13 +963,11 @@
             <span class="k">with</span> <span class="n">system</span> <span class="k">as</span> <span class="n">db</span><span class="p">:</span>
                 <span class="n">user_obj</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">user_obj</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">check_password_hash</span><span class="p">(</span>
-                    <span class="n">user_obj</span><span class="o">.</span><span class="n">password_hash</span><span class="p">,</span> <span class="n">old_password</span>
-                <span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">user_obj</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">user_obj</span><span class="o">.</span><span class="n">verify_password</span><span class="p">(</span><span class="n">old_password</span><span class="p">):</span>
                     <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;Old password is incorrect.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;bp.change_password&quot;</span><span class="p">))</span>
 
-                <span class="n">UserService</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">change_user_password</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">new_password</span><span class="p">)</span>
+                <span class="n">system</span><span class="o">.</span><span class="n">change_user_password</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">new_password</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">SQLAlchemyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">current_app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Change password error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">flash</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while changing your password.&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">)</span>
@@ -720,8 +1007,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -755,7 +1042,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
 </p></div>
       
     </div>

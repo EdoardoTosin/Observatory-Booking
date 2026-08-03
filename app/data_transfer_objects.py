@@ -37,7 +37,7 @@ class ConfigurationUpdate:
 @dataclass
 class EventData:
     """
-    DTO for creating or updating an event slot.
+    DTO for creating or updating an event.
 
     Attributes:
         event_title (str): Title of the event (up to 30 characters recommended).

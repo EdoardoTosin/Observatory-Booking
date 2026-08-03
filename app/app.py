@@ -54,7 +54,7 @@ def create_instance():
 
     @instance.before_request
     def csrf_protect():
-        validate_csrf()
+        return validate_csrf()
 
     # --- Security headers ---
     @instance.after_request

@@ -24,6 +24,15 @@ User Workflow
    - Each event includes title, date, time, and weather rating.
    - Status shows if it's available, booked, full, or past.
    - Weather warnings and color-coded ratings are included.
+   - Search by title, sort by date or weather rating, hide full/warned
+     events, and browse a date-picker calendar to jump to a specific day -
+     the calendar stays open across month navigation so you don't have to
+     reopen it after each click.
+
+   Filtering/sorting/date navigation re-fetch just the event list and
+   calendar via the JSON API (``/api/v1/events``) without a full page
+   reload; the same page also works with JavaScript disabled, falling
+   back to plain links.
 
 4. **Book an Event**
 
@@ -58,26 +67,42 @@ Admin Workflow
 
 2. **Manage Events**
 
-   - Add/update events using the calendar tab
+   - Add/update events using the calendar tab (scoped to the viewed month;
+     prev/next navigation re-fetches via the JSON API without a reload)
    - Provide title, description, date, open/close times, max bookings
    - Weather is auto-evaluated on save
    - Use “Update Weather” to refresh forecasts for all events
+   - The edit modal shows "booked / max" capacity; lowering the max
+     bookings below the number of confirmed bookings is rejected with an
+     explicit error
+   - Revoke an individual user's booking directly from the edit modal's
+     "Manage bookings" list to free up capacity (allowed even after the
+     event has started, unlike a user's own self-cancel) before reducing
+     the limit or deleting the event
 
 3. **Manage Users**
 
-   - View all non-superadmin accounts
-   - Filter by name, email, role, or status
+   - View all non-superadmin accounts, paginated (10/25/50/100 per page)
+   - Filter by name, email, role, or status; sort by ID, name, role, or status
    - Promote/demote between User and Admin
    - Block/unblock accounts
    - Superadmins can also delete users permanently
+   - Select rows individually, or select every row on the page and expand
+     to "select all N users matching the current filters" for a bulk
+     block/unblock/role change in one action - the acting admin and any
+     superadmin account are always excluded server-side regardless of
+     what's selected
 
 4. **Configure System Settings**
 
-   - Update observatory coordinates (latitude/longitude)
+   - Update observatory coordinates (latitude/longitude) by dragging a
+     marker on the built-in map (Leaflet + OpenStreetMap tiles) or typing
+     values directly
    - Set default event times
    - Set weather suitability threshold (%)
    - Define max bookings per event
-   - Define timezone (IANA format)
+   - Choose the timezone from a curated, continent-grouped list (derived
+     from the IANA database)
 
 Superadmin Rules
 ----------------

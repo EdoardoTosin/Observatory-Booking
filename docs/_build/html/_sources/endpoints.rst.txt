@@ -25,14 +25,14 @@ These endpoints are accessible to all users, including unauthenticated visitors.
 User Endpoints
 --------------
 
-These endpoints require the user to be authenticated. They allow registered users to perform actions related to their account and event participation, such as viewing available slots, booking events, canceling bookings, and managing passwords.
+These endpoints require the user to be authenticated. They allow registered users to perform actions related to their account and event participation, such as viewing available events, booking events, canceling bookings, and managing passwords.
 
 .. openapi:: specs/openapi.yaml
    :paths:
      /logout
      /events
      /booking
-     /cancel_booking/{slot_id}
+     /cancel_booking/{event_id}
      /change_password
 
 Admin Endpoints
@@ -57,6 +57,32 @@ Reserved for superadministrators, these endpoints enable the execution of critic
 .. openapi:: specs/openapi.yaml
    :paths:
      /admin/user/delete
+
+JSON API (v1)
+-------------
+
+A separate ``/api/v1/...`` namespace used by the Events page, the admin User Accounts tab, and the admin Events Calendar tab to filter, paginate, and run bulk/corrective actions via ``fetch()`` without a full page reload. Every page still renders its first paint as plain server-rendered HTML (so it works with JavaScript disabled); these endpoints only back the *subsequent* interactions on top of that first paint.
+
+Authenticated the same way as the rest of the app (session cookie via ``login_required``/``admin_required`` - not a separately token-authenticated public API). State-changing requests (``POST``) must send the CSRF token via the ``X-CSRF-Token`` header instead of a form field, since the body is JSON.
+
+Every response uses the same envelope, regardless of success or failure:
+
+.. code-block:: javascript
+
+    // list endpoints
+    {"data": [...], "meta": {"page": 1, "per_page": 25, "total": 5000, "total_pages": 200}, "errors": null}
+    // single-object / action endpoints
+    {"data": {...}, "errors": null}
+    // failure
+    {"data": null, "errors": [{"message": "Cannot reduce capacity below 5 confirmed bookings."}]}
+
+.. openapi:: specs/openapi.yaml
+   :paths:
+     /api/v1/events
+     /api/v1/admin/users
+     /api/v1/admin/users/bulk
+     /api/v1/admin/events
+     /api/v1/admin/events/{event_id}/bookings/{booking_id}/revoke
 
 Utility Endpoints
 -----------------

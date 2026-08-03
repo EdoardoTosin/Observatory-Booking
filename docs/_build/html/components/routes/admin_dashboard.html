@@ -27,18 +27,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
     <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
@@ -46,6 +46,7 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'components/routes/admin_dashboard';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -54,20 +55,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -93,7 +100,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -171,23 +178,13 @@
   </a>
 </li>
 
-            <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-controls="pst-nav-more-links">
-                    More
-                </button>
-                <ul id="pst-nav-more-links" class="dropdown-menu">
-                    
-<li class=" current active">
-  <a class="nav-link dropdown-item nav-internal" href="../index.html">
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../index.html">
     Components
   </a>
 </li>
 
-                </ul>
-            </li>
-            
   </ul>
 </nav></div>
       
@@ -209,11 +206,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -226,8 +230,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -330,11 +333,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -347,8 +357,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -357,7 +366,15 @@
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
         <div class="sidebar-primary-item">
+
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
@@ -447,6 +464,19 @@
 <span id="admin-dashboard"></span><h1>Admin Dashboard<a class="headerlink" href="#module-app.routes.admin_dashboard" title="Link to this heading">#</a></h1>
 <p>Admin Dashboard routes for managing configurations, events, and users.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard._admin_redirect_url">
+<span class="sig-name descname"><span class="pre">_admin_redirect_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#_admin_redirect_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard._admin_redirect_url" title="Link to this definition">#</a></dt>
+<dd><p>Build a <cite>bp.admin</cite> redirect URL preserving tab/pagination/filter form fields.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard._admin_redirect_url_from_query">
+<span class="sig-name descname"><span class="pre">_admin_redirect_url_from_query</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#_admin_redirect_url_from_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard._admin_redirect_url_from_query" title="Link to this definition">#</a></dt>
+<dd><p>Like <cite>_admin_redirect_url</cite>, but for GET-triggered actions (reads
+<cite>request.args</cite> instead of a POSTed form).</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="app.routes.admin_dashboard.convert_utc_time_to_local_str">
 <span class="sig-name descname"><span class="pre">convert_utc_time_to_local_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_tz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#convert_utc_time_to_local_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.convert_utc_time_to_local_str" title="Link to this definition">#</a></dt>
 <dd><p>Converts a UTC time object to a local time string in HH:MM format.</p>
@@ -478,15 +508,156 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="app.routes.admin_dashboard.build_events_data">
-<span class="sig-name descname"><span class="pre">build_events_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_timezone</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#build_events_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.build_events_data" title="Link to this definition">#</a></dt>
-<dd><p>Build events data for calendar display.</p>
+<span class="sig-name descname"><span class="pre">build_events_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_timezone</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#build_events_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.build_events_data" title="Link to this definition">#</a></dt>
+<dd><p>Build events data for calendar display, including each booked user
+(name/email/booking id) so the admin can review and revoke individual
+bookings without a separate lookup.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.get_month_events">
+<span class="sig-name descname"><span class="pre">get_month_events</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">month</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#get_month_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.get_month_events" title="Link to this definition">#</a></dt>
+<dd><p>Query only the events within the given month (fixes the previous
+behavior of loading every event ever scheduled into every admin page
+load), eager-loading bookings and their users for capacity/participant
+display without N+1 queries.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard._parse_user_query_params">
+<span class="sig-name descname"><span class="pre">_parse_user_query_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#_parse_user_query_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard._parse_user_query_params" title="Link to this definition">#</a></dt>
+<dd><p>Parse and validate the User Accounts tab’s filter/sort/pagination params.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard._user_sort_column">
+<span class="sig-name descname"><span class="pre">_user_sort_column</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#_user_sort_column"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard._user_sort_column" title="Link to this definition">#</a></dt>
+<dd><p>Map a <cite>sort</cite> filter value to the SQL ORDER BY column/direction.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard._build_user_filter_query">
+<span class="sig-name descname"><span class="pre">_build_user_filter_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#_build_user_filter_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard._build_user_filter_query" title="Link to this definition">#</a></dt>
+<dd><p>Build the base filtered <cite>User</cite> query shared by pagination
+(<cite>get_paginated_users</cite>) and “select all matching” bulk actions
+(<cite>get_matching_user_ids</cite>): the acting admin and any superadmin are
+always excluded, and <cite>role</cite>/<cite>status</cite>/<cite>name</cite> (all plaintext or SQL-native
+columns) are applied directly in SQL. Does not apply <cite>email</cite> search,
+sorting, or pagination - callers handle those themselves.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.get_matching_user_ids">
+<span class="sig-name descname"><span class="pre">get_matching_user_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#get_matching_user_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.get_matching_user_ids" title="Link to this definition">#</a></dt>
+<dd><p>Resolve every user id matching the User Accounts tab’s active filters,
+not just the current page - backs the “select all N matching” bulk
+action (as opposed to “select all on this page”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>Every matching user id (already excludes the acting</dt><dd><p>admin and any superadmin).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.get_paginated_users">
+<span class="sig-name descname"><span class="pre">get_paginated_users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#get_paginated_users"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.get_paginated_users" title="Link to this definition">#</a></dt>
+<dd><p>Query, filter, sort, and paginate users for the User Accounts tab.</p>
+<p><cite>role</cite>/<cite>status</cite>/<cite>name</cite> filters and every sort except by email run
+entirely in SQL. <cite>email</cite> is AES-GCM encrypted at rest with a
+plaintext-derived nonce, so identical plaintext always produces
+identical ciphertext (enabling exact-match lookups elsewhere in the
+app) but ciphertext has no substring-preserving relationship to
+plaintext - an <cite>email</cite> search can’t be pushed to SQL and instead
+decrypts and scans the (already role/status/name-filtered) candidate
+rows in Python. <cite>meta[“email_search_scanned”]</cite> flags when that
+fallback was used, so the UI can surface the cost to the admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The current page of users, and pagination</dt><dd><p>metadata (<cite>page</cite>, <cite>per_page</cite>, <cite>total</cite>, <cite>total_pages</cite>,
+<cite>email_search_scanned</cite>).</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[List[<a class="reference internal" href="../models.html#app.models.User" title="app.models.User">User</a>], dict]</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="app.routes.admin_dashboard.admin">
 <span class="sig-name descname"><span class="pre">admin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#admin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.admin" title="Link to this definition">#</a></dt>
-<dd><p>Render the admin dashboard page with full configuration, user, booking,
-and event slot data.</p>
+<dd><p>Render the admin dashboard page with full configuration, a filtered/
+paginated page of users, and event data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.api_admin_users">
+<span class="sig-name descname"><span class="pre">api_admin_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#api_admin_users"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.api_admin_users" title="Link to this definition">#</a></dt>
+<dd><p>JSON API: list users matching the same filters as the User Accounts tab.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard._resolve_bulk_user_targets">
+<span class="sig-name descname"><span class="pre">_resolve_bulk_user_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#_resolve_bulk_user_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard._resolve_bulk_user_targets" title="Link to this definition">#</a></dt>
+<dd><p>Resolve the target user ids and protected-id set for a bulk user action.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt><cite>user_ids</cite>, <cite>protected_ids</cite>,</dt><dd><p>and <cite>error_response</cite>. <cite>error_response</cite> is <cite>None</cite> on success; when
+set, the caller must return it immediately instead of proceeding.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[List[int], set, Optional[Response]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.api_admin_users_bulk">
+<span class="sig-name descname"><span class="pre">api_admin_users_bulk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#api_admin_users_bulk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.api_admin_users_bulk" title="Link to this definition">#</a></dt>
+<dd><p>JSON API: apply one action (block/unblock/role change) to a batch of
+users at once, either just the rows checked on the current page
+(<cite>scope: “selected”</cite>, the default) or every user matching the tab’s
+active filters (<cite>scope: “all_matching”</cite>, with a <cite>filters</cite> object shaped
+like the User Accounts tab’s query params) - mirroring the
+“select all N videos” pattern from similar bulk-management UIs, where
+“select all on this page” can be expanded to “select all matching”.</p>
+<p>Loops over the existing single-item <cite>AdminService.update_user_role</cite>/
+<cite>block_user</cite> methods rather than a dedicated bulk-update query, reusing
+their proven guards (an Admin can’t be blocked, a superadmin’s role
+can’t be changed) instead of re-implementing them. The page-scoped case
+is bounded to &lt;=100 rows (<cite>_USER_PER_PAGE_OPTIONS</cite>); the all-matching
+case can be larger, but is still a bounded, explicit admin action.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.api_admin_events">
+<span class="sig-name descname"><span class="pre">api_admin_events</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#api_admin_events"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.api_admin_events" title="Link to this definition">#</a></dt>
+<dd><p>JSON API: list events for the given (or current) month, for the
+Events Calendar tab’s prev/next month navigation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.routes.admin_dashboard.api_revoke_booking">
+<span class="sig-name descname"><span class="pre">api_revoke_booking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">booking_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/app/routes/admin_dashboard.html#api_revoke_booking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.routes.admin_dashboard.api_revoke_booking" title="Link to this definition">#</a></dt>
+<dd><p>JSON API: revoke (delete) a single booking on an event, as a corrective
+admin action - unlike the user-facing self-cancel route, this is
+allowed even after the event has started, and gives the admin a real
+path to shrink an event’s capacity or fully clear it before deleting it.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -602,15 +773,28 @@ and event slot data.</p>
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard._admin_redirect_url"><code class="docutils literal notranslate"><span class="pre">_admin_redirect_url()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard._admin_redirect_url_from_query"><code class="docutils literal notranslate"><span class="pre">_admin_redirect_url_from_query()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.convert_utc_time_to_local_str"><code class="docutils literal notranslate"><span class="pre">convert_utc_time_to_local_str()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.admin_js"><code class="docutils literal notranslate"><span class="pre">admin_js()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.user_accounts_js"><code class="docutils literal notranslate"><span class="pre">user_accounts_js()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.events_calendar_js"><code class="docutils literal notranslate"><span class="pre">events_calendar_js()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.get_config_details"><code class="docutils literal notranslate"><span class="pre">get_config_details()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.build_events_data"><code class="docutils literal notranslate"><span class="pre">build_events_data()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.get_month_events"><code class="docutils literal notranslate"><span class="pre">get_month_events()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard._parse_user_query_params"><code class="docutils literal notranslate"><span class="pre">_parse_user_query_params()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard._user_sort_column"><code class="docutils literal notranslate"><span class="pre">_user_sort_column()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard._build_user_filter_query"><code class="docutils literal notranslate"><span class="pre">_build_user_filter_query()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.get_matching_user_ids"><code class="docutils literal notranslate"><span class="pre">get_matching_user_ids()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.get_paginated_users"><code class="docutils literal notranslate"><span class="pre">get_paginated_users()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.admin"><code class="docutils literal notranslate"><span class="pre">admin()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.api_admin_users"><code class="docutils literal notranslate"><span class="pre">api_admin_users()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard._resolve_bulk_user_targets"><code class="docutils literal notranslate"><span class="pre">_resolve_bulk_user_targets()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.api_admin_users_bulk"><code class="docutils literal notranslate"><span class="pre">api_admin_users_bulk()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.api_admin_events"><code class="docutils literal notranslate"><span class="pre">api_admin_events()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.api_revoke_booking"><code class="docutils literal notranslate"><span class="pre">api_revoke_booking()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.update_configuration"><code class="docutils literal notranslate"><span class="pre">update_configuration()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.validate_config_inputs"><code class="docutils literal notranslate"><span class="pre">validate_config_inputs()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#app.routes.admin_dashboard.process_time_inputs"><code class="docutils literal notranslate"><span class="pre">process_time_inputs()</span></code></a></li>
@@ -626,13 +810,13 @@ and event slot data.</p>
   </nav></div>
 
   <div class="sidebar-secondary-item">
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../../_sources/components/routes/admin_dashboard.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div></div>
+
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/components/routes/admin_dashboard.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
 
 </div></div>
               
@@ -647,8 +831,8 @@ and event slot data.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -682,7 +866,7 @@ and event slot data.</p>
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
 </p></div>
       
     </div>

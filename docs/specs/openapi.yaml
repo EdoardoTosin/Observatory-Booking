@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Batcomputer API
+  title: Observatory Booking API
   version: "1.0.0"
   description: >
     Comprehensive API documentation grouped by role:
@@ -8,6 +8,12 @@ info:
     - Authenticated Users
     - Admins
     - Superadmins
+
+    Most endpoints are server-rendered Jinja pages reached via normal form
+    submissions. The `/api/v1/...` endpoints are a separate JSON API layer
+    used for progressive-enhancement (filtering, pagination, bulk actions)
+    on top of those same pages - see the "JSON API" tag below for their
+    shared response envelope.
 
 tags:
   - name: Public
@@ -18,6 +24,11 @@ tags:
     description: Endpoints for system administration and event management.
   - name: Superadmin
     description: Elevated admin endpoints for critical account operations.
+  - name: JSON API
+    description: >
+      /api/v1/... endpoints returning a consistent {data, meta, errors}
+      envelope, consumed via fetch() from the corresponding Jinja page for
+      filtering/pagination/bulk actions without a full page reload.
   - name: Utility
     description: Static JavaScript files used by the web interface.
 
@@ -167,7 +178,7 @@ paths:
   /events:
     get:
       tags: [User]
-      summary: View events and booking slots.
+      summary: View and book available events.
       responses:
         '200':
           description: Event calendar data returned.
@@ -175,37 +186,44 @@ paths:
   /booking:
     post:
       tags: [User]
-      summary: Book a slot for an event.
+      summary: Book an event.
       requestBody:
         required: true
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                slot_id:
+                event_id:
+                  type: string
+                _csrf_token:
                   type: string
       responses:
-        '200':
-          description: Booking confirmed.
-        '400':
-          description: Slot unavailable or invalid input.
+        '302':
+          description: Redirect to /events with a flash message (confirmed, full, already booked, or already started).
 
-  /cancel_booking/{slot_id}:
+  /cancel_booking/{event_id}:
     post:
       tags: [User]
       summary: Cancel an existing booking.
       parameters:
-        - name: slot_id
+        - name: event_id
           in: path
           required: true
           schema:
-            type: string
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                _csrf_token:
+                  type: string
       responses:
-        '200':
-          description: Booking cancelled.
-        '404':
-          description: Slot not found.
+        '302':
+          description: Redirect to /events with a flash message (cancelled, not found, or already started).
 
   /change_password:
     get:
@@ -349,6 +367,199 @@ paths:
           description: User updated.
         '403':
           description: Not allowed.
+
+  /api/v1/events:
+    get:
+      tags: [JSON API]
+      summary: List events matching the same filters as the /events page.
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+          description: Substring match on the event title.
+        - name: date
+          in: query
+          schema:
+            type: string
+            format: date
+          description: Show only this local calendar day; takes precedence over from/to.
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: avail
+          in: query
+          schema:
+            type: string
+            enum: ["1"]
+          description: Hide full or already-booked-by-user events.
+        - name: no_warning
+          in: query
+          schema:
+            type: string
+            enum: ["1"]
+          description: Hide events with a weather warning.
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [date_asc, date_desc, weather_desc]
+        - name: month
+          in: query
+          schema:
+            type: integer
+          description: Month the date-picker widget should display (1-12).
+        - name: year
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: >
+            {data: [event...], meta: {count, date_range_clamped,
+            calendar_year, calendar_month, calendar_days_with_events},
+            errors: null}
+        '401':
+          description: Not logged in.
+
+  /api/v1/admin/users:
+    get:
+      tags: [JSON API]
+      summary: List users matching the same filters as the User Accounts tab.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            enum: [10, 25, 50, 100]
+            default: 25
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: email
+          in: query
+          schema:
+            type: string
+          description: >
+            Substring search. Email is encrypted at rest, so this falls
+            back to a decrypt-and-scan of the filtered candidate set
+            instead of a SQL search (meta.email_search_scanned flags it).
+        - name: role
+          in: query
+          schema:
+            type: string
+            enum: ["", User, Admin]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: ["", active, blocked]
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [id_asc, id_desc, role, status, name_asc, name_desc]
+      responses:
+        '200':
+          description: >
+            {data: [{id, name, email, role, blocked}...], meta: {page,
+            per_page, total, total_pages, email_search_scanned}, errors: null}
+        '403':
+          description: Not an admin.
+
+  /api/v1/admin/users/bulk:
+    post:
+      tags: [JSON API]
+      summary: Apply one action to a batch of users (page-scoped or every matching user).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [block, unblock, role_user, role_admin]
+                scope:
+                  type: string
+                  enum: [selected, all_matching]
+                  default: selected
+                user_ids:
+                  type: array
+                  items:
+                    type: integer
+                  description: Required when scope is "selected".
+                filters:
+                  type: object
+                  description: >
+                    Same shape as GET /api/v1/admin/users's query params.
+                    Required when scope is "all_matching" - the acting
+                    admin and any superadmin are always excluded server-side.
+      responses:
+        '200':
+          description: "{data: {succeeded, skipped, failed}, errors: null}"
+        '400':
+          description: Invalid action, scope, or empty selection.
+
+  /api/v1/admin/events:
+    get:
+      tags: [JSON API]
+      summary: List events for a given (or the current) month.
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: integer
+        - name: month
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: >
+            {data: [{id, effective_date, opening_time, closing_time,
+            max_bookings, weather_rating, num_bookings, bookings, title,
+            description}...], meta: {year, month}, errors: null}
+        '403':
+          description: Not an admin.
+
+  /api/v1/admin/events/{event_id}/bookings/{booking_id}/revoke:
+    post:
+      tags: [JSON API]
+      summary: >
+        Revoke (delete) a single booking on an event. Unlike the
+        user-facing self-cancel route, this is allowed even after the
+        event has started, since it's a corrective admin action.
+      parameters:
+        - name: event_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: booking_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: "{data: {num_bookings, bookings}, errors: null}"
+        '404':
+          description: Booking not found.
 
   /js/events.js:
     get:

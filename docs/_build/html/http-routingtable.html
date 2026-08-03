@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
@@ -45,6 +45,7 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'http-routingtable';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,6 +53,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
 
     <script>
       DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
@@ -59,19 +66,19 @@
 
 
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -97,7 +104,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -175,23 +182,13 @@
   </a>
 </li>
 
-            <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-controls="pst-nav-more-links">
-                    More
-                </button>
-                <ul id="pst-nav-more-links" class="dropdown-menu">
-                    
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="components/index.html">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="components/index.html">
     Components
   </a>
 </li>
 
-                </ul>
-            </li>
-            
   </ul>
 </nav></div>
       
@@ -213,11 +210,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -230,8 +234,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -332,11 +335,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -349,8 +359,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -392,6 +401,7 @@
    <div class="modindex-jumpbox">
    <a href="#cap-/"><strong>/</strong></a> | 
    <a href="#cap-/admin"><strong>/admin</strong></a> | 
+   <a href="#cap-/api"><strong>/api</strong></a> | 
    <a href="#cap-/booking"><strong>/booking</strong></a> | 
    <a href="#cap-/cancel_booking"><strong>/cancel_booking</strong></a> | 
    <a href="#cap-/change_password"><strong>/change_password</strong></a> | 
@@ -456,20 +466,49 @@
        <a href="endpoints.html#post--admin-user-role"><code class="xref">POST /admin/user/role</code></a></td><td>
        <em>Change a user&#39;s role.</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/api"><td></td><td>
+       <strong>/api</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="endpoints.html#get--api-v1-admin-events"><code class="xref">GET /api/v1/admin/events</code></a></td><td>
+       <em>List events for a given (or the current) month.</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="endpoints.html#get--api-v1-admin-users"><code class="xref">GET /api/v1/admin/users</code></a></td><td>
+       <em>List users matching the same filters as the User Accounts tab.</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="endpoints.html#get--api-v1-events"><code class="xref">GET /api/v1/events</code></a></td><td>
+       <em>List events matching the same filters as the /events page.</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="endpoints.html#post--api-v1-admin-events-event_id-bookings-booking_id-revoke"><code class="xref">POST /api/v1/admin/events/{event_id}/bookings/{booking_id}/revoke</code></a></td><td>
+       <em>Revoke (delete) a single booking on an event. Unlike the user-facing self-cancel route, this is allowed even after the event has started, since it&#39;s a corrective admin action.
+</em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="endpoints.html#post--api-v1-admin-users-bulk"><code class="xref">POST /api/v1/admin/users/bulk</code></a></td><td>
+       <em>Apply one action to a batch of users (page-scoped or every matching user).</em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-/booking"><td></td><td>
        <strong>/booking</strong></td><td></td></tr>
      <tr>
        <td></td>
        <td>
        <a href="endpoints.html#post--booking"><code class="xref">POST /booking</code></a></td><td>
-       <em>Book a slot for an event.</em></td></tr>
+       <em>Book an event.</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-/cancel_booking"><td></td><td>
        <strong>/cancel_booking</strong></td><td></td></tr>
      <tr>
        <td></td>
        <td>
-       <a href="endpoints.html#post--cancel_booking-slot_id"><code class="xref">POST /cancel_booking/{slot_id}</code></a></td><td>
+       <a href="endpoints.html#post--cancel_booking-event_id"><code class="xref">POST /cancel_booking/{event_id}</code></a></td><td>
        <em>Cancel an existing booking.</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-/change_password"><td></td><td>
@@ -507,7 +546,7 @@
        <td></td>
        <td>
        <a href="endpoints.html#get--events"><code class="xref">GET /events</code></a></td><td>
-       <em>View events and booking slots.</em></td></tr>
+       <em>View and book available events.</em></td></tr>
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
      <tr class="cap" id="cap-/faq"><td></td><td>
        <strong>/faq</strong></td><td></td></tr>
@@ -632,8 +671,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -667,7 +706,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
 </p></div>
       
     </div>

@@ -5,14 +5,14 @@ This module provides a service class for managing event bookings and cancellatio
 It ensures concurrency safety, rate-limiting, and event availability checks.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 from threading import Lock
 
 from sqlalchemy import and_
 from sqlalchemy.exc import SQLAlchemyError
 
-from ..models import User, Slot, Booking, Configuration
+from ..models import User, Event, Booking, Configuration
 from ..utils import logger, is_rate_limited
 
 
@@ -23,7 +23,7 @@ class BookingService:
     This class ensures:
     - Thread-safe operations
     - Rate limiting enforcement
-    - Slot availability validation
+    - Event availability validation
     - User permission checks
     """
 
@@ -62,20 +62,20 @@ class BookingService:
         """
         return datetime.now(self._get_timezone(db))
 
-    def _validate_user_and_slot(self, db, user_id, slot_id):
+    def _validate_user_and_event(self, db, user_id, event_id):
         """
-        Validate user and slot existence and eligibility.
+        Validate user and event existence and eligibility.
 
         Args:
             db (Session): Database session.
             user_id (int): ID of the user.
-            slot_id (str): ID of the slot.
+            event_id (str): ID of the event.
 
         Returns:
-            Tuple[Optional[str], Optional[User], Optional[Slot]]:
+            Tuple[Optional[str], Optional[User], Optional[Event]]:
                 - Error message (if any)
                 - User object (if valid)
-                - Slot object (if valid)
+                - Event object (if valid)
         """
         user = db.query(User).filter_by(id=user_id).first()
         if not user:
@@ -83,19 +83,21 @@ class BookingService:
         if user.blocked:
             return "Your account is blocked.", None, None
 
-        slot = db.query(Slot).filter_by(id=slot_id).first()
-        if not slot:
+        event = db.query(Event).filter_by(id=event_id).first()
+        if not event:
             return "Event not found.", None, None
 
-        return None, user, slot
+        return None, user, event
 
-    def book_slot(self, user_id, slot_id):  # pylint: disable=too-many-return-statements
+    def book_event(
+        self, user_id, event_id
+    ):  # pylint: disable=too-many-return-statements
         """
-        Book an event slot for a user if all conditions are met.
+        Book an event for a user if all conditions are met.
 
         Args:
             user_id (int): The user's ID.
-            slot_id (str): The slot's ID.
+            event_id (str): The event's ID.
 
         Returns:
             str: A message indicating the success or failure of the booking.
@@ -103,7 +105,7 @@ class BookingService:
         with self.lock:
             db = self.db()
             try:
-                error, _, slot = self._validate_user_and_slot(db, user_id, slot_id)
+                error, _, event = self._validate_user_and_event(db, user_id, event_id)
                 if error:
                     return error
 
@@ -112,9 +114,14 @@ class BookingService:
 
                 tz = self._get_timezone(db)
                 current_time = datetime.now(tz)
-                slot_start = slot.start_time.replace(tzinfo=tz)
+                # event.start_time is naive UTC (see Event model docstring) -
+                # attach UTC first, then convert, rather than reinterpreting
+                # the UTC wall-clock value as if it were already local time.
+                event_start = event.start_time.replace(tzinfo=timezone.utc).astimezone(
+                    tz
+                )
 
-                if current_time >= slot_start:
+                if current_time >= event_start:
                     return "Event is no longer available for booking."
 
                 existing_booking = (
@@ -122,7 +129,7 @@ class BookingService:
                     .filter(
                         and_(
                             Booking.user_id == user_id,
-                            Booking.slot_id == slot_id,
+                            Booking.event_id == event_id,
                             Booking.status == "confirmed",
                         )
                     )
@@ -134,42 +141,44 @@ class BookingService:
                 current_bookings = (
                     db.query(Booking)
                     .filter(
-                        and_(Booking.slot_id == slot_id, Booking.status == "confirmed")
+                        and_(
+                            Booking.event_id == event_id, Booking.status == "confirmed"
+                        )
                     )
                     .count()
                 )
 
-                if current_bookings >= slot.max_bookings:
+                if current_bookings >= event.max_bookings:
                     return "Event is fully booked."
 
                 new_booking = Booking(
-                    user_id=user_id, slot_id=slot_id, status="confirmed"
+                    user_id=user_id, event_id=event_id, status="confirmed"
                 )
                 db.add(new_booking)
 
-                if current_bookings + 1 >= slot.max_bookings:
-                    slot.available = False
+                if current_bookings + 1 >= event.max_bookings:
+                    event.available = False
 
                 db.commit()
-                logger.info("User %d successfully booked event %s.", user_id, slot_id)
+                logger.info("User %d successfully booked event %s.", user_id, event_id)
                 return "Booking confirmed."
 
             except (SQLAlchemyError, RuntimeError) as e:
                 db.rollback()
                 logger.exception(
-                    "Error booking event %s for user %d: %s", slot_id, user_id, e
+                    "Error booking event %s for user %d: %s", event_id, user_id, e
                 )
                 return "Booking failed due to a server error."
             finally:
                 db.close()
 
-    def cancel_booking(self, user_id, slot_id):
+    def cancel_booking(self, user_id, event_id):
         """
-        Cancel an existing booking for a specific user and event slot.
+        Cancel an existing booking for a specific user and event.
 
         Args:
             user_id (int): The user's ID.
-            slot_id (str): The slot's ID.
+            event_id (str): The event's ID.
 
         Returns:
             str: A message indicating the success or failure of the cancellation.
@@ -177,7 +186,7 @@ class BookingService:
         with self.lock:
             db = self.db()
             try:
-                error, _, slot = self._validate_user_and_slot(db, user_id, slot_id)
+                error, _, event = self._validate_user_and_event(db, user_id, event_id)
                 if error:
                     return error
 
@@ -189,7 +198,7 @@ class BookingService:
                     .filter(
                         and_(
                             Booking.user_id == user_id,
-                            Booking.slot_id == slot_id,
+                            Booking.event_id == event_id,
                             Booking.status == "confirmed",
                         )
                     )
@@ -202,9 +211,14 @@ class BookingService:
 
                 tz = self._get_timezone(db)
                 current_time = datetime.now(tz)
-                slot_start = slot.start_time.replace(tzinfo=tz)
+                # event.start_time is naive UTC (see Event model docstring) -
+                # attach UTC first, then convert, rather than reinterpreting
+                # the UTC wall-clock value as if it were already local time.
+                event_start = event.start_time.replace(tzinfo=timezone.utc).astimezone(
+                    tz
+                )
 
-                if current_time >= slot_start:
+                if current_time >= event_start:
                     return "Cannot cancel booking after event has started."
 
                 db.delete(booking)
@@ -213,24 +227,28 @@ class BookingService:
                 confirmed_count = (
                     db.query(Booking)
                     .filter(
-                        and_(Booking.slot_id == slot_id, Booking.status == "confirmed")
+                        and_(
+                            Booking.event_id == event_id, Booking.status == "confirmed"
+                        )
                     )
                     .count()
                 )
 
-                if confirmed_count < slot.max_bookings:
-                    slot.available = True
+                if confirmed_count < event.max_bookings:
+                    event.available = True
 
                 db.commit()
-                logger.info("User %d cancelled booking for event %s.", user_id, slot_id)
+                logger.info(
+                    "User %d cancelled booking for event %s.", user_id, event_id
+                )
                 return "Booking cancelled successfully."
 
             except (SQLAlchemyError, RuntimeError) as e:
                 db.rollback()
                 logger.exception(
-                    "Error cancelling booking for user %d and slot %s: %s",
+                    "Error cancelling booking for user %d and event %s: %s",
                     user_id,
-                    slot_id,
+                    event_id,
                     e,
                 )
                 return "Booking cancellation failed due to a server error."

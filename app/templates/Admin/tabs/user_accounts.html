@@ -1,39 +1,166 @@
+{% import "components/_pagination.html" as pagination %}
 <div class="mb-8">
+  <form
+    method="get"
+    action="{{ url_for('bp.admin') }}"
+    class="mb-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 flex flex-wrap gap-4 items-end"
+  >
+    <input type="hidden" name="tab" value="users" />
+    <div>
+      <label
+        for="filter-name"
+        class="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1"
+        >Name</label
+      >
+      <input
+        type="text"
+        id="filter-name"
+        name="name"
+        value="{{ user_filters.name }}"
+        placeholder="Filter by name"
+        class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100"
+      />
+    </div>
+    <div>
+      <label
+        for="filter-email"
+        class="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1"
+        >Email</label
+      >
+      <input
+        type="text"
+        id="filter-email"
+        name="email"
+        value="{{ user_filters.email }}"
+        placeholder="Filter by email"
+        class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100"
+      />
+    </div>
+    <div>
+      <label
+        for="filter-role"
+        class="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1"
+        >Role</label
+      >
+      <select
+        id="filter-role"
+        name="role"
+        class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100"
+      >
+        <option value="" {% if not user_filters.role %}selected{% endif %}>All</option>
+        <option value="User" {% if user_filters.role=='User' %}selected{% endif %}>User</option>
+        <option value="Admin" {% if user_filters.role=='Admin' %}selected{% endif %}>Admin</option>
+      </select>
+    </div>
+    <div>
+      <label
+        for="filter-status"
+        class="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1"
+        >Status</label
+      >
+      <select
+        id="filter-status"
+        name="status"
+        class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100"
+      >
+        <option value="" {% if not user_filters.status %}selected{% endif %}>All</option>
+        <option value="active" {% if user_filters.status=='active' %}selected{% endif %}>Active</option>
+        <option value="blocked" {% if user_filters.status=='blocked' %}selected{% endif %}>Blocked</option>
+      </select>
+    </div>
+    <div>
+      <label
+        for="filter-sort"
+        class="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1"
+        >Sort</label
+      >
+      <select
+        id="filter-sort"
+        name="sort"
+        class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100"
+      >
+        <option value="id_asc" {% if user_filters.sort=='id_asc' %}selected{% endif %}>ID (asc)</option>
+        <option value="id_desc" {% if user_filters.sort=='id_desc' %}selected{% endif %}>ID (desc)</option>
+        <option value="name_asc" {% if user_filters.sort=='name_asc' %}selected{% endif %}>Name (A-Z)</option>
+        <option value="name_desc" {% if user_filters.sort=='name_desc' %}selected{% endif %}>Name (Z-A)</option>
+        <option value="role" {% if user_filters.sort=='role' %}selected{% endif %}>Role</option>
+        <option value="status" {% if user_filters.sort=='status' %}selected{% endif %}>Status</option>
+      </select>
+    </div>
+    <div>
+      <label
+        for="filter-per-page"
+        class="block text-xs font-medium text-gray-600 dark:text-gray-300 mb-1"
+        >Per page</label
+      >
+      <select
+        id="filter-per-page"
+        name="per_page"
+        class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100"
+      >
+        {% for option in (10, 25, 50, 100) %}
+        <option value="{{ option }}" {% if user_filters.per_page==option %}selected{% endif %}>{{ option }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button
+      type="submit"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
+    >
+      Apply
+    </button>
+    {% if user_filters.name or user_filters.email or user_filters.role or
+    user_filters.status or user_filters.sort != 'id_asc' %}
+    <a
+      href="{{ url_for('bp.admin', tab='users') }}"
+      class="text-sm text-gray-500 dark:text-gray-300 underline"
+      >Clear filters</a
+    >
+    {% endif %}
+  </form>
+
+  {% if user_filters.email and users_meta.email_search_scanned %}
+  <p class="mb-3 text-xs text-gray-500 dark:text-gray-400 italic">
+    Searching by email scans all accounts matching the other active filters
+    (email is encrypted at rest, so it can't be searched directly in the
+    database).
+  </p>
+  {% endif %}
+
   {% if users %}
-    <div class="overflow-x-auto">
-      <table id="users-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead class="bg-gray-200 dark:bg-gray-700">
-          <tr>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Name</th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Email</th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Role</th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Status</th>
-            <th class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Actions</th>
-          </tr>
-          <tr class="bg-gray-50 dark:bg-gray-600">
-            <th class="px-4 py-2">
-              <input type="text" id="filter-name" placeholder="Filter Name" class="w-full p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100" />
-            </th>
-            <th class="px-4 py-2">
-              <input type="text" id="filter-email" placeholder="Filter Email" class="w-full p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100" />
-            </th>
-            <th class="px-4 py-2">
-              <input type="text" id="filter-role" placeholder="Filter Role" class="w-full p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100" />
-            </th>
-            <th class="px-4 py-2">
-              <select id="filter-status" class="w-full p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100">
-                <option value="">All</option>
-                <option value="active">Active</option>
-                <option value="blocked">Blocked</option>
-              </select>
-            </th>
-            <th class="px-4 py-2"></th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-          {% for user in users %}
-            {% if user.id != current_user.id and user.admin_rank != 'super' %}
+    {# Bulk-action inputs (checkboxes below, form="bulk-action-form") stay
+       outside this form element on purpose: nesting <form> inside <form> is
+       invalid HTML and would break the per-row role/block/delete forms in
+       the Actions column, which must remain independent top-level forms. #}
+    <form id="bulk-action-form" method="post" action="" class="hidden">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
+    </form>
+      <div class="overflow-x-auto">
+        <table id="users-table" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead class="bg-gray-200 dark:bg-gray-700">
+            <tr>
+              <th class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">
+                <input type="checkbox" id="select-all-users" aria-label="Select all users on this page" />
+              </th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Name</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Email</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Role</th>
+              <th class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Status</th>
+              <th class="px-4 py-3 text-center text-xs font-medium text-gray-600 uppercase tracking-wider dark:text-gray-300">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+            {% for user in users %}
             <tr class="user-row hover:bg-gray-50 dark:hover:bg-gray-700">
+              <td class="px-4 py-4 whitespace-nowrap text-center">
+                <input
+                  type="checkbox"
+                  class="user-row-checkbox"
+                  value="{{ user.id }}"
+                  form="bulk-action-form"
+                  aria-label="Select {{ user.get_name() }}"
+                />
+              </td>
               <td class="px-4 py-4 whitespace-nowrap dark:text-gray-100">{{ user.get_name() }}</td>
               <td class="px-4 py-4 whitespace-nowrap dark:text-gray-100">{{ user.get_email() }}</td>
               <td class="px-4 py-4 whitespace-nowrap dark:text-gray-100">{{ user.role }}</td>
@@ -49,25 +176,37 @@
                   <form method="post" action="{{ url_for('bp.update_user_role') }}" onsubmit="return confirm('Are you sure you want to update this user\\'s role?');">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="user_id" value="{{ user.id }}" />
+                    {% for key, value in request.args.items() %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}" />
+                    {% endfor %}
+                    <input type="hidden" name="tab" value="users" />
                     <select name="new_role" class="p-1 border rounded-sm dark:bg-gray-600 dark:border-gray-500 dark:text-gray-100">
                       <option value="User" {% if user.role == 'User' %}selected{% endif %}>User</option>
                       <option value="Admin" {% if user.role == 'Admin' %}selected{% endif %}>Admin</option>
                     </select>
-                    <button type="submit" class="bg-yellow-500 text-white px-2 py-1 rounded-sm hover:bg-yellow-800 dark:bg-yellow-600 dark:hover:bg-yellow-700">Update</button>
+                    <button type="submit" class="bg-blue-600 text-white px-2 py-1 rounded-sm hover:bg-blue-700 dark:hover:bg-blue-500">Update</button>
                   </form>
                   <form method="post" action="{{ url_for('bp.block_user') }}" onsubmit="return confirm('Are you sure you want to change this user\'s block status?');">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
                     <input type="hidden" name="user_id" value="{{ user.id }}" />
                     <input type="hidden" name="block" value="{% if user.blocked %}false{% else %}toggle{% endif %}" />
-                    <button type="submit" class="bg-orange-500 text-white px-2 py-1 rounded-sm hover:bg-orange-800 dark:bg-orange-600 dark:hover:bg-orange-700">
+                    {% for key, value in request.args.items() %}
+                    <input type="hidden" name="{{ key }}" value="{{ value }}" />
+                    {% endfor %}
+                    <input type="hidden" name="tab" value="users" />
+                    <button type="submit" class="bg-blue-600 text-white px-2 py-1 rounded-sm hover:bg-blue-700 dark:hover:bg-blue-500">
                       {% if user.blocked %}Unblock{% else %}Block{% endif %}
                     </button>
                   </form>
-                  {% if is_superadmin and user.admin_rank != 'super' %}
+                  {% if is_superadmin %}
                   <form method="post" action="{{ url_for('bp.delete_user') }}"
                       onsubmit="return confirm('Are you sure you want to delete this user account permanently?');">
                       <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}" />
                       <input type="hidden" name="user_id" value="{{ user.id }}" />
+                      {% for key, value in request.args.items() %}
+                      <input type="hidden" name="{{ key }}" value="{{ value }}" />
+                      {% endfor %}
+                      <input type="hidden" name="tab" value="users" />
                       <button type="submit"
                               class="bg-red-700 text-white px-2 py-1 rounded-sm hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700">
                           Delete
@@ -77,13 +216,43 @@
                 </div>
               </td>
             </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div id="select-all-banner" class="hidden mt-2 p-2 text-sm text-center bg-blue-50 dark:bg-gray-600 rounded-md border border-blue-200 dark:border-gray-500">
+        <span id="select-all-banner-text"></span>
+        <button type="button" id="select-all-banner-action" class="ml-2 text-blue-600 dark:text-blue-400 underline font-semibold"></button>
+      </div>
+
+      <div id="bulk-action-bar" class="hidden mt-3 p-3 bg-blue-50 dark:bg-gray-600 rounded-lg border border-blue-200 dark:border-gray-500 flex items-center gap-3">
+        <span id="bulk-selected-count" class="text-sm text-gray-700 dark:text-gray-200">0 selected</span>
+        <select id="bulk-action-select" class="p-1 border rounded-sm dark:bg-gray-500 dark:border-gray-400 dark:text-gray-100">
+          <option value="block">Block</option>
+          <option value="unblock">Unblock</option>
+          <option value="role_user">Set role: User</option>
+          <option value="role_admin">Set role: Admin</option>
+        </select>
+        <button
+          type="button"
+          id="bulk-action-apply"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-sm text-sm transition-colors duration-200"
+        >
+          Apply to selected
+        </button>
+      </div>
+
+    {{ pagination.pager(users_meta.page, users_meta.total_pages, 'bp.admin') }}
+    <p class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">
+      {{ users_meta.total }} user{{ 's' if users_meta.total != 1 else '' }} total
+    </p>
   {% else %}
     <p class="text-gray-600 dark:text-gray-300">No users found.</p>
   {% endif %}
 </div>
+<script>
+  window.USER_FILTERS = {{ user_filters | tojson }};
+  window.USERS_META = {{ users_meta | tojson }};
+</script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/admin/tabs/user_accounts.js') }}"></script>

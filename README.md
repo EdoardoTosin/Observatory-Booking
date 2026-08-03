@@ -46,28 +46,39 @@
   - Role-based access control (User, Admin, Superadmin).
   - Rate-limited requests to prevent abuse (10 requests per 20 seconds).
 
-- **Admin Panel**
-  - Manage users: block/unblock, assign roles, delete user accounts (Superadmin only).
-  - Update global system configurations.
-  - Create or modify event with weather-aware logic.
-
 - **Event Booking**
+  - Search, filter, and browse-by-date UI for finding events, with a
+    date-picker calendar and sort by date or weather rating.
   - Book or cancel observatory events with enforced limits.
   - Automated weather integration (via Open-Meteo API) to assess event suitability.
   - Timezone-aware event scheduling.
 
+- **Admin Panel**
+  - Paginated, filterable user management: block/unblock, assign roles,
+    delete accounts (Superadmin only), with bulk actions across a page of
+    selected users or every user matching the current filters.
+  - Events Calendar with per-event capacity management: raise/lower the
+    booking limit (down to the number already confirmed) or revoke
+    individual bookings to free up space.
+  - System settings with a curated, continent-grouped timezone picker and
+    an interactive map (Leaflet + OpenStreetMap) for setting the
+    observatory's coordinates.
+
 - **Weather Service**
   - Fetch and cache forecasts every 3 hours.
-  - Evaluate weather conditions (cloud cover, precipitation, visibility).
+  - Evaluate weather conditions (cloud cover, precipitation, visibility, dew point).
 
 - **System Security**
   - AES-256-GCM authenticated encryption for personal data.
-  - CSRF protection on all state-changing endpoints.
+  - CSRF protection on all state-changing endpoints, including the JSON API.
   - HTTP security headers (X-Frame-Options, CSP, etc.) on every response.
   - Concurrency-safe operations with thread locking.
   - Deleted users are automatically logged out upon next request.
 
 - **Modern UI**
+  - Server-rendered pages (work with JavaScript disabled) progressively
+    enhanced via a consistent `/api/v1` JSON API for filtering,
+    pagination, and bulk/corrective actions without full page reloads.
   - Tailwind CSS and PostCSS for responsive and customizable styling.
   - Mobile-friendly interface.
 
@@ -115,29 +126,13 @@ uv sync
 
 ### 3. Environment Configuration
 
-Copy `.env.example` to `.env` and adjust as needed. Missing cryptographic keys are generated automatically on first start and written back to `.env`.
+Copy `.env.example` to `.env`. Missing cryptographic keys are generated automatically on first start and written back to `.env`; leave `DEFAULT_ADMIN_PASSWORD` empty (a secure one is generated and printed once to stdout on first run). See the [installation guide](https://edoardotosin.github.io/Observatory-Booking/installation.html) for the full variable reference.
 
-```dotenv
-DATABASE_URL=sqlite:///observatory_booking.db
-DEFAULT_ADMIN_EMAIL=admin@example.com
-DEFAULT_ADMIN_PASSWORD=
-SECRET_KEY=
-AES_SECRET_KEY=
-AES_HMAC_KEY=
-AES_IV=
-ENV=production
-DEBUG_MODE=False
-HOST=127.0.0.1
-PORT=5000
-SESSION_COOKIE_HTTPONLY=True
-SESSION_COOKIE_SECURE=True
-SESSION_COOKIE_SAMESITE=Strict
-SESSION_COOKIE_DOMAIN=
-WTF_CSRF_ENABLED=True
-LOGGING_LEVEL=INFO
+```bash
+cp .env.example .env
 ```
 
-> **Security note:** Leave `DEFAULT_ADMIN_PASSWORD` empty. On first run the app generates a secure random password and prints it once to stdout; change it immediately after logging in. For local HTTP development set `SESSION_COOKIE_SECURE=False`; in production it must be `True` (requires HTTPS).
+> **Security note:** For local HTTP development set `SESSION_COOKIE_SECURE=False`; in production it must be `True` (requires HTTPS).
 
 ### 4. Start the Application
 
@@ -149,72 +144,9 @@ uv run python -m app
 
 Visit: `http://127.0.0.1:5000/` or configured `HOST:PORT`.
 
-## Configuration Overview
-
-| Setting                    | Description                                                         | Default                            |
-|----------------------------|---------------------------------------------------------------------|------------------------------------|
-| `DATABASE_URL`             | SQLAlchemy connection URI                                           | `sqlite:///observatory_booking.db` |
-| `SECRET_KEY`               | Flask session signing key (auto-generated if absent)                | (auto-generated)                   |
-| `AES_SECRET_KEY`           | Base64 AES-256 key for personal data encryption (auto-generated)    | (auto-generated)                   |
-| `AES_HMAC_KEY`             | Base64 HMAC key for nonce derivation (auto-generated)               | (auto-generated)                   |
-| `AES_IV`                   | Base64 legacy IV for migration compatibility (auto-generated)       | (auto-generated)                   |
-| `DEFAULT_ADMIN_EMAIL`      | Email for first-time superadmin account                             | `admin@example.com`                |
-| `DEFAULT_ADMIN_PASSWORD`   | Password for first-time superadmin, leave empty                     | (auto-generated)                   |
-| `ENV`                      | Set to `development` to enable SQLAlchemy SQL logging               | `production`                       |
-| `DEBUG_MODE`               | Enable Flask debug mode (`True`/`False`)                            | `False`                            |
-| `HOST`                     | Host address to bind the server to                                  | `127.0.0.1`                        |
-| `PORT`                     | Port to bind the server to                                          | `5000`                             |
-| `WTF_CSRF_ENABLED`         | Enable CSRF protection on all state-changing endpoints              | `True`                             |
-| `SESSION_COOKIE_HTTPONLY`  | Prevent JavaScript access to the session cookie                     | `True`                             |
-| `SESSION_COOKIE_SECURE`    | Require HTTPS for the session cookie, must be `True` in production  | `True`                             |
-| `SESSION_COOKIE_SAMESITE`  | SameSite policy for the session cookie                              | `Strict`                           |
-| `SESSION_COOKIE_DOMAIN`    | Domain for the session cookie (blank = current host)                | (unset)                            |
-| `LOGGING_LEVEL`            | Log verbosity: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`      | `INFO`                             |
-
-## User Roles & Permissions
-
-| Role           | Capabilities                                                              |
-|----------------|---------------------------------------------------------------------------|
-| **User**       | Book/cancel events, view events, change password                          |
-| **Admin**      | Block/unblock users, update user roles, configure system, manage events   |
-| **Superadmin** | Full control: delete users, manage admins, immune to role changes/deletion |
-
-## Automated Weather Updates
-
-- API: [Open-Meteo](https://open-meteo.com/)
-- Runs every 3 hours (background scheduler).
-- Updates event weather forecast based on:
-  - Cloud cover
-  - Precipitation
-  - Visibility
-  - Dew point
-- Cached for 3 hours (reduces API load).
-
-## Rate Limiting
-
-- Users: **10 requests per 20 seconds**.
-- Applies to login, booking, and cancellation endpoints.
-- Prevents system abuse and ensures fair access.
-
-## API Endpoints Overview
-
-| Endpoint                       | Method   | Auth Required  | Description                                |
-|--------------------------------|----------|----------------|--------------------------------------------|
-| `/register`                    | GET/POST | No             | Register new user                          |
-| `/login`                       | GET/POST | No             | Login with password                        |
-| `/logout`                      | GET      | No             | Logout from user session                   |
-| `/change_password`             | GET/POST | Yes            | Change user password                       |
-| `/events`                      | GET      | Yes            | View available events                      |
-| `/booking`                     | POST     | Yes            | Book an event                              |
-| `/cancel_booking/<id>`         | POST     | Yes            | Cancel a booking                           |
-| `/admin`                       | GET      | Admin          | Access admin control panel                 |
-| `/admin/confirm_event`         | POST     | Admin          | Create/update events                       |
-| `/admin/delete_event/<id>`     | POST     | Admin          | Delete event                               |
-| `/admin/update_events_weather` | GET      | Admin          | Refresh weather data for all events        |
-| `/admin/config`                | POST     | Admin          | Update system configuration                |
-| `/admin/user/block`            | POST     | Admin          | Block or unblock a user                    |
-| `/admin/user/role`             | POST     | Admin          | Change user role                           |
-| `/admin/user/delete`           | POST     | Superadmin     | Permanently delete user account            |
+For the full environment variable reference, sample/demo data seeding,
+user roles, the weather rating system, rate limiting, and the JSON API
+endpoint reference, see the [full documentation](https://edoardotosin.github.io/Observatory-Booking).
 
 ## License
 

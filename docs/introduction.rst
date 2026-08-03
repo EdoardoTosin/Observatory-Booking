@@ -20,9 +20,13 @@ Key Features
   - Superadmins are bootstrapped from environment variables.
 
 - **Events Management**
-  - Users can view, book, and cancel observation events.
-  - Admins can create, update, and confirm events.
+  - Users can search, filter, sort, and browse a date-picker calendar to find events, then view, book, and cancel them.
+  - Admins can create, update, and confirm events, manage per-event capacity, and revoke individual bookings.
   - Bookings are blocked if full, expired, or weather-restricted.
+
+- **Progressive JSON API**
+  - Every page renders a full first paint as plain server-rendered HTML (works with JavaScript disabled).
+  - A consistent ``/api/v1/...`` JSON API backs filtering, pagination, and bulk/corrective admin actions via ``fetch()`` on top of that first paint, without full page reloads.
 
 - **Weather-Aware Booking**
   - Uses hourly forecasts (cloud cover, dew point, visibility, precipitation).

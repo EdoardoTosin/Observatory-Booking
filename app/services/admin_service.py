@@ -8,10 +8,11 @@ for managing users, configurations, and event scheduling in the booking system.
 import secrets
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
+from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from flask import session, redirect, url_for, flash
 
-from ..models import Configuration, User, Slot
+from ..models import Configuration, User, Event, Booking
 from ..utils import logger, get_env_value
 from ..data_transfer_objects import (
     EventTimes,
@@ -133,7 +134,10 @@ class AdminService:
             if user.admin_rank == "super":
                 raise ValueError("Cannot change role for superadmin")
             user.role = new_role
-            user.admin_rank = "admin" if new_role == "Admin" else None
+            # admin_rank is reserved for the bootstrapped superadmin ('super')
+            # and is otherwise NULL; the check_admin_rank_super_only
+            # constraint rejects any other value, including "admin".
+            user.admin_rank = None
             db_session.commit()
         except (SQLAlchemyError, ValueError) as e:
             db_session.rollback()
@@ -225,7 +229,7 @@ class AdminService:
 
     def confirm_event(self, event, event_id=None):
         """
-        Create or update an event slot based on provided event details.
+        Create or update an event based on provided event details.
 
         Args:
             event (EventData): Event details.
@@ -260,7 +264,7 @@ class AdminService:
 
             current_time = datetime.now(tz)
             existing_event = (
-                db_session.query(Slot).filter(Slot.id == int(event_id)).first()
+                db_session.query(Event).filter(Event.id == int(event_id)).first()
                 if event_id
                 else None
             )
@@ -387,7 +391,9 @@ class AdminService:
 
     def _get_existing_event(self, db_session, event_start_utc):
         """Get existing event for the given start time."""
-        return db_session.query(Slot).filter(Slot.start_time == event_start_utc).first()
+        return (
+            db_session.query(Event).filter(Event.start_time == event_start_utc).first()
+        )
 
     def _can_modify_event(self, event, current_time, tz):
         """Check if an existing event can be modified."""
@@ -425,24 +431,11 @@ class AdminService:
         start_time = event_data["start_time"]
         end_time = event_data["end_time"]
 
-        if self._check_same_day_start(db_session, existing_event, start_time, tz):
-            return "Only one event can start per day."
-
-        if self._check_prev_day_overlap(db_session, existing_event, start_time):
-            return "Start time overlaps with previous day's event."
-
-        if self._check_next_day_overlap(db_session, existing_event, end_time):
-            return "End time overlaps with next day's event."
-
-        query = db_session.query(Slot).filter(
-            Slot.end_time > start_time, Slot.start_time < end_time
+        conflict_error = self._check_time_conflicts(
+            db_session, existing_event, start_time, end_time, tz
         )
-        if existing_event:
-            query = query.filter(Slot.id != existing_event.id)
-
-        overlapping_event = query.first()
-        if overlapping_event:
-            return f"Time conflict with another event (ID: {overlapping_event.id})."
+        if conflict_error:
+            return conflict_error
 
         title = event_data["title"]
         description = event_data["description"]
@@ -450,6 +443,11 @@ class AdminService:
         weather_info = event_data["weather_info"]
 
         if existing_event:
+            capacity_error = self._check_capacity_reduction(
+                db_session, existing_event, max_bookings
+            )
+            if capacity_error:
+                return capacity_error
             existing_event.title = title
             existing_event.description = description
             existing_event.end_time = end_time
@@ -463,7 +461,7 @@ class AdminService:
             logger.info("Existing event updated for start time %s.", start_time)
             return "Event updated successfully."
 
-        new_event = Slot(
+        new_event = Event(
             title=title,
             description=description,
             start_time=start_time,
@@ -479,6 +477,51 @@ class AdminService:
         logger.info("New event created for start time %s.", start_time)
         return "Event created successfully."
 
+    def _check_time_conflicts(
+        self, db_session, existing_event, start_time, end_time, tz
+    ):
+        """Return an error message if the proposed time slot conflicts with
+        another event (same-day, adjacent-day overlap, or direct time
+        overlap), or None if the slot is free."""
+        if self._check_same_day_start(db_session, existing_event, start_time, tz):
+            return "Only one event can start per day."
+
+        if self._check_prev_day_overlap(db_session, existing_event, start_time):
+            return "Start time overlaps with previous day's event."
+
+        if self._check_next_day_overlap(db_session, existing_event, end_time):
+            return "End time overlaps with next day's event."
+
+        query = db_session.query(Event).filter(
+            Event.end_time > start_time, Event.start_time < end_time
+        )
+        if existing_event:
+            query = query.filter(Event.id != existing_event.id)
+
+        overlapping_event = query.first()
+        if overlapping_event:
+            return f"Time conflict with another event (ID: {overlapping_event.id})."
+        return None
+
+    def _check_capacity_reduction(self, db_session, existing_event, max_bookings):
+        """Return an error message if `max_bookings` would drop below the
+        event's current confirmed-booking count, or None if the change is
+        allowed."""
+        confirmed_count = (
+            db_session.query(func.count(Booking.id))  # pylint: disable=not-callable
+            .filter(
+                Booking.event_id == existing_event.id,
+                Booking.status == "confirmed",
+            )
+            .scalar()
+        )
+        if max_bookings < confirmed_count:
+            return (
+                f"Cannot reduce capacity below the {confirmed_count} "
+                "confirmed booking(s) for this event."
+            )
+        return None
+
     def _check_same_day_start(self, db_session, existing_event, start_time, tz):
         """Check if any event starts on the same local calendar day."""
         local_day = start_time.astimezone(tz).date()
@@ -488,12 +531,12 @@ class AdminService:
         local_day_end_utc = datetime.combine(
             local_day + timedelta(days=1), datetime.min.time(), tzinfo=tz
         ).astimezone(timezone.utc)
-        query = db_session.query(Slot).filter(
-            Slot.start_time >= local_day_start_utc,
-            Slot.start_time < local_day_end_utc,
+        query = db_session.query(Event).filter(
+            Event.start_time >= local_day_start_utc,
+            Event.start_time < local_day_end_utc,
         )
         if existing_event:
-            query = query.filter(Slot.id != existing_event.id)
+            query = query.filter(Event.id != existing_event.id)
         return query.first() is not None
 
     def _check_prev_day_overlap(self, db_session, existing_event, start_time):
@@ -502,13 +545,13 @@ class AdminService:
         prev_day_start_utc = start_day_utc - timedelta(days=1)
         prev_day_end_utc = start_day_utc
 
-        query = db_session.query(Slot).filter(
-            Slot.start_time >= prev_day_start_utc,
-            Slot.start_time < prev_day_end_utc,
-            Slot.end_time > start_time,
+        query = db_session.query(Event).filter(
+            Event.start_time >= prev_day_start_utc,
+            Event.start_time < prev_day_end_utc,
+            Event.end_time > start_time,
         )
         if existing_event:
-            query = query.filter(Slot.id != existing_event.id)
+            query = query.filter(Event.id != existing_event.id)
         return query.first() is not None
 
     def _check_next_day_overlap(self, db_session, existing_event, end_time):
@@ -516,13 +559,13 @@ class AdminService:
         end_day_utc = end_time.replace(hour=0, minute=0, second=0, microsecond=0)
         next_day_utc = end_day_utc + timedelta(days=1)
 
-        query = db_session.query(Slot).filter(
-            Slot.start_time >= next_day_utc,
-            Slot.start_time < next_day_utc + timedelta(days=1),
-            Slot.start_time < end_time,
+        query = db_session.query(Event).filter(
+            Event.start_time >= next_day_utc,
+            Event.start_time < next_day_utc + timedelta(days=1),
+            Event.start_time < end_time,
         )
         if existing_event:
-            query = query.filter(Slot.id != existing_event.id)
+            query = query.filter(Event.id != existing_event.id)
         return query.first() is not None
 
     def update_events_weather(self):

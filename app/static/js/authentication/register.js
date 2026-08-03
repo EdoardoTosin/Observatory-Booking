@@ -35,17 +35,8 @@ document
   });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const inputs = document.querySelectorAll("input[required]");
-  const registerButton = document.getElementById("register-button");
-
-  function checkInputs() {
-    const allFilled = [...inputs].every((input) => input.value.trim() !== "");
-    registerButton.disabled = !allFilled;
-    registerButton.classList.toggle("opacity-50", !allFilled);
-    registerButton.classList.toggle("cursor-not-allowed", !allFilled);
-    registerButton.classList.toggle("hover:bg-green-700", allFilled);
-    registerButton.classList.toggle("dark:hover:bg-green-600", allFilled);
-  }
-
-  inputs.forEach((input) => input.addEventListener("input", checkInputs));
+  initializeRequiredFieldsGate("register-button", [
+    "hover:bg-green-700",
+    "dark:hover:bg-green-600",
+  ]);
 });

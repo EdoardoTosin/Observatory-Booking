@@ -10,7 +10,7 @@ from threading import Lock
 from .models import (  # pylint: disable=unused-import
     Base,
     User,
-    Slot,
+    Event,
     Booking,
     Configuration,
 )
@@ -37,7 +37,7 @@ class BookingSystem:
         weather_service (WeatherService): Manages weather updates and ratings.
         admin_service (AdminService): Handles admin operations and configurations.
         user_service (UserService): Manages user accounts and credentials.
-        booking_service (BookingService): Processes slot bookings and cancellations.
+        booking_service (BookingService): Processes event bookings and cancellations.
     """
 
     def __init__(self):
@@ -160,7 +160,7 @@ class BookingSystem:
 
     def confirm_event(self, event, event_id=None):
         """
-        Create or update an event slot.
+        Create or update an event.
 
         Args:
             event: Event data including time, description, and limits.
@@ -177,31 +177,31 @@ class BookingSystem:
         """
         self.weather_service.update_events_weather()
 
-    def book_slot(self, user_id, slot_id):
+    def book_event(self, user_id, event_id):
         """
-        Book a slot for a user.
+        Book an event for a user.
 
         Args:
             user_id: Identifier of the user making the booking.
-            slot_id: Identifier of the slot to book.
+            event_id: Identifier of the event to book.
 
         Returns:
             str: Status message about the booking result.
         """
-        return self.booking_service.book_slot(user_id=user_id, slot_id=slot_id)
+        return self.booking_service.book_event(user_id=user_id, event_id=event_id)
 
-    def cancel_booking(self, user_id, slot_id):
+    def cancel_booking(self, user_id, event_id):
         """
-        Cancel a previously booked slot.
+        Cancel a previously booked event.
 
         Args:
             user_id: Identifier of the user.
-            slot_id: Identifier of the slot to cancel.
+            event_id: Identifier of the event to cancel.
 
         Returns:
             str: Status message about the cancellation result.
         """
-        return self.booking_service.cancel_booking(user_id=user_id, slot_id=slot_id)
+        return self.booking_service.cancel_booking(user_id=user_id, event_id=event_id)
 
     def create_user_account(self, name, email, password):
         """

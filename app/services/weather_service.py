@@ -19,7 +19,7 @@ from urllib3.util.retry import Retry
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy.exc import SQLAlchemyError
 
-from ..models import Configuration, Slot
+from ..models import Configuration, Event
 from ..data_transfer_objects import WeatherData
 from ..utils import ttl_cache, logger
 
@@ -75,7 +75,16 @@ class WeatherService:
 
         self.scheduler = BackgroundScheduler()
         self.scheduler.add_job(
-            self.update_events_weather, "interval", hours=3, id="update_events_weather"
+            self.update_events_weather,
+            "interval",
+            hours=3,
+            id="update_events_weather",
+            # APScheduler's interval trigger otherwise waits a full interval
+            # before its first run, leaving the cache empty until then. Run
+            # once immediately (in this background thread, not blocking app
+            # startup) so the first admin action that needs weather data
+            # doesn't pay for a synchronous, possibly slow/retrying API call.
+            next_run_time=datetime.now(),
         )
         self.scheduler.start()
 
@@ -85,7 +94,14 @@ class WeatherService:
     def shutdown(self):
         """
         Gracefully shuts down the background scheduler.
+
+        Safe to call twice: an explicit shutdown (e.g. test teardown) can
+        race with the `atexit` hook also registered in `__init__`, and
+        APScheduler raises if `shutdown()` runs on an already-stopped
+        scheduler.
         """
+        if not self.scheduler.running:
+            return
         self.scheduler.shutdown()
         logger.info("WeatherService scheduler shutdown complete.")
 
@@ -146,6 +162,7 @@ class WeatherService:
             Dict[datetime, Dict[str, float]]: A dictionary mapping datetimes to weather parameters.
         """
         weather_by_time = {}
+        tz = ZoneInfo(weather_data.tz_str)
 
         for time_str, dew, precip, cloud, vis in zip(
             weather_data.times,
@@ -155,9 +172,7 @@ class WeatherService:
             weather_data.visibilities,
         ):
             try:
-                dt = datetime.fromisoformat(time_str).replace(
-                    tzinfo=ZoneInfo(weather_data.tz_str)
-                )
+                dt = datetime.fromisoformat(time_str).replace(tzinfo=tz)
             except ValueError as exc:
                 logger.exception("Error parsing datetime '%s': %s", time_str, exc)
                 continue
@@ -318,6 +333,12 @@ class WeatherService:
         Generate a list of hourly timestamps between start and end, inclusive.
         Ensures that the datetimes are timezone-aware and in the specified timezone.
 
+        A naive `start`/`end` is assumed to already represent UTC (the
+        convention for every naive datetime in this app - see `Event.start_time`),
+        not local wall-clock time in `tz_str`. Attaching `tz_str` directly to
+        a naive value here would silently reinterpret the UTC hour as a local
+        hour, shifting the whole range by the zone's UTC offset.
+
         Args:
             start (datetime): The start datetime.
             end (datetime): The end datetime.
@@ -328,14 +349,12 @@ class WeatherService:
         """
         tz = ZoneInfo(tz_str)
         if start.tzinfo is None:
-            start = start.replace(tzinfo=tz)
-        else:
-            start = start.astimezone(tz)
+            start = start.replace(tzinfo=timezone.utc)
+        start = start.astimezone(tz)
 
         if end.tzinfo is None:
-            end = end.replace(tzinfo=tz)
-        else:
-            end = end.astimezone(tz)
+            end = end.replace(tzinfo=timezone.utc)
+        end = end.astimezone(tz)
 
         start = start.replace(minute=0, second=0, microsecond=0)
         total_hours = int((end - start).total_seconds() // 3600) + 1
@@ -350,14 +369,14 @@ class WeatherService:
             timezone_str (str): The timezone string.
 
         Returns:
-            List[Slot]: A list of upcoming events within the next 7 days.
+            List[Event]: A list of upcoming events within the next 7 days.
         """
         now_local = datetime.now(ZoneInfo(timezone_str))
         now_utc = now_local.astimezone(timezone.utc)
         future_utc = (now_local + timedelta(days=7)).astimezone(timezone.utc)
         events = (
-            session.query(Slot)
-            .filter(Slot.start_time >= now_utc, Slot.start_time <= future_utc)
+            session.query(Event)
+            .filter(Event.start_time >= now_utc, Event.start_time <= future_utc)
             .all()
         )
         logger.debug("Retrieved %d upcoming events.", len(events))

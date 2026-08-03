@@ -23,3 +23,11 @@ repos:
         language: system
         types: [python]
         files: ^app/
+
+      - id: pytest-check
+        name: Run automated test suite with pytest
+        entry: pytest
+        args: [tests/]
+        language: system
+        pass_filenames: false
+        files: ^(app|tests)/

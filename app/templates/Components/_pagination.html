@@ -1,0 +1,35 @@
+{% macro pager(page, total_pages, endpoint) %}
+{% if total_pages > 1 %}
+<nav class="flex items-center justify-center gap-2 mt-4" aria-label="Pagination">
+  {% if page > 1 %}
+  <a
+    href="{{ preserve_query(endpoint, page=page - 1) }}"
+    class="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 text-sm"
+    >Prev</a
+  >
+  {% else %}
+  <span
+    class="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 text-sm"
+    >Prev</span
+  >
+  {% endif %}
+
+  <span class="px-3 py-1 text-sm text-gray-700 dark:text-gray-300">
+    Page {{ page }} of {{ total_pages }}
+  </span>
+
+  {% if page < total_pages %}
+  <a
+    href="{{ preserve_query(endpoint, page=page + 1) }}"
+    class="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 text-sm"
+    >Next</a
+  >
+  {% else %}
+  <span
+    class="px-3 py-1 rounded-md border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 text-sm"
+    >Next</span
+  >
+  {% endif %}
+</nav>
+{% endif %}
+{% endmacro %}

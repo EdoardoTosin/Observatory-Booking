@@ -26,18 +26,18 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=90905a2f556bf617f1a9" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=db01c9f3" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=90905a2f556bf617f1a9"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9" />
 
     <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
@@ -45,26 +45,33 @@
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/app/services/weather_service';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
+  <body data-default-mode="">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -90,7 +97,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -168,23 +175,13 @@
   </a>
 </li>
 
-            <li class="nav-item dropdown">
-                <button class="btn dropdown-toggle nav-item" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-controls="pst-nav-more-links">
-                    More
-                </button>
-                <ul id="pst-nav-more-links" class="dropdown-menu">
-                    
-<li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../../components/index.html">
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../components/index.html">
     Components
   </a>
 </li>
 
-                </ul>
-            </li>
-            
   </ul>
 </nav></div>
       
@@ -206,11 +203,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -223,8 +227,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -325,11 +328,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -342,8 +352,7 @@
           
           
           
-          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
-            <span class="sr-only">GitHub</span></a>
+          <a href="https://github.com/EdoardoTosin/Observatory-Booking" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -428,7 +437,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">apscheduler.schedulers.background</span><span class="w"> </span><span class="kn">import</span> <span class="n">BackgroundScheduler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.exc</span><span class="w"> </span><span class="kn">import</span> <span class="n">SQLAlchemyError</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">Slot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span><span class="p">,</span> <span class="n">Event</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..data_transfer_objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">WeatherData</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ttl_cache</span><span class="p">,</span> <span class="n">logger</span>
 
@@ -488,7 +497,16 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="o">=</span> <span class="n">BackgroundScheduler</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_events_weather</span><span class="p">,</span> <span class="s2">&quot;interval&quot;</span><span class="p">,</span> <span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;update_events_weather&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_events_weather</span><span class="p">,</span>
+            <span class="s2">&quot;interval&quot;</span><span class="p">,</span>
+            <span class="n">hours</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;update_events_weather&quot;</span><span class="p">,</span>
+            <span class="c1"># APScheduler&#39;s interval trigger otherwise waits a full interval</span>
+            <span class="c1"># before its first run, leaving the cache empty until then. Run</span>
+            <span class="c1"># once immediately (in this background thread, not blocking app</span>
+            <span class="c1"># startup) so the first admin action that needs weather data</span>
+            <span class="c1"># doesn&#39;t pay for a synchronous, possibly slow/retrying API call.</span>
+            <span class="n">next_run_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
@@ -501,7 +519,14 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gracefully shuts down the background scheduler.</span>
+
+<span class="sd">        Safe to call twice: an explicit shutdown (e.g. test teardown) can</span>
+<span class="sd">        race with the `atexit` hook also registered in `__init__`, and</span>
+<span class="sd">        APScheduler raises if `shutdown()` runs on an already-stopped</span>
+<span class="sd">        scheduler.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;WeatherService scheduler shutdown complete.&quot;</span><span class="p">)</span></div>
 
@@ -568,6 +593,7 @@
 <span class="sd">            Dict[datetime, Dict[str, float]]: A dictionary mapping datetimes to weather parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">weather_by_time</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">tz</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">weather_data</span><span class="o">.</span><span class="n">tz_str</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">time_str</span><span class="p">,</span> <span class="n">dew</span><span class="p">,</span> <span class="n">precip</span><span class="p">,</span> <span class="n">cloud</span><span class="p">,</span> <span class="n">vis</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
             <span class="n">weather_data</span><span class="o">.</span><span class="n">times</span><span class="p">,</span>
@@ -577,9 +603,7 @@
             <span class="n">weather_data</span><span class="o">.</span><span class="n">visibilities</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">time_str</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
-                    <span class="n">tzinfo</span><span class="o">=</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="n">weather_data</span><span class="o">.</span><span class="n">tz_str</span><span class="p">)</span>
-                <span class="p">)</span>
+                <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">time_str</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error parsing datetime &#39;</span><span class="si">%s</span><span class="s2">&#39;: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">time_str</span><span class="p">,</span> <span class="n">exc</span><span class="p">)</span>
                 <span class="k">continue</span>
@@ -758,6 +782,12 @@
 <span class="sd">        Generate a list of hourly timestamps between start and end, inclusive.</span>
 <span class="sd">        Ensures that the datetimes are timezone-aware and in the specified timezone.</span>
 
+<span class="sd">        A naive `start`/`end` is assumed to already represent UTC (the</span>
+<span class="sd">        convention for every naive datetime in this app - see `Event.start_time`),</span>
+<span class="sd">        not local wall-clock time in `tz_str`. Attaching `tz_str` directly to</span>
+<span class="sd">        a naive value here would silently reinterpret the UTC hour as a local</span>
+<span class="sd">        hour, shifting the whole range by the zone&#39;s UTC offset.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            start (datetime): The start datetime.</span>
 <span class="sd">            end (datetime): The end datetime.</span>
@@ -768,14 +798,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tz</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">tz_str</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">start</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">end</span><span class="o">.</span><span class="n">tzinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
 
         <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">minute</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">total_hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
@@ -793,14 +821,14 @@
 <span class="sd">            timezone_str (str): The timezone string.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            List[Slot]: A list of upcoming events within the next 7 days.</span>
+<span class="sd">            List[Event]: A list of upcoming events within the next 7 days.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">now_local</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">ZoneInfo</span><span class="p">(</span><span class="n">timezone_str</span><span class="p">))</span>
         <span class="n">now_utc</span> <span class="o">=</span> <span class="n">now_local</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
         <span class="n">future_utc</span> <span class="o">=</span> <span class="p">(</span><span class="n">now_local</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
         <span class="n">events</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Slot</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Slot</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">now_utc</span><span class="p">,</span> <span class="n">Slot</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;=</span> <span class="n">future_utc</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Event</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">now_utc</span><span class="p">,</span> <span class="n">Event</span><span class="o">.</span><span class="n">start_time</span> <span class="o">&lt;=</span> <span class="n">future_utc</span><span class="p">)</span>
             <span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Retrieved </span><span class="si">%d</span><span class="s2"> upcoming events.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">))</span>
@@ -836,8 +864,8 @@
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=90905a2f556bf617f1a9"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=90905a2f556bf617f1a9"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -871,7 +899,7 @@
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.20.0.
 </p></div>
       
     </div>
