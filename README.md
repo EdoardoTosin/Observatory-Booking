@@ -137,7 +137,7 @@ WTF_CSRF_ENABLED=True
 LOGGING_LEVEL=INFO
 ```
 
-> **Security note:** Leave `DEFAULT_ADMIN_PASSWORD` empty. On first run the app generates a secure random password and prints it once to stdout - change it immediately after logging in. For local HTTP development set `SESSION_COOKIE_SECURE=False`; in production it must be `True` (requires HTTPS).
+> **Security note:** Leave `DEFAULT_ADMIN_PASSWORD` empty. On first run the app generates a secure random password and prints it once to stdout; change it immediately after logging in. For local HTTP development set `SESSION_COOKIE_SECURE=False`; in production it must be `True` (requires HTTPS).
 
 ### 4. Start the Application
 
@@ -159,14 +159,14 @@ Visit: `http://127.0.0.1:5000/` or configured `HOST:PORT`.
 | `AES_HMAC_KEY`             | Base64 HMAC key for nonce derivation (auto-generated)               | (auto-generated)                   |
 | `AES_IV`                   | Base64 legacy IV for migration compatibility (auto-generated)       | (auto-generated)                   |
 | `DEFAULT_ADMIN_EMAIL`      | Email for first-time superadmin account                             | `admin@example.com`                |
-| `DEFAULT_ADMIN_PASSWORD`   | Password for first-time superadmin - leave empty                    | (auto-generated)                   |
+| `DEFAULT_ADMIN_PASSWORD`   | Password for first-time superadmin, leave empty                     | (auto-generated)                   |
 | `ENV`                      | Set to `development` to enable SQLAlchemy SQL logging               | `production`                       |
 | `DEBUG_MODE`               | Enable Flask debug mode (`True`/`False`)                            | `False`                            |
 | `HOST`                     | Host address to bind the server to                                  | `127.0.0.1`                        |
 | `PORT`                     | Port to bind the server to                                          | `5000`                             |
 | `WTF_CSRF_ENABLED`         | Enable CSRF protection on all state-changing endpoints              | `True`                             |
 | `SESSION_COOKIE_HTTPONLY`  | Prevent JavaScript access to the session cookie                     | `True`                             |
-| `SESSION_COOKIE_SECURE`    | Require HTTPS for the session cookie - must be `True` in production | `True`                             |
+| `SESSION_COOKIE_SECURE`    | Require HTTPS for the session cookie, must be `True` in production  | `True`                             |
 | `SESSION_COOKIE_SAMESITE`  | SameSite policy for the session cookie                              | `Strict`                           |
 | `SESSION_COOKIE_DOMAIN`    | Domain for the session cookie (blank = current host)                | (unset)                            |
 | `LOGGING_LEVEL`            | Log verbosity: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`      | `INFO`                             |

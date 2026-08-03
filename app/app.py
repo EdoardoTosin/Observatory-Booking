@@ -11,21 +11,18 @@ from flask import Flask
 from waitress import serve
 
 from .booking_system import BookingSystem
-from .utils import logger, get_secret_key, get_env_value
+from .utils import logger, get_secret_key, get_env_value, get_env_bool
 from .filters import init_filters
 from .routes.blueprint import bp
 from .routes.security_decorators import generate_csrf_token, validate_csrf
 
 
-def create_instance(debug=False):
+def create_instance():
     """
     Create and configure the Flask application instance.
 
     Initializes the Flask app, sets secure configurations for production,
     binds core services, registers custom filters, and sets up route blueprints.
-
-    Args:
-        debug (bool): Indicates whether the app should run in debug mode.
 
     Returns:
         Flask: A fully configured Flask app instance ready to run.
@@ -33,16 +30,16 @@ def create_instance(debug=False):
     instance = Flask(__name__)
     instance.secret_key = get_secret_key()
 
-    if not debug:
-        instance.config.update(
-            WTF_CSRF_ENABLED=bool(get_env_value("WTF_CSRF_ENABLED", True)),
-            SESSION_COOKIE_DOMAIN=get_env_value("SESSION_COOKIE_DOMAIN", None),
-            SESSION_COOKIE_HTTPONLY=bool(
-                get_env_value("SESSION_COOKIE_HTTPONLY", True)
-            ),
-            SESSION_COOKIE_SECURE=bool(get_env_value("SESSION_COOKIE_SECURE", True)),
-            SESSION_COOKIE_SAMESITE=get_env_value("SESSION_COOKIE_SAMESITE", "Strict"),
-        )
+    # Cookie/CSRF hardening is applied unconditionally so it cannot be
+    # silently disabled just because DEBUG_MODE (which also enables the
+    # interactive Werkzeug debugger) is turned on for troubleshooting.
+    instance.config.update(
+        WTF_CSRF_ENABLED=get_env_bool("WTF_CSRF_ENABLED", True),
+        SESSION_COOKIE_DOMAIN=get_env_value("SESSION_COOKIE_DOMAIN", None),
+        SESSION_COOKIE_HTTPONLY=get_env_bool("SESSION_COOKIE_HTTPONLY", True),
+        SESSION_COOKIE_SECURE=get_env_bool("SESSION_COOKIE_SECURE", True),
+        SESSION_COOKIE_SAMESITE=get_env_value("SESSION_COOKIE_SAMESITE", "Strict"),
+    )
 
     instance.system = BookingSystem()  # type: ignore[attr-defined]
 
@@ -116,6 +113,6 @@ def main():
     port = int(get_env_value("PORT", "5000"))
     debug_mode = get_env_value("DEBUG_MODE", "False").lower() == "true"
 
-    app = create_instance(debug=debug_mode)
+    app = create_instance()
 
     run_app(app, host, port, debug_mode)

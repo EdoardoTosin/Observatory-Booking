@@ -20,9 +20,8 @@ from flask import (
 )
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
-from werkzeug.security import check_password_hash
 
-from ..booking_system import Slot, Booking, Configuration, User, UserService
+from ..booking_system import Slot, Booking, Configuration, User
 from ..utils import is_password_strong
 from .blueprint import bp
 from .security_decorators import login_required
@@ -248,13 +247,11 @@ def change_password():  # pylint: disable=too-many-return-statements
             with system as db:
                 user_obj = db.query(User).filter(User.id == user_id).first()
 
-                if not user_obj or not check_password_hash(
-                    user_obj.password_hash, old_password
-                ):
+                if not user_obj or not user_obj.verify_password(old_password):
                     flash("Old password is incorrect.", "error")
                     return redirect(url_for("bp.change_password"))
 
-                UserService(db, lock=False).change_user_password(user_id, new_password)
+                system.change_user_password(user_id, new_password)
         except SQLAlchemyError as e:
             current_app.logger.error(f"Change password error: {e}")
             flash("An unexpected error occurred while changing your password.", "error")

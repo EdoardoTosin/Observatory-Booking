@@ -1,7 +1,7 @@
 Observatory Booking Documentation
 =================================
 
-Welcome to the documentation for the **Observatory Booking Web App** - a self-hostable, modular application built with **Flask** and styled using **Tailwind CSS**, designed for managing observatory event reservations with real-time weather integration and secure user access.
+Welcome to the documentation for the **Observatory Booking Web App**, a self-hostable, modular application built with **Flask** and styled using **Tailwind CSS**, designed for managing observatory event reservations with real-time weather integration and secure user access.
 
 .. raw:: html
 

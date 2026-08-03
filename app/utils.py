@@ -137,6 +137,27 @@ def get_env_value(key_name, default=None):
     return value
 
 
+def get_env_bool(key_name, default=True):
+    """
+    Retrieve a boolean environment variable, parsing common string
+    representations ("true"/"false", "1"/"0", "yes"/"no") instead of relying
+    on Python truthiness, since `bool("False")` is `True` because any
+    non-empty string is truthy. Relying on that would make a `False` value
+    written in `.env` silently have no effect.
+
+    Args:
+        key_name (str): The environment variable name.
+        default (bool): Fallback value if the variable is unset.
+
+    Returns:
+        bool: The parsed boolean value.
+    """
+    value = os.getenv(key_name)
+    if value is None:
+        return default
+    return value.strip().lower() in ("1", "true", "yes", "on")
+
+
 _AES_KEY, _AES_IV_LEGACY, _AES_HMAC_KEY = get_encryption_keys()
 
 # GCM nonce size (96 bits, recommended by NIST for AES-GCM)
